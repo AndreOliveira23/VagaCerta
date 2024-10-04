@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Display a map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
+
+    <style>
+      #map {
+        position: absolute; 
+        top: 0; 
+        right: 0; 
+        bottom: 0; 
+        left: 0;
+        
+        width: 90%;
+        height: 60%;    
+
+
+        margin-top: 10%;
+        margin-left: 5%;
+        margin-bottom: 10%;
+        
+        border-radius: 10px;
+    }
+
+    p{
+        font-size: 20px;
+    }
+
+    </style>
+  </head>
+  <body>
+    <div id="map">
+    </div>
+
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Park do Zé</h4>
+        <div class="row">
+            <div class="column">
+              <img src="img1.webp" alt="Snow" style="width:270px; height: 200px; border-radius: 10px;">
+            </div>
+            <div class="column">
+              <img src="img2.jpg" alt="Forest" style="width:270px; height: 200px; border-radius: 10px;">
+            </div>
+            <div class="column">
+              <img src="img3.jpg" alt="Mountains" style="width:270px; height: 200px; border-radius: 10px;">
+            </div>
+          </div> 
+            <div class="card-content">
+                <p>Endereço: Rua A, Número 100, Bairro B, Cidade C</p>
+                <p>Lotação: 240 / 400 (60%)</p>
+                <div class="rating">
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star-half">&#9733;</span>
+                </div>
+                <button data-target="modal1" class="btn modal-trigger">Reservar vaga</button>
+        
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+    <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.modal');
+  var instances = M.Modal.init(elems, {
+    // specify options here
+  });
+});
+          
+   /* eslint-disable no-undef */
+/**
+ * Get coordinates after clicking on the map
+ */
+
+// config map
+let config = {
+  minZoom: 7,
+  maxZoom: 18,
+};
+// magnification with which the map will start
+const zoom = 18;
+// co-ordinates
+const lat = -23.5489;
+const lng = -46.6388;
+
+// calling map
+const map = L.map("map", config).setView([lat, lng], zoom);
+
+// Used to load and display tile layers on the map
+// Most tile servers require attribution, which you can set under `Layer`
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+// Define the sidebar element
+const sidebar = document.createElement('div');
+sidebar.id = 'sidebar';
+sidebar.style.width = '30%';
+sidebar.style.height = '100%';
+sidebar.style.backgroundColor = 'white';
+sidebar.style.position = 'absolute';
+sidebar.style.top = '0';
+sidebar.style.right = '0';
+sidebar.style.display = 'none';
+
+// Add content to the sidebar
+sidebar.innerHTML = '<h2>Sidebar Content</h2>';
+
+// Append the sidebar to the body element
+document.body.appendChild(sidebar);
+
+// Function to open the sidebar
+function openSidebar() {
+    sidebar.style.display = 'block';
+}
+
+// Function to close the sidebar
+function closeSidebar() {
+    sidebar.style.display = 'none';
+}
+
+// Add click event listeners to the markers
+L.marker([-23.549303528562227, -46.639324444983856])
+    .addTo(map)
+    .on('click', function() {
+        var modalInstance = M.Modal.getInstance(document.getElementById('modal1'));
+        modalInstance.open();
+    })
+    .bindPopup('Estacionamento 1');
+
+L.marker([-23.548698207032892, -46.64079405570502])
+    .addTo(map)
+    .bindPopup('Center Warsaw');
+
+L.marker([-23.5494511675368, -46.64063851296448])
+    .addTo(map)
+    .bindPopup('Center Warsaw');
+
+   /* 
+L.marker([-23.549303528562227, -46.639324444983856])
+    .addTo(map)
+    .on('click', function() {
+
+        teste();
+    })
+    .bindPopup('Estacionamento 1');
+
+L.marker([-23.548698207032892, -46.64079405570502])
+    .addTo(map)
+    .bindPopup('Center Warsaw');
+
+L.marker([-23.5494511675368, -46.64063851296448])
+    .addTo(map)
+    .bindPopup('Center Warsaw');*/
+//L.marker([ -23.549303528562227,-46.639324444983856]).addTo(map).on('click', teste).bindPopup("Estacionamento 1");
+
+//L.marker([  -23.548698207032892, -46.64079405570502]).addTo(map).bindPopup("Center Warsaw");
+
+//L.marker([   -23.5494511675368, -46.64063851296448]).addTo(map).bindPopup("Center Warsaw");
+
+function teste(){
+     var elems = document.querySelectorAll('.modal');
+  var instances = M.Modal.init(elems, {
+    // specify options here
+  });
+}
+
+// obtaining coordinates after clicking on the map
+map.on('click', function(ev){
+  var latlng = map.mouseEventToLatLng(ev.originalEvent);
+  console.log(latlng.lat + ', ' + latlng.lng);
+
+  L.marker([latlng.lat, latlng.lng]).addTo(map).bindPopup("Center Warsaw");
+
+});
+
+
+    </script>
+  </body>
+</html>
