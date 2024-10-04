@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Search with a geocoding control</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <!-- Load Leaflet from CDN -->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js" integrity="sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ==" crossorigin=""></script>
+
+
+    <!-- Load Esri Leaflet Geocoder from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.css" integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ==" crossorigin="">
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.js" integrity="sha512-QXchymy6PyEfYFQeOUuoz5pH5q9ng0eewZN8Sv0wvxq3ZhujTGF4eS/ySpnl6YfTQRWmA2Nn3Bezi9xuF8yNiw==" crossorigin=""></script>
+
+    <!-- Add Materialize CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/css/materialize.min.css">
+
+    <!-- Add Materialize JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
+
+
+    <style>
+      html,
+      body,
+      #map {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        color: #323232;
+      }
+
+      #navbar{
+        background-color: aqua;
+
+        margin: 8px;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id = "navbar">
+        [navbar]
+    </div>
+    <div id="map"></div>
+
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Park do Zé</h4>
+
+            <div class="row">
+                <div class="column">
+                    <img src="img1.webp" alt="Snow" style="width:270px; height: 200px; border-radius: 10px;">
+                </div>
+
+                <div class="column">
+                    <img src="img2.jpg" alt="Forest" style="width:270px; height: 200px; border-radius: 10px;">
+                </div>
+
+                <div class="column">
+                    <img src="img3.jpg" alt="Mountains" style="width:270px; height: 200px; border-radius: 10px;">
+                </div>
+            </div> 
+
+            <div class="card-content">
+                <p>Endereço: Rua A, Número 100, Bairro B, Cidade C</p>
+                <p>Lotação: 240 / 400 (60%)</p>
+                <div class="rating">
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star">&#9733;</span>
+                    <span class="star-half">&#9733;</span>
+                </div>
+                
+                <button data-target="modal1" class="btn modal-trigger">Reservar vaga</button>
+            </div>
+        </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {});
+});
+
+
+
+//Define a região inicial do mapa para SP
+var map = L.map('map').setView([-23.5489,-46.6388], 10);
+
+//Mostra o mapa
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+
+//Barra de Pesquisa
+var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+
+var results = L.layerGroup().addTo(map);
+
+searchControl.on('results', function(data) {
+  results.clearLayers();
+  for (var i = data.results.length - 1; i >= 0; i--) {
+    //results.addLayer(L.marker(data.results[i].latlng));
+  }
+});
+
+
+//Criando marcadores após clicar no mapa
+map.on('click', function(ev){
+    var latlng = map.mouseEventToLatLng(ev.originalEvent);
+    console.log(latlng.lat + ', ' + latlng.lng);
+    
+    L.marker([latlng.lat, latlng.lng]).addTo(map).on('click', function() {
+        var modalInstance = M.Modal.getInstance(document.getElementById('modal1'));
+        modalInstance.open();
+    }).bindPopup("Estacionamento");
+  
+});
+
+
+    </script>
+  </body>
+</html>
