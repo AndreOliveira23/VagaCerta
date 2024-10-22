@@ -1,0 +1,3 @@
+[submodule "Leaflet-IconLayers"]
+	path = Leaflet-IconLayers
+	url = https://github.com/ScanEx/Leaflet-IconLayers

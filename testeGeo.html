@@ -23,6 +23,13 @@
     <!-- Add Materialize JS -->
     <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
 
+    <!-- Leaflet IconLayers Plugin-->
+    <link rel="stylesheet" href="/Leaflet-IconLayers/src/iconLayers.css" />
+    <script src="/Leaflet-IconLayers/src/iconLayers.js"></script>
+
+    <!--BOx icons -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
       html,
@@ -30,7 +37,7 @@
       #map {
         padding: 0;
         margin: 0;
-        height: 100%;
+        height: 96%;
         width: 100%;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 14px;
@@ -38,19 +45,67 @@
       }
 
       #navbar{
-        background-color: aqua;
-
-        margin: 8px;
-        border-radius: 6px;
+        background-color: #007AFF;
+        height: 10%;
+        margin-top: -15;
       }
+
+      #navbar-placeholder{
+        text-align: center;
+      }
+
+      #logo-vaga-certa{
+        float: left;
+        margin: 5px;
+        background-color: crimson;
+        width: 10%;
+      }
+
+      #sidebar {
+        float: left;
+        height: 80%;
+        width: 2%;
+        background-color: blueviolet;
+      }
+
+      #map {
+        border-radius: 13px;
+      }
+
+      #container {
+        background: fixed;
+        position: relative;
+        top: 10px;
+        left: 10px;
+        z-index: 1000; /* Ensure it appears above the map */
+        
+      }
+
+      #sidebar-toggle{
+        position: relative;
+        margin-bottom: 30%;
+        margin-left: 30%;
+      }
+
+
+
     </style>
   </head>
   <body>
     <div id = "navbar">
-        [navbar]
+    
+        <div id="logo-vaga-certa">[logo vaga certa]</div>
+        <p id="navbar-placeholder">[navbar]</p>
     </div>
-    <div id="map"></div>
 
+    <div>
+    
+        <div id="map"></div>
+
+    
+
+    </div>
+    
 
     <!-- Modal Structure -->
     <div id="modal1" class="modal">
@@ -112,7 +167,8 @@ searchControl.on('results', function(data) {
   results.clearLayers();
   for (var i = data.results.length - 1; i >= 0; i--) {
     //results.addLayer(L.marker(data.results[i].latlng));
-  }
+   
+}
 });
 
 
@@ -128,6 +184,53 @@ map.on('click', function(ev){
   
 });
 
+//Menu icon
+var searchButton = L.control({position: 'topleft'});
+
+searchButton.onAdd = function(map) {
+    var div = L.DomUtil.create('div', 'search-button');
+    div.innerHTML = '<i class=\'bx bx-menu\' style="margin-top: 35px; background-color: black; font-size: 32px; border-radius: 2px" onclick="teste()"></i>';
+    return div;
+};
+
+searchButton.addTo(map);
+
+//Sidebar
+var sideBar = L.control({position: 'topleft'});
+
+sideBar.onAdd = function(map) {
+    var div = L.DomUtil.create('div', 'sidebar2');
+    div.innerHTML = '\
+      <div id="sidebar" class="w3-sidebar w3-light-grey w3-bar-block" style="width:100%; height: 100%">\
+            <h3 class="w3-bar-item">Menu</h3>\
+            <a href="#" class="w3-bar-item w3-button">Link 1</a>\
+            <a href="#" class="w3-bar-item w3-button">Link 2</a>\
+            <a href="#" class="w3-bar-item w3-button">Link 3</a>\
+        </div>\
+    ';
+    return div;
+};
+
+sideBar.addTo(map);
+
+
+
+
+function teste(){
+    var sidebar = document.getElementById("sidebar");
+        if (sidebar.style.display === "none" || sidebar.style.display === "") {
+          sidebar.style.display = "block";
+        } else {
+          sidebar.style.display = "none";
+        }
+};
+
+var overlays = {
+    "Layer 1": layer1,
+    "Layer 2": layer2
+};
+
+L.control.layers(null, overlays, {collapsed: false}).addTo(map); 
 
     </script>
   </body>
