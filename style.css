@@ -1,21 +1,78 @@
+html,
+body,
 #map {
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    bottom: 0; 
-    left: 0;
-    
-    width: 90%;
-    height: 650px;    
-
-
-    margin-top: 5%;
-    margin-left: 5%;
-    margin-bottom: 10%;
-    
-    border-radius: 10px;
+  height: 96.7%;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #323232;
 }
 
-p{
-    font-size: 20px;
+#navbar{
+  background-color: #007AFF;
+  height: 10%;
+}
+
+#navbar-placeholder{
+  text-align: center;
+}
+
+#logo-vaga-certa{
+  float: left;
+  margin: 5px;
+  width: 10%;
+}
+
+#sidebar {
+  float: left;
+  height: 1500px;
+  width: 100%;
+  background-color: rgb(85, 81, 88);
+  transition: width 0.5s ease;
+  border-radius: 6px;
+  display: none;
+  height: 50%;
+
+}
+
+#sidebar-toggle{
+  position: relative;
+  margin-bottom: 30%;
+  margin-left: 30%;
+}
+
+.link-sidebar{
+  font-size: 32px;
+  margin-top: 10px;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.link-sidebar:hover {
+    background-color: #575757;
+  }
+
+#sidebar.open {
+width: 250px; /* Set the width when opened */
+opacity: 1;
+}
+
+.link-sidebar:hover {
+background-color: #575757;
+}
+
+#logo{
+width: 50%;
+height: 80%;
+}
+
+#search{
+width: 50%;
+height: 60%;
+margin-top: 15px;
+margin-left: 170px;
+border-radius: 80px;
 }
