@@ -24,15 +24,14 @@ body,
 }
 
 #sidebar {
-  float: left;
-  height: 1500px;
-  width: 100%;
+  position: fixed;
+  bottom: 180;
+  right: 1580;
+  border: 3px solid #73AD21;
   background-color: rgb(85, 81, 88);
-  transition: width 0.5s ease;
   border-radius: 6px;
   display: none;
-  height: 50%;
-
+  height: 50%; 
 }
 
 #sidebar-toggle{
@@ -61,7 +60,7 @@ opacity: 1;
 }
 
 .link-sidebar:hover {
-background-color: #575757;
+background-color: #e2e2e2;
 }
 
 #logo{
@@ -75,4 +74,8 @@ height: 60%;
 margin-top: 15px;
 margin-left: 170px;
 border-radius: 80px;
+}
+
+#modal-nome{
+  font-size: 32px;
 }

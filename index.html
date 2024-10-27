@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
+    <!--Leaflet Routing machine-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+
+
     <!-- Load Esri Leaflet from CDN -->
     <script src="https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js" integrity="sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ==" crossorigin=""></script>
 
@@ -37,11 +45,18 @@
     
     <!-- CSS-->
      <link rel="stylesheet" href="style.css">
-  </head>
+    
+     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+     <script src="Permalink.js"></script>
+     <script src="osmtogeojson.js"></script>
+     <script src="Leaflet.EditInOSM.js"></script>
+
+</head>
   <body>
     <div id = "navbar">
         <div id="logo-vaga-certa"><img id="logo" src="logo-vaga-certa.png"></div>
-        <input id="search" type="text" placeholder="  Para onde você vai?" onkeydown="handleSearch()">
+        <input id="search" type="text" placeholder="  Para onde você vai?" onkeydown="handleSearch(), getParkingLotData()">
         <button onclick="handleSearch()">Search</button>
     </div>
 
@@ -53,7 +68,7 @@
     <!-- Modal -->
     <div id="modal1" class="modal">
         <div class="modal-content">
-            <h4>Park do Zé</h4>
+            <p id="modal-nome"></p>
 
             <div class="row">
                 <div class="column">
@@ -70,19 +85,16 @@
             </div> 
 
             <div class="card-content">
-                <p>Endereço: Rua A, Número 100, Bairro B, Cidade C</p>
-                <p>Lotação: 240 / 400 (60%)</p>
-                <div class="rating">
-                    <span class="star">&#9733;</span>
-                    <span class="star">&#9733;</span>
-                    <span class="star">&#9733;</span>
-                    <span class="star">&#9733;</span>
-                    <span class="star-half">&#9733;</span>
-                </div>
                 
+                <p id="modal-endereco"></p>
+                <p id="modal-lotacao"></p>
+                <div class="rating" id="modal-rating">
+                    <!-- Stars will be generated here dynamically -->
+                </div>
                 <button data-target="modal1" class="btn modal-trigger">Reservar vaga</button>
             </div>
         </div>
     </div>
     <script src="index.js"></script>
+    <script src="sheltermap.js"></script>
 </html>
