@@ -16,7 +16,6 @@
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
 
-
     <!-- Load Esri Leaflet from CDN -->
     <script src="https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js" integrity="sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ==" crossorigin=""></script>
 
@@ -27,6 +26,7 @@
 
     <!-- Add Materialize CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Add Materialize JS -->
     <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
@@ -52,12 +52,17 @@
      <script src="osmtogeojson.js"></script>
      <script src="Leaflet.EditInOSM.js"></script>
 
+
+
 </head>
   <body>
     <div id = "navbar">
         <div id="logo-vaga-certa"><img id="logo" src="logo-vaga-certa.png"></div>
         <input id="search" type="text" placeholder="  Para onde você vai?" onkeydown="handleSearch(), getParkingLotData()">
         <button onclick="handleSearch()">Search</button>
+
+        <div id="icone-usuario"><i class=" medium material-icons">account_circle</i></div>
+        <p id="ola-usuario">Olá, Pedro!</p>
     </div>
 
     <div>
@@ -91,7 +96,7 @@
                 <div class="rating" id="modal-rating">
                     <!-- Stars will be generated here dynamically -->
                 </div>
-                <button data-target="modal1" class="btn modal-trigger">Reservar vaga</button>
+                <button data-target="modal1" class="btn modal-trigger" onclick='location.href="login.html"'>Reservar vaga</button>
             </div>
         </div>
     </div>

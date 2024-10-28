@@ -75,7 +75,7 @@ para que possam ser adicionados ao mapa através do método addTo(map)*/
 var menuIcon = L.control({position: 'topleft'});
 
 menuIcon.onAdd = function(map) {
-  var div = L.DomUtil.create('div', 'search-button');
+  var div = L.DomUtil.create('div', 'menu-icon');
   div.innerHTML = '<i class=\'bx bx-menu\' style=" background-color: white; font-size: 32px; border-radius: 2px" onclick="sidebar()"></i>';
   return div;
 };
@@ -83,13 +83,13 @@ menuIcon.onAdd = function(map) {
 menuIcon.addTo(map);
 
 //Adiciona sidebar
-var sideBar = L.control();
+var sideBar = L.control({position: 'topleft'});
 
 sideBar.onAdd = function(map) {
-  var div = L.DomUtil.create('div', 'sidebar2');
+  var div = L.DomUtil.create('div', 'sidebar');
   div.innerHTML = '\
-    <div id="sidebar" class="w3-sidebar w3-light-grey w3-bar-block">\
-          <h3 class="w3-bar-item">Menu</h3>\
+    <div id="sidebar" >\
+          <h3>Menu</h3>\
           <div class = "link-sidebar"><a href="#" class="w3-bar-item w3-button">Link 1</a></div>\
           <div class = "link-sidebar"><a href="#" class="w3-bar-item w3-button">Link 2</a></div>\
           <div class = "link-sidebar"><a href="#" class="w3-bar-item w3-button">Link 3</a></div>\
@@ -193,7 +193,7 @@ ela seja chamada após a handleSearch()*/
 function getParkingLotData() {
   setTimeout(function() {
     getData();
-  }, 100);
+  }, 900);
 };
 
 
