@@ -1,0 +1,31 @@
+html,
+body,
+#map {
+  height: 100%;
+  z-index: 1;
+}
+
+#menu-icon-mapa{
+    background-color: white;
+    color: black;
+    height: 100%;
+    width: 90%;
+    position: absolute;
+    left: 0;
+}
+
+.drawer{
+   z-index: 2;
+}
+
+.sidebar {
+  will-change: transform;
+}
+
+/*Edita o botão de zoom in e zoom out
+.leaflet-control-container .leaflet-top .leaflet-control-zoom a.leaflet-control-zoom-in {
+   color: red; 
+   background-color: aqua;
+   border-radius: 9px;
+}
+*/

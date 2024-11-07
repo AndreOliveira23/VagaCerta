@@ -17,22 +17,21 @@
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
-
     <!-- Load Esri Leaflet from CDN -->
     <script src="https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js" integrity="sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ==" crossorigin=""></script>
-
 
     <!-- Load Esri Leaflet Geocoder from CDN -->
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.css" integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ==" crossorigin="">
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.js" integrity="sha512-QXchymy6PyEfYFQeOUuoz5pH5q9ng0eewZN8Sv0wvxq3ZhujTGF4eS/ySpnl6YfTQRWmA2Nn3Bezi9xuF8yNiw==" crossorigin=""></script>
 
 
-
+    <!-- Leaflet CSS-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
 
 
+    <!--Beer CSS-->
     <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css" rel="stylesheet">
 
     <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
@@ -40,130 +39,108 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
 
 
+    <!--Local CSS-->
+     <link rel="stylesheet" href="styleZen.css">
     
-    <!-- CSS-->
-     <link rel="stylesheet" href="style.css">
-    
-     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
+     <!--API de localização dos estacionamentos-->
      <script src="Permalink.js"></script>
      <script src="osmtogeojson.js"></script>
      <script src="Leaflet.EditInOSM.js"></script>
+
+     <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"
+/>
+
+
+<script src="https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js"></script>
 
 
 
 </head>
 <body>
-    <nav class="top" style="background-color: #007AFF;">
-       
-        <img src="logo-vaga-certa.png" id="logo-vaga-certa">
-
+    <nav class="top" onclick="fecharSidebar()">
       
+      <button class="circle transparent absolute left" onclick="abrirSidebar()">
+        <i id="menu-icon-navbar" >menu</i>
+      </button>
 
-        <div class="field large prefix round fill">
-            <i class="front" onkeydown="handleSearch(), getParkingLotData()" id="search" >search</i>
-            <input placeholder="Para onde você vai?" onkeydown="handleSearch(), getParkingLotData()">
+      <div class="field large prefix round fill">
+        <i class="front">search</i>
+        <input>
+        <menu class="min">
+          <div class="field large prefix suffix no-margin fixed">
+            <i class="front">arrow_back</i>
+            <input>
+            <i class="front">close</i>
           </div>
-          
-        <div>
-        <p id="ola-usuario">Olá, Pedro!</p>
-      </div>
+        </menu>
+      </div>         
 
+      <i class="extra absolute right" id="icone-user">account_circle</i>
 
-        <button class="active" id="icone-usuario">
-            <i class="extra">
-              <svg viewBox="0 0 24 24">
-                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M7.07,18.28C7.5,17.38 10.12,16.5 12,16.5C13.88,16.5 16.5,17.38 16.93,18.28C15.57,19.36 13.86,20 12,20C10.14,20 8.43,19.36 7.07,18.28M18.36,16.83C16.93,15.09 13.46,14.5 12,14.5C10.54,14.5 7.07,15.09 5.64,16.83C4.62,15.5 4,13.82 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,13.82 19.38,15.5 18.36,16.83M12,6C10.06,6 8.5,7.56 8.5,9.5C8.5,11.44 10.06,13 12,13C13.94,13 15.5,11.44 15.5,9.5C15.5,7.56 13.94,6 12,6M12,11A1.5,1.5 0 0,1 10.5,9.5A1.5,1.5 0 0,1 12,8A1.5,1.5 0 0,1 13.5,9.5A1.5,1.5 0 0,1 12,11Z"></path>
-              </svg>
-            </i>
+    </nav>
 
-            <!--<i class="large tertiary-text" style=" position: absolute; right: 10px;">account_circle</i>-->
-            <menu style="z-index: 2;">
-              <a>Item 1</a>
-              <a>Item 2</a>
-              <a>Item 3</a>
-            </menu>
-          </button>
-          
-          
-
-     
-      </nav>
       <main class="responsive max">
-            <div id="map"></div>
+            <div id="map" onclick="fecharSidebar()"></div>
       </main>
-
-
-<div class="overlay blur"></div>
-<dialog >
-  <h5>Custom overlay</h5>
-  <div>Some text here</div>
-  <nav class="right-align no-space">
-    <button class="transparent link" onclick="fecharSidebar()">Cancel</button>
-    <button class="transparent link" onclick="fecharSidebar()">Confirm</button>
-  </nav>
-</dialog>
-
-
-<dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
-  <nav class="drawer" onclick="fecharSidebar()">
-    <header>
-      <nav>
-        <img src="logo-vaga-certa.png" id="logo-vaga-certa-sidebar">
-        <div id="fechar-sidebar">
-        <button class="transparent circle large">
-          <i>close</i>
-        </button>
-      </div>
-      </nav>
-    </header>
-    <a>
-      <i>inbox</i>
-      <span class="max">Inbox</span>
-      <b>24</b>
-    </a>
-    <a>
-      <i>send</i>
-      <span>Outbox</span>
-    </a>
-    <a>
-      <i>favorite</i>
-      <span>favorities</span>
-    </a>
-    <a>
-      <i>delete</i>
-      <span>Trash</span>
-    </a>
-    <hr>
-    <label>Labels</label>
-    <a>
-      <i>fiber_manual_record</i>
-      <span>Label</span>
-    </a>
-    <a>
-      <i>change_history</i>
-      <span>Label</span>
-    </a>
-    <a>
-      <i>stop</i>
-      <span>Label</span>
-    </a>
-  </nav>
-</dialog>
-
-<dialog class="modal" id="modal">
-  <h5>Modal</h5>
-  <div>Some text here</div>
-  <nav class="right-align no-space">
-    <button class="transparent link" onclick="fechaModal()">Cancel</button>
-    <button class="transparent link" onclick="fechaModal()">Confirm</button>
-  </nav>
-</dialog>
-
-
-
-
-      <script src="index.js"></script>
-      <script src="sheltermap.js"></script>
+      
+      <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
+        <nav class="drawer" onclick="fecharSidebar()">
+          <header>
+            <nav>
+              <img class="circle" src="/favicon.png">
+              <h6 class="max">Title</h6>
+              <button class="transparent circle large" onclick="fecharSidebar()">
+                <i>close</i>
+              </button>
+            </nav>
+          </header>
+          <a>
+            <i>inbox</i>
+            <span class="max">Inbox</span>
+            <b>24</b>
+          </a>
+          <a>
+            <i>send</i>
+            <span>Outbox</span>
+          </a>
+          <a>
+            <i>favorite</i>
+            <span>favorities</span>
+          </a>
+          <a>
+            <i>delete</i>
+            <span>Trash</span>
+          </a>
+          <hr>
+          <label>Labels</label>
+          <a>
+            <i>fiber_manual_record</i>
+            <span>Label</span>
+          </a>
+          <a>
+            <i>change_history</i>
+            <span>Label</span>
+          </a>
+          <a>
+            <i>stop</i>
+            <span>Label</span>
+          </a>
+        </nav>
+      </dialog>
+      
+      
+      <dialog class="modal" id="modal">
+        <h5>Modal</h5>
+        <div>Some text here</div>
+        <nav class="right-align no-space">
+          <button class="transparent link" onclick="fechaModal()">Cancel</button>
+          <button class="transparent link" onclick="fechaModal()">Confirm</button>
+        </nav>
+      </dialog>
+      
+      
+      <script src="indexZen.js"></script>
 </body>
 </html>
