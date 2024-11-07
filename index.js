@@ -31,8 +31,9 @@ map.on('click', function(ev) {
   markerCount++;
 
   marker.on('click', function() {
-      // Prepara o modal
-      var modalInstance = M.Modal.getInstance(document.getElementById('modal1'));
+    abrirModal();
+     /* // Prepara o modal
+      var modalInstance = M.Modal.getInstance(document.getElementByClass('modal'));
       
       // Usa o índice do marcador para obter o estacionamento correspondente
       var index = markerCount - 1;
@@ -46,12 +47,14 @@ map.on('click', function(ev) {
       document.getElementById('modal-lotacao').textContent = `Lotação: ${estacionamento.lotacao} / ${estacionamento.capacidade} (${Math.round((estacionamento.lotacao / estacionamento.capacidade) * 100)}%)`;
 
       // Abre o modal
-      modalInstance.open();
+      modalInstance.open();*/
+      
   });
 
 
 });
 
+/*
 //Abre o Modal ao clicar nos marcadores inseridos no mapa
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.modal');
@@ -65,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('modal-lotacao').textContent = `Lotação: ${estacionamento.lotacao} / ${estacionamento.capacidade} (${Math.round((estacionamento.lotacao / estacionamento.capacidade) * 100)}%)`;
 
 });
+*/
 
 
 /*Acredito que elementos comuns do HTML não aparecem sobre o mapa, então é necessário adicionar eles como controles do Leaflet,
@@ -76,7 +80,12 @@ var menuIcon = L.control({position: 'topleft'});
 
 menuIcon.onAdd = function(map) {
   var div = L.DomUtil.create('div', 'menu-icon');
-  div.innerHTML = '<i class=\'bx bx-menu\' style=" background-color: white; font-size: 32px; border-radius: 2px" onclick="sidebar()"></i>';
+  div.innerHTML = '<div id="menu-icon">\
+                  <button id="botao-sidebar" class="circle transparent" onclick="abrirSidebar()">\
+                    <i id="botao-sidebar2">menu</i>\
+                   </button>\
+                  </div>\
+                  ';
   return div;
 };
 
@@ -151,7 +160,7 @@ function handleSearch() {
 //Pega a localização atual do usuário e coloca na variável global "User Location"
 navigator.geolocation.getCurrentPosition(function(position) {
   userLocation = L.latLng(position.coords.latitude, position.coords.longitude);
-
+ 
   map.setView(userLocation, 15);
 
   // Adiciona um marcador na localização do usuário
@@ -193,7 +202,7 @@ ela seja chamada após a handleSearch()*/
 function getParkingLotData() {
   setTimeout(function() {
     getData();
-  }, 900);
+  }, 800);
 };
 
 
@@ -260,4 +269,23 @@ function getData() {
       // Adiciona um controle de camadas para os marcadores
       $('#mySpinner').removeClass('spinner');
   }, "xml");
+}
+
+
+function abrirSidebar(){
+  event.stopPropagation();
+  document.querySelector('#dialog').show(); 
+}
+
+function fecharSidebar(){
+  document.querySelector('#dialog').close(); 
+}
+
+function abrirModal(){
+  event.stopPropagation();
+  document.querySelector('#modal').show(); 
+}
+
+function fechaModal(){
+  document.querySelector('#modal').close(); 
 }
