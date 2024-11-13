@@ -29,3 +29,38 @@ body,
    border-radius: 9px;
 }
 */
+
+/*Edita a barra de pesquisa*/
+.leaflet-control-geosearch.leaflet-geosearch-bar {
+  display: none;
+  background-color: gray;
+  border-radius: 25px;
+  height: 50px;
+  padding: 5px;
+} 
+
+/*Edita o box onde está escrito "enter adress"*/
+.glass {
+  background-color: blue;
+  padding: 10px;
+
+}
+
+/*Edita a div de resultados do autocomplete*/
+div.results.active {
+  background-color: red;
+  color:yellow;
+  padding: 15px;
+  font-weight: bold;
+}
+
+/*Edita a fonte do autocomplete*/
+.data-key{
+  font-weight: bold;
+}
+
+/*Oculta o botão "X" da barra de pesquisa*/
+.reset{
+  display: none;
+}
+

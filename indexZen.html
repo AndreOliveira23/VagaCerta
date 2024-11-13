@@ -47,16 +47,15 @@
      <script src="osmtogeojson.js"></script>
      <script src="Leaflet.EditInOSM.js"></script>
 
-     <link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"
-/>
+     <!-- CSS and JS files for Search Box -->
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
 
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
 
-<script src="https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
 
-
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch/dist/geosearch.css"/>
+    <script src="https://unpkg.com/leaflet-geosearch/dist/bundle.min.js"></script>
 </head>
 <body>
     <nav class="top" onclick="fecharSidebar()">
@@ -67,14 +66,7 @@
 
       <div class="field large prefix round fill">
         <i class="front">search</i>
-        <input>
-        <menu class="min">
-          <div class="field large prefix suffix no-margin fixed">
-            <i class="front">arrow_back</i>
-            <input>
-            <i class="front">close</i>
-          </div>
-        </menu>
+        <input id="search">
       </div>         
 
       <i class="extra absolute right" id="icone-user">account_circle</i>
