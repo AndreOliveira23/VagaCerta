@@ -64,3 +64,12 @@ div.results.active {
   display: none;
 }
 
+/*Estilizando botões para mostrar rotas extras*/
+.leaflet-routing-container.leaflet-bar.leaflet-control{
+  border-radius: 15px;
+  height: 150%;
+}
+
+.leaflet-routing-alt.leaflet-routing-alt-minimized{
+  background-color: rgb(43, 96, 175);
+}

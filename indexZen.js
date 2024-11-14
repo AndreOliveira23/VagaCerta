@@ -22,13 +22,14 @@ menuIcon.onAdd = function(map) {
 
 menuIcon.addTo(map);
 
+
 function abrirSidebar(){
-  event.stopImmediatePropagation();
-     document.querySelector('#dialog').show(); 
+    event.stopImmediatePropagation();
+    document.querySelector('#dialog').show();
 }
   
 function fecharSidebar(){
-    document.querySelector('#dialog').close(); 
+    document.querySelector('#dialog').close();
 }
 
 map.on('click', function(ev) {
@@ -36,16 +37,18 @@ map.on('click', function(ev) {
     console.log(latlng.lat + ', ' + latlng.lng);
 });
 
-//Barra de pesquisa
+//Barra de pesquisa (API do Leaflet)
 const searchControl = new GeoSearch.GeoSearchControl({
   provider: new GeoSearch.OpenStreetMapProvider(),
   style: 'bar',
 });
 map.addControl(searchControl);
 
-
+/*Pega a string da barra de pesquisa estilizada e envia para a
+barra de pesquisa do leaflet, após apertar "enter" */
 const textbox = document.getElementById("search");
 const searchInput = document.getElementById("search");
+
 textbox.addEventListener("keypress", function onEvent(event) {
     if (event.key === "Enter") {
       console.log("Entered value:", searchInput.value);
@@ -54,20 +57,103 @@ textbox.addEventListener("keypress", function onEvent(event) {
     }
 });
 
+/*Após passar a string pra barra de pesquisa, simula o clique de um enter para efetivamente buscar
+a localização inserida */
 function clicar(){
-  // create a new keyboard event and set the key to "Enter"
-const event = new KeyboardEvent('keydown', {
-  key: 'Enter',
-  code: 'Enter',
-  which: 13,
-  keyCode: 13,
+    
+// Cria um evento para o clique de um enter
+  const event = new KeyboardEvent('keydown', {
+    key: 'Enter',
+    code: 'Enter',
+    which: 13,
+    keyCode: 13,
+  });
+
+  //Ativa o evento de clique de um enter na barra de pesquisa da API quando houver um clique de enter na barra estilizada
+  const elements = document.getElementsByClassName('glass'); // glass é a classe do input da barra de pesquisa do leaflet
+    if (elements.length > 0) {
+      elements[0].dispatchEvent(event); // Simula o enter na barra de pesquisa do leaflet para pesquisar a localização
+      //Chama a função para definir a rota depois de 2 segundos
+      setTimeout(setRoute, 2000);
+    }
+}
+
+var destino;
+
+// Armazena as coordenadas do destino depois de encontrá-lo
+map.on('locationfound', function (e) {
+  var lat = result.latitude; // Latitude
+  var lng = result.longitude; // Longitude
+  destino = { lat: lat, lng: lgn};
+  console.log("Found location coordinates:", lat, lng);
 });
 
-// dispatch the event on some DOM element
-const elements = document.getElementsByClassName('glass'); // Replace 'myInputClass' with your actual class name
-  if (elements.length > 0) {
-    elements[0].dispatchEvent(event); // Dispatch the event on the first element with the specified class
-  }
+
+var userLocation; // Variável global para armazenar a localização do usuário
+
+
+//Descobrindo a localização atual do usuário
+navigator.geolocation.getCurrentPosition(function(position) {
+  userLocation = L.latLng(position.coords.latitude, position.coords.longitude);
+
+  map.setView(userLocation, 15);
+
+  // Adiciona um marcador na localização do usuário
+  L.marker(userLocation).addTo(map).bindPopup("Você está aqui!!").openPopup();
+
+
+}, function(error) {
+  console.error("Falha na geolocalização: " + error.message);
+  alert("Não foi possível determinar a sua localização. Veja se o GPS está habilitado.");
+});
+
+
+rotaCounter = 0;
+i = 0;
+
+function setRoute(){
+
+  /*Removendo marcador antigo, colocado sobre o destino encontrado, para não sobrepor o novo marcador
+  que será colocado no destino da rota*/
+
+  map.eachLayer((layer) => {
+    if (layer instanceof L.Polyline) {
+        console.log("This is a Polyline.");
+        layer.remove();
+    }
+
+    if (layer instanceof L.Polygon) {
+        console.log("This is a Polygon.");
+        layer.remove();
+    }
+
+    if (layer instanceof L.LayerGroup) {
+        console.log("This is a Layer Group.");
+        layer.remove();
+    }
+
+    if (layer instanceof L.Control.Layers) {
+        layer.remove();
+    }
+  });
+
+
+  //Remove a barra de rotas anterior
+    setTimeout(function(){
+        document.getElementsByClassName("leaflet-routing-container leaflet-bar leaflet-control")[i].style.display = "none";
+        i++;
+    }, 500);
+
+    //Cria a nova rota
+    setTimeout(function(){
+        var destino = map.getCenter();
+        L.Routing.control({
+            waypoints: [
+                userLocation,
+                destino
+            ]
+        }).addTo(map);
+    },2000);
 }
 
 
