@@ -1,177 +1,75 @@
 html,
 body,
 #map {
-  height: 96.7%;
-  width: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  color: #323232;
+  height: 100%;
+  z-index: 1;
 }
 
-#navbar{
-  background-color: #007AFF;
-  height: 10%;
+#menu-icon-mapa{
+    background-color: white;
+    color: black;
+    height: 100%;
+    width: 90%;
+    position: absolute;
+    left: 0;
 }
 
-#navbar-placeholder{
-  text-align: center;
+.drawer{
+   z-index: 2;
 }
 
-#logo-vaga-certa{
-  float: left;
-  margin: 5px;
-  width: 10%;
+.sidebar {
+  will-change: transform;
 }
 
-#sidebar {
-  border: 3px solid #73AD21;
-  background-color: rgb(85, 81, 88);
-  border-radius: 6px;
+/*Edita o botão de zoom in e zoom out
+.leaflet-control-container .leaflet-top .leaflet-control-zoom a.leaflet-control-zoom-in {
+   color: red; 
+   background-color: aqua;
+   border-radius: 9px;
+}
+*/
+
+/*Edita a barra de pesquisa*/
+.leaflet-control-geosearch.leaflet-geosearch-bar {
   display: none;
-  height: 50%;
-}
-
-#sidebar-toggle{
-  position: relative;
-  margin-bottom: 30%;
-  margin-left: 30%;
-}
-
-.link-sidebar{
-  font-size: 32px;
-  margin-top: 10px;
-  padding: 10px;
-  color: white;
-  text-decoration: none;
-  display: block;
-  transition: background-color 0.3s ease;
-}
-
-.link-sidebar:hover {
-    background-color: #575757;
-  }
-
-#sidebar.open {
-width: 250px; /* Set the width when opened */
-opacity: 1;
-}
-
-.link-sidebar:hover {
-background-color: #e2e2e2;
-}
-
-#logo{
-width: 50%;
-height: 80%;
-}
-
-#search{
-width: 50%;
-height: 60%;
-margin-top: 15px;
-margin-left: 170px;
-border-radius: 80px;
-}
-
-#modal-nome{
-  font-size: 32px;
-}
-
-#icone-usuario{
-  position: relative;
-  float: right;
-  width: 50px;
+  background-color: gray;
+  border-radius: 25px;
   height: 50px;
-  margin-top: 10px;
-  margin-right: 15px;
-}
+  padding: 5px;
+} 
 
-#ola-usuario{
-  float: right;
-  margin-right: 20px;
-  font-size: 23px;
-  color: white;
-}
-
-/************************************************CSS da página de login********************************************/
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-.login-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  width: 60%;
-  max-width: 800px;
-  margin-top: 50px;
-  margin-left: 25%;
-}
-
-.login-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.login-form h2 {
-  margin-bottom: 15px;
-  color: #333;
-}
-
-.login-form label {
-  display: block;
-  margin: 10px 0 5px;
-  color: #555;
-}
-
-.login-form input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.login-form button {
-  width: 100%;
+/*Edita o box onde está escrito "enter adress"*/
+.glass {
+  background-color: blue;
   padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+
 }
 
-.login-form button:hover {
-  background-color: #007AFF;
+/*Edita a div de resultados do autocomplete*/
+div.results.active {
+  background-color: red;
+  color:yellow;
+  padding: 15px;
+  font-weight: bold;
 }
 
-.menu-icon{
-  margin: 30px;
-  width: 35px;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  background-color: b;
+/*Edita a fonte do autocomplete*/
+.data-key{
+  font-weight: bold;
 }
 
-.menu-icon .bar {
-  width: 100%;
-  height: 4px;
-  background-color: #333;
-  border-radius: 2px;
-  transition: 0.3s;
+/*Oculta o botão "X" da barra de pesquisa*/
+.reset{
+  display: none;
 }
 
-.menu-icon:hover .bar {
-  background-color: #007AFF;
+/*Estilizando botões para mostrar rotas extras*/
+.leaflet-routing-container.leaflet-bar.leaflet-control{
+  border-radius: 15px;
+  height: 150%;
+}
+
+.leaflet-routing-alt.leaflet-routing-alt-minimized{
+  background-color: rgb(43, 96, 175);
 }

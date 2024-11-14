@@ -1,10 +1,12 @@
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Search with a geocoding control</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaga Certa - Página Inicial</title>
 
-    <!-- Load Leaflet from CDN -->
+
+    <!-- Leaflet CDN -->
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -15,91 +17,119 @@
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
-
     <!-- Load Esri Leaflet from CDN -->
     <script src="https://unpkg.com/esri-leaflet@2.1.4/dist/esri-leaflet.js" integrity="sha512-m+BZ3OSlzGdYLqUBZt3u6eA0sH+Txdmq7cqA1u8/B2aTXviGMMLOfrKyiIW7181jbzZAY0u+3jWoiL61iLcTKQ==" crossorigin=""></script>
-
 
     <!-- Load Esri Leaflet Geocoder from CDN -->
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.css" integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ==" crossorigin="">
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.js" integrity="sha512-QXchymy6PyEfYFQeOUuoz5pH5q9ng0eewZN8Sv0wvxq3ZhujTGF4eS/ySpnl6YfTQRWmA2Nn3Bezi9xuF8yNiw==" crossorigin=""></script>
 
-    <!-- Add Materialize CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Add Materialize JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
-
-    <!-- Leaflet IconLayers Plugin-->
-    <link rel="stylesheet" href="/Leaflet-IconLayers/src/iconLayers.css" />
-    <script src="/Leaflet-IconLayers/src/iconLayers.js"></script>
-
-    <!-- Box icons -->
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+    <!-- Leaflet CSS-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
-    
-    <!-- CSS-->
+
+    <!--Beer CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css" rel="stylesheet">
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+
+    <!--CSS Local -->
      <link rel="stylesheet" href="style.css">
     
-     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
+     <!--API de localização dos estacionamentos-->
      <script src="Permalink.js"></script>
      <script src="osmtogeojson.js"></script>
      <script src="Leaflet.EditInOSM.js"></script>
 
+     <!-- CSS e JS para barra de pesquisa -->
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
 
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch/dist/geosearch.css"/>
+
+    <script src="https://unpkg.com/leaflet-geosearch/dist/bundle.min.js"></script>
 </head>
-  <body>
-    <div id = "navbar">
-        <div id="logo-vaga-certa"><img id="logo" src="logo-vaga-certa.png"></div>
-        <input id="search" type="text" placeholder="  Para onde você vai?" onkeydown="handleSearch(), getParkingLotData()">
-        <button onclick="handleSearch()">Search</button>
+<body>
+    <nav class="top" onclick="fecharSidebar()">
+      
+      <button class="circle transparent absolute left" onclick="abrirSidebar()">
+        <i id="menu-icon-navbar" >menu</i>
+      </button>
 
-        <div id="icone-usuario"><i class=" medium material-icons">account_circle</i></div>
-        <p id="ola-usuario">Olá, Pedro!</p>
-    </div>
+      <div class="field large prefix round fill">
+        <i class="front">search</i>
+        <input id="search">
+      </div>         
 
-    <div>
-        <div id="map"></div>
-    </div>
-    
+      <i class="extra absolute right" id="icone-user">account_circle</i>
 
-    <!-- Modal -->
-    <div id="modal1" class="modal">
-        <div class="modal-content">
-            <p id="modal-nome"></p>
+    </nav>
 
-            <div class="row">
-                <div class="column">
-                    <img src="img1.webp" alt="Snow" style="width:270px; height: 200px; border-radius: 10px;">
-                </div>
-
-                <div class="column">
-                    <img src="img2.jpg" alt="Forest" style="width:270px; height: 200px; border-radius: 10px;">
-                </div>
-
-                <div class="column">
-                    <img src="img3.jpg" alt="Mountains" style="width:270px; height: 200px; border-radius: 10px;">
-                </div>
-            </div> 
-
-            <div class="card-content">
-                
-                <p id="modal-endereco"></p>
-                <p id="modal-lotacao"></p>
-                <div class="rating" id="modal-rating">
-                    <!-- Stars will be generated here dynamically -->
-                </div>
-                <button data-target="modal1" class="btn modal-trigger" onclick='location.href="login.html"'>Reservar vaga</button>
-            </div>
-        </div>
-    </div>
-    <script src="index.js"></script>
-    <script src="sheltermap.js"></script>
+      <main class="responsive max">
+            <div id="map" onclick="fecharSidebar()"></div>
+      </main>
+      
+      <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
+        <nav class="drawer" onclick="fecharSidebar()">
+          <header>
+            <nav>
+              <img class="circle" src="/favicon.png">
+              <h6 class="max">Title</h6>
+              <button class="transparent circle large" onclick="fecharSidebar()">
+                <i>close</i>
+              </button>
+            </nav>
+          </header>
+          <a>
+            <i>inbox</i>
+            <span class="max">Inbox</span>
+            <b>24</b>
+          </a>
+          <a>
+            <i>send</i>
+            <span>Outbox</span>
+          </a>
+          <a>
+            <i>favorite</i>
+            <span>favorities</span>
+          </a>
+          <a>
+            <i>delete</i>
+            <span>Trash</span>
+          </a>
+          <hr>
+          <label>Labels</label>
+          <a>
+            <i>fiber_manual_record</i>
+            <span>Label</span>
+          </a>
+          <a>
+            <i>change_history</i>
+            <span>Label</span>
+          </a>
+          <a>
+            <i>stop</i>
+            <span>Label</span>
+          </a>
+        </nav>
+      </dialog>
+      
+      
+      <dialog class="modal" id="modal">
+        <h5>Modal</h5>
+        <div>Some text here</div>
+        <nav class="right-align no-space">
+          <button class="transparent link" onclick="fechaModal()">Cancel</button>
+          <button class="transparent link" onclick="fechaModal()">Confirm</button>
+        </nav>
+      </dialog>
+      
+      <script src="index.js"></script>
+</body>
 </html>
