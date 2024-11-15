@@ -108,8 +108,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
 });
 
 
-rotaCounter = 0;
-i = 0;
+i = 0; //Variável para controlar a contagem de rotas criadas, para removê-las.
 
 function setRoute(){
 
@@ -117,22 +116,9 @@ function setRoute(){
   que será colocado no destino da rota*/
 
   map.eachLayer((layer) => {
-    if (layer instanceof L.Polyline) {
-        console.log("This is a Polyline.");
-        layer.remove();
-    }
-
-    if (layer instanceof L.Polygon) {
-        console.log("This is a Polygon.");
-        layer.remove();
-    }
-
-    if (layer instanceof L.LayerGroup) {
-        console.log("This is a Layer Group.");
-        layer.remove();
-    }
-
-    if (layer instanceof L.Control.Layers) {
+    
+    //Polyline é a linha que representa a rota, LayerGroup é o grupo de camadas e Marker é o marcador
+    if (layer instanceof L.Polyline || layer instanceof L.LayerGroup || layer instanceof L.Marker) { 
         layer.remove();
     }
   });
@@ -142,7 +128,7 @@ function setRoute(){
     setTimeout(function(){
         document.getElementsByClassName("leaflet-routing-container leaflet-bar leaflet-control")[i].style.display = "none";
         i++;
-    }, 500);
+    }, 50);
 
     //Cria a nova rota
     setTimeout(function(){
@@ -151,112 +137,90 @@ function setRoute(){
             waypoints: [
                 userLocation,
                 destino
-            ]
+            ],
+            lineOptions: { //Estilo da linha da rota
+              styles: [{ color: 'blue', opacity: 1, weight: 5 }] 
+          }
         }).addTo(map);
-    },2000);
+    },200);
+
+    getParkingLotData();
 }
 
 
-/********************************************MOCKS**********************************/
 
-/*
-function mockLocation(inputValue){
+var markers = new L.FeatureGroup();
+/*Chama a função para localizar os estacionamentos ao redor da localização
+Está desta forma porque várias funções são chamadas ao apertar o 'enter' após digitar o endereço:
+cliclar(), setRoute() e getParkingLotData(). clicar() é chamada primeiro pois
+é a função que faz a busca pelo endereço digitado. setRoute() é chamada
+em seguida para traçar a rota entre os pontos de origem e destino. Existe um delay
+associado a setRoute() para garantir que a rota seja traçada após a remoção da rota anterior.
+Por fim, getParkingLotData() é chamada para buscar os estacionamentos ao redor da localização encontrada.
+Todos esses delays podem ser ajustados para melhorar a experiência do usuário. */
 
-  if(inputValue.toLowerCase() === "neo quimica arena"){
-    
-    map.setView([-23.545694237082536, -46.47390604019166], 17);
+function getParkingLotData() {
+  setTimeout(function() {
+    getData();
+  }, 900);
+};
 
-    var marker = L.marker([-23.544936895841495, -46.47334814071655]).addTo(map);
-    marker.bindPopup("<b>Neo Química Arena</b><br>Estádio do Corinthians").openPopup();
 
-    //Colocar marcadores nos estacionamentos ao redor do estádio
+function getData() {
+  // Remove os marcadores antigos (tirar isso faz com que as instruções da rota fiquem sobre a tela)
+  markers.clearLayers();
+  var bbox = map.getBounds();
+  console.log(bbox);
+  
+  // Define a área de busca para os estacionamentos
+  var overpassQueryBox = [
+      bbox._southWest.lat,
+      bbox._southWest.lng,
+      bbox._northEast.lat,
+      bbox._northEast.lng
+  ];
+  var overpassQuery = buildQuery(overpassQueryBox);
 
-    criarMarcadorEstacionamento(-23.54525163558828, -46.4764165878296, "Estacionamento 1");
-
-    criarMarcadorEstacionamento(-23.546825323021206, -46.47388458251953, "Estacionamento 2");
-
-    criarMarcadorEstacionamento(-23.545035252093307, -46.47062301635743, "Estacionamento 3");
-    
-    criarMarcadorEstacionamento(-23.54475001876039, -46.472318172454834, "Estacionamento 4");
+  function buildQuery(overpassQueryBox) {
+      var query =
+          'https://overpass-api.de/api/interpreter?' +
+          'data=[out:xml][timeout:25];' +
+          '(' + 
+          'node["amenity"="parking"](' + overpassQueryBox + ');' +
+          'way["amenity"="parking"](' + overpassQueryBox + ');' +
+          'relation["amenity"="parking"](' + overpassQueryBox + ');' +
+          ');' +
+          'out%20center;';
+      console.log(query);
+      return query;
   }
 
-  if(inputValue.toLowerCase() === "allianz parque"){
-      
-      map.setView([-23.5280972212507, -46.67841911315919], 17);
-  
-      var marker = L.marker([-23.52699548517475, -46.67864441871644]).addTo(map);
-      marker.bindPopup("<b>Allianz Parque</b><br>Estádio do Palmeiras").openPopup();
-  
-      //Colocar marcadores nos estacionamentos ao redor do estádio
-  
-      criarMarcadorEstacionamento(-23.526179014096655, -46.678451299667366, "Estacionamento 1");
-  
-      criarMarcadorEstacionamento(-23.525392049227378, -46.67821526527405, "Estacionamento 2");
-  
-      criarMarcadorEstacionamento(-23.525018239266025, -46.678987741470344, "Estacionamento 3");
-      
-    }
-
-  if(inputValue.toLowerCase() === "estadio do morumbi"){
-        
-      map.setView([-23.597, -46.720], 17);
-  
-      var marker = L.marker([-23.597, -46.720]).addTo(map);
-      marker.bindPopup("<b>Estádio do Morumbi</b><br>Estádio do São Paulo").openPopup();
-  
-      //Colocar marcadores nos estacionamentos ao redor do estádio
-  
-      criarMarcadorEstacionamento(-23.597, -46.720, "Estacionamento 1");
-  
-      criarMarcadorEstacionamento(-23.597, -46.720, "Estacionamento 2");
-  
-      criarMarcadorEstacionamento(-23.597, -46.720, "Estacionamento 3");
-  }
-
-  if(inputValue.toLowerCase() === "estadio do pacaembu"){
-            
-      map.setView([-23.547, -46.657], 17);
-    
-      var marker = L.marker([-23.547, -46.657]).addTo(map);
-      marker.bindPopup("<b>Estádio do Pacaembu</b><br>Estádio do Vaxco").openPopup();
-    
-      //Colocar marcadores nos estacionamentos ao redor do estádio
-    
-      criarMarcadorEstacionamento(-23.547, -46.657, "Estacionamento 1");
-    
-      criarMarcadorEstacionamento(-23.547, -46.657, "Estacionamento 2");
-    
-      criarMarcadorEstacionamento(-23.547, -46.657, "Estacionamento 3");
-    }   
-
-  if(inputValue.toLowerCase() === "estadio são januário"){
-                
-        map.setView([-22.906, -43.230], 17);
-        
-        var marker = L.marker([-22.906, -43.230]).addTo(map);
-        marker.bindPopup("<b>Estádio São Januário</b><br>Estádio do Vasco").openPopup();
-        
-        //Colocar marcadores nos estacionamentos ao redor do estádio
-        
-        criarMarcadorEstacionamento(-22.906, -43.230, "Estacionamento 1");
-        
-        criarMarcadorEstacionamento(-22.906, -43.230, "Estacionamento 2");
-        
-        criarMarcadorEstacionamento(-22.906, -43.230, "Estacionamento 3");
-      }
-    
+  $.get(overpassQuery, function(data) {
+      var data = osmtogeojson(data);
+      var geojsonLayer = L.geoJson(data, {
+          pointToLayer: function(feature, latlng) {
+              var MarkerOptions = L.icon({
+                  iconUrl: 'map-marker-svgrepo-com.svg',
+                  iconSize: [30, 30],
+                  iconAnchor: [15, 15],
+                  popupAnchor: [0, -15]
+              });
+              return L.marker(latlng, { icon: MarkerOptions });
+          },
+          onEachFeature: function(feature, layer) {
+              var popupOptions = { maxWidth: 320, minWidth: 250, maxHeight: 350, autoPan: true, closeButton: true };
+              var desc_head = "<b>Description:</b> ";
+              var desc = feature.properties.description || desc_head + "None yet";
+              var popupContent = '<h1>' + (feature.properties.name || "") + '</h1>' +
+                  '<div>' + desc + '</div>' +
+                  '<h3>Tags</h3>' +
+                  '<div>' + Object.entries(feature.properties).map(([key, value]) => `<b>${key}:</b> ${value}`).join("<br />") + '</div>';
+              layer.bindPopup(popupContent, popupOptions);
+          } //fecha onEachFeature
+      }); // fecha L.geojson
+      markers.addLayer(geojsonLayer);
+      map.addLayer(markers);
+      // Adiciona um controle de camadas para os marcadores
+      $('#mySpinner').removeClass('spinner');
+  }, "xml"); //fecha $.get
 }
-
-function criarMarcadorEstacionamento (lat, long, nome) {
-  var marker = L.marker([lat, long]).addTo(map);
-  marker.bindPopup("<b>"+nome+"</b><br>Estacionamento");
-  marker.setIcon(L.icon({
-    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  }));
-}
-*/
