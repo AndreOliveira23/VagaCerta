@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaga Certa - Página Inicial</title>
 
+     <!--Jquery CDN-->
+     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <!-- Leaflet CDN -->
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
@@ -31,9 +32,7 @@
 
     <!--Beer CSS-->
     <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css" rel="stylesheet">
-
     <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
-
     <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
 
     <!--CSS Local -->
@@ -46,18 +45,11 @@
 
      <!-- CSS e JS para barra de pesquisa -->
     <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
-
     <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
-
     <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch/dist/geosearch.css"/>
-
     <script src="https://unpkg.com/leaflet-geosearch/dist/bundle.min.js"></script>
 
-    <!--Jquery CDN-->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
 </head>
 <body>
     <nav class="top" onclick="fecharSidebar()">
@@ -79,6 +71,19 @@
             <div id="map" onclick="fecharSidebar()"></div>
       </main>
       
+      <button class="padding primary absolute right middle" id="botao">
+        <i>add</i>
+      </button>
+
+
+      <button class="padding primary absolute right middle" id="botao2">
+        <i>-</i>
+      </button>
+
+      <button class="padding primary absolute right middle" id="botao3" onclick="botaoRota()">
+        <p id="rota">Ocultar rota</p>
+      </button>
+
       <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
         <nav class="drawer" onclick="fecharSidebar()">
           <header>
@@ -92,7 +97,7 @@
           </header>
           <a>
             <i>inbox</i>
-            <span class="max">Inbox</span>
+            <span class="max" id="inbox">Inbox</span>
             <b>24</b>
           </a>
           <a>
@@ -125,15 +130,14 @@
       </dialog>
       
       
-      <dialog class="modal" id="modal">
-        <h5>Modal</h5>
+      <dialog id="modal">
+        <h5>Default</h5>
         <div>Some text here</div>
         <nav class="right-align no-space">
-          <button class="transparent link" onclick="fechaModal()">Cancel</button>
-          <button class="transparent link" onclick="fechaModal()">Confirm</button>
+          <button class="transparent link" data-ui="#modal">Cancel</button>
+          <button class="transparent link" data-ui="#modal">Confirm</button>
         </nav>
       </dialog>
-      
-      <script src="index.js"></script>
+      <script src="index.js"></script>    
 </body>
 </html>
