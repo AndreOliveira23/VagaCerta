@@ -50,10 +50,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch/dist/geosearch.css"/>
     <script src="https://unpkg.com/leaflet-geosearch/dist/bundle.min.js"></script>
 
+    <!-- Biblioteca de Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
     <nav class="top" onclick="fecharSidebar()">
-      
+
       <button class="circle transparent absolute left" onclick="abrirSidebar()">
         <i id="menu-icon-navbar" >menu</i>
       </button>
@@ -61,83 +64,131 @@
       <div class="field large prefix round fill">
         <i class="front">search</i>
         <input id="search">
-      </div>         
-
-      <i class="extra absolute right" id="icone-user">account_circle</i>
+      </div>
+      <div class="absolute right" id="ola-usuario">
+        <p style="font-size: large;">Olá, Pedro!</p>
+        <button class="active">
+          <i class="extra" id="icone-user">account_circle</i>
+          <menu style="width: 200%;">
+            <a>Configurações</a>
+            <a>Sair</a>
+          </menu>
+        </button>
+      </div>
 
     </nav>
 
       <main class="responsive max">
-            <div id="map" onclick="fecharSidebar()"></div>
+        <div id="map" onclick="fecharSidebar(),fecharModalEstacionamento()"></div>
       </main>
       
-      <button class="padding primary absolute right middle" id="botao">
+      <button class="padding primary absolute right middle" id="botaoZoomIn">
         <i>add</i>
       </button>
 
-
-      <button class="padding primary absolute right middle" id="botao2">
+      <button class="padding primary absolute right middle" id="botaoZoomOut">
         <i>-</i>
       </button>
 
-      <button class="padding primary absolute right middle" id="botao3" onclick="botaoRota()">
+      <button class="padding primary absolute right middle" id="botaoOcultarRota" onclick="botaoRota()">
         <p id="rota">Ocultar rota</p>
       </button>
 
+      <!--Sidebar-->
       <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
         <nav class="drawer" onclick="fecharSidebar()">
           <header>
             <nav>
-              <img class="circle" src="/favicon.png">
-              <h6 class="max">Title</h6>
+              <img class="circle" src="logo-vaga-certa.png">
+              <h6 class="max">Vaga Certa</h6>
               <button class="transparent circle large" onclick="fecharSidebar()">
                 <i>close</i>
               </button>
             </nav>
           </header>
           <a>
-            <i>inbox</i>
-            <span class="max" id="inbox">Inbox</span>
-            <b>24</b>
+            <i>track</i>
+            <span class="max" id="inbox">Histórico de reservas</span>
           </a>
           <a>
-            <i>send</i>
-            <span>Outbox</span>
+            <i>notifications</i>
+            <span>Notificações</span>
           </a>
           <a>
             <i>favorite</i>
-            <span>favorities</span>
-          </a>
-          <a>
-            <i>delete</i>
-            <span>Trash</span>
-          </a>
-          <hr>
-          <label>Labels</label>
-          <a>
-            <i>fiber_manual_record</i>
-            <span>Label</span>
-          </a>
-          <a>
-            <i>change_history</i>
-            <span>Label</span>
-          </a>
-          <a>
-            <i>stop</i>
-            <span>Label</span>
+            <span>Minhas avaliações</span>
           </a>
         </nav>
       </dialog>
       
-      
-      <dialog id="modal">
-        <h5>Default</h5>
-        <div>Some text here</div>
+      <!--Modal com informações dos estacionamentos geradas dinamicamente-->
+      <dialog id="modal" class="inverse-surface">
+        <div class="grid">
+          <div class="s12"> <h5 id="nome-do-estacionamento">Park do Zé</h5></div>
+          <div class="s6" id="nota-do-estacionamento"> </div>
+        </div>
+
+        <i>map</i><div id="endereco-do-estacionamento"></div>
+        <div><b><i>phone</i></b>  (11) 12345-6789</div>
+
+        <div class="grid">
+            <div class="s6 green">
+              <button class="green center extra" id="porcentagem-ocupacao"></button>
+            </div>
+
+            <div class="s6 grey">
+              <button class="grey center extra"><i>man</i>80m do seu destino</button>
+            </div>
+        </div>
+
+        <div class="grid">
+          <div class="s12 grey">
+              <center>
+                <h5>Qual o dia e horário da reserva?</h5>
+
+                  <button id="data">
+                    <i>today</i>
+                    <span>Date</span>
+                    <input type="date">
+                  </button>
+
+                  <button id="hora">
+                    <i>schedule</i>
+                    <span>Time</span>
+                    <input type="time">
+                  </button>
+             </center>
+        </div>
+      </div>
+
+        <div class="grid">
+          <div class="s6 grey">
+            <button class="grey center black-text">R$ 15,00 / hora</button>
+          </div>
+
+          <div class="s6 grey">
+            <button class="grey center">Total: R$15,00</button>
+          </div>
+      </div>
+
+      <div class="grid" id="foto-estacionamento">
+
+        <div class="s6">
+          <img src="img2.jpg" alt="Imagem do estacionamento" style="width:100%; height:100%;">
+        </div>
+
+        <div class="s6">
+          <img src="img3.jpg" alt="Imagem do estacionamento" style="width:100%; height:100%;">
+        </div>
+      </div>
+
         <nav class="right-align no-space">
-          <button class="transparent link" data-ui="#modal">Cancel</button>
-          <button class="transparent link" data-ui="#modal">Confirm</button>
+          <button data-ui="#modal">Voltar</button>
+          <a href="login.html"><button >Reservar vaga</button></a>
         </nav>
+
       </dialog>
+
       <script src="index.js"></script>    
 </body>
 </html>
