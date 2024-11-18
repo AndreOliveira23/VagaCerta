@@ -22,16 +22,6 @@ menuIcon.onAdd = function(map) {
 
 menuIcon.addTo(map);
 
-
-function abrirSidebar(){
-    event.stopImmediatePropagation();
-    document.querySelector('#dialog').show();
-}
-  
-function fecharSidebar(){
-    document.querySelector('#dialog').close();
-}
-
 map.on('click', function(ev) {
     var latlng = map.mouseEventToLatLng(ev.originalEvent);
     console.log(latlng.lat + ', ' + latlng.lng);

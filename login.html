@@ -3,51 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Vaga Certa - Login</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Beer CSS-->
+        <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css" rel="stylesheet">
+
+        <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
+    
+        <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+    
+        <!-- Local -->
+        <script src="nav.js"></script>
+        <link rel="stylesheet" href="login.css">
+
+        <script>
+            function abrirForm(){
+                let form = document.getElementById('signup-form');
+                form.classList.toggle('add');
+            }
+        </script>
 </head>
 <body>
-    <div id = "navbar">
+    <!-- <div id = "navbar">
         <div id="logo-vaga-certa"><img id="logo" src="logo-vaga-certa.png"></div>
         <input id="search" type="text" placeholder="  Para onde você vai?" onkeydown="handleSearch(), getParkingLotData()">
         <button onclick="handleSearch()">Search</button>
         <div id="icone-usuario"><i class=" medium material-icons">account_circle</i></div>
         <p id="ola-usuario">Olá, Pedro!</p>
-    </div>
+    </div> -->
 
-    <div id="menu-icon">
+    <nav class="top" onclick="fecharSidebar()">
+      
+        <button class="circle transparent absolute left" onclick="abrirSidebar()">
+          <i id="menu-icon-navbar" >menu</i>
+        </button>
+  
+        <div class="field large prefix round fill">
+          <i class="front">search</i>
+          <input id="search">
+        </div>         
+  
+        <i class="extra absolute right" id="icone-user">account_circle</i>
+  
+      </nav>
+
+      <main class="responsive max" onclick="fecharSidebar()">
+        
+        <div class="container">
+            <div class="form">
+                <h2>Faça o seu login!</h2>
+                <form action="#">
+                    <section class="question-sect">
+                        <label for="username1">Usuário*:</label>
+                        <input type="text" id="username1" name="username1" required>
+                    </section>
+                    <section class="question-sect">
+                        <label for="password1">Senha*:</label>
+                        <input type="password" id="password1" name="password1" required>    
+                    </section>
+                    <section>
+                        <button type="submit">Entrar</button>
+                    </section>
+                    <section>
+                        <p>Ainda não tem uma conta? <a onclick="abrirForm()">Cadastre-se!</a></p>
+                    </section>
+                </form>
+            </div>
+
+            <div class="form add" id="signup-form">
+                <h2>Ainda não tem uma conta? Crie agora!</h2>
+                <form action="#">
+                    <section class="question-sect">
+                        <label for="username2">Usuário:</label>
+                        <input type="text" id="username2" name="username2" required>
+                    </section>
+                    <section class="question-sect">
+                        <label for="password2">Senha:</label>
+                        <input type="password" id="password2" name="password2" required>
+                    </section>
+                    <section>
+                        <button type="submit">Cadastrar</button>
+                    </section>
+                </form>
+            </div>
+        </div>
+      </main>
+
+      <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
+        <nav class="drawer" onclick="fecharSidebar()">
+          <header>
+            <nav>
+              <img class="circle" src="/favicon.png">
+              <h6 class="max">Title</h6>
+              <button class="transparent circle large" onclick="fecharSidebar()">
+                <i>close</i>
+              </button>
+            </nav>
+          </header>
+          <a>
+            <i>inbox</i>
+            <span class="max">Inbox</span>
+            <b>24</b>
+          </a>
+          <a>
+            <i>send</i>
+            <span>Outbox</span>
+          </a>
+          <a>
+            <i>favorite</i>
+            <span>favorities</span>
+          </a>
+          <a>
+            <i>delete</i>
+            <span>Trash</span>
+          </a>
+          <hr>
+          <label>Labels</label>
+          <a>
+            <i>fiber_manual_record</i>
+            <span>Label</span>
+          </a>
+          <a>
+            <i>change_history</i>
+            <span>Label</span>
+          </a>
+          <a>
+            <i>stop</i>
+            <span>Label</span>
+          </a>
+        </nav>
+      </dialog>
+
+
+    <!-- <div id="menu-icon">
         <div class="menu-icon" onclick="toggleMenu()">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="login-container">
-        <div class="login-form">
-            <h2>Já tem uma conta? Faça o seu login!</h2>
-            <form action="#">
-                <label for="username1">Username:</label>
-                <input type="text" id="username1" name="username1" required>
-                <label for="password1">Password:</label>
-                <input type="password" id="password1" name="password1" required>
 
-                <button type="submit">Entrar</button>
-            </form>
-        </div>
-
-        <div class="login-form">
-            <h2>Ainda não tem uma conta? Crie agora!</h2>
-            <form action="#">
-                <label for="username2">Username:</label>
-                <input type="text" id="username2" name="username2" required>
-                <label for="password2">Password:</label>
-                <input type="password" id="password2" name="password2" required>
-                <button type="submit">Cadastrar</button>
-            </form>
-        </div>
-    </div>
 
 </body>
 </html>
