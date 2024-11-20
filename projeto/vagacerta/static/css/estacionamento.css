@@ -1,0 +1,27 @@
+
+
+main.responsive{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--line-light)
+
+}
+
+.form-card{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+
+    div{
+        padding: 1rem;
+        background-color: var(--neutral-element);
+    }
+
+    div:first-child{
+        background-color: var(--primary-color-dark);
+        font-size: 1rem;
+        font-weight: bold;
+        color: var(--neutral-diff);
+    }
+}

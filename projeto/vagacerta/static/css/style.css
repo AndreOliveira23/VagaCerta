@@ -35,6 +35,11 @@ body,
     left: 0;
 }
 
+main.responsive{
+  background-color: var(--neutral-background);
+}
+
+
 .top{
   background-color: var(--primary-color-neutral);
 }
