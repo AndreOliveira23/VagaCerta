@@ -1,8 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+:root{
+  font-family: 'Quicksand' sans-serif;
+  --primary-color-neutral: #3995f8;
+  --primary-color-light:#a3cfff;
+  --primary-color-dark: #007aff;
+}
+
+*{
+}
+
 html,
 body,
 #map {
   height: 100%;
   z-index: 1;
+  box-sizing: border-box;
 }
 
 #menu-icon-mapa{
@@ -12,7 +25,10 @@ body,
     width: 90%;
     position: absolute;
     left: 0;
-    border-radius: 5px;
+}
+
+.top{
+  background-color: var(--primary-color-neutral);
 }
 
 .drawer{
@@ -23,6 +39,14 @@ body,
   will-change: transform;
 }
 
+/*Edita o botão de zoom in e zoom out
+.leaflet-control-container .leaflet-top .leaflet-control-zoom a.leaflet-control-zoom-in {
+   color: red; 
+   background-color: aqua;
+   border-radius: 9px;
+}
+*/
+
 /*Edita a barra de pesquisa*/
 .leaflet-control-geosearch.leaflet-geosearch-bar {
   display: none;
@@ -32,55 +56,37 @@ body,
   padding: 5px;
 } 
 
-/*Estilizando container das rotas alternativas */
+/*Edita o box onde está escrito "enter adress"*/
+.glass {
+  background-color: blue;
+  padding: 10px;
+
+}
+
+/*Edita a div de resultados do autocomplete*/
+div.results.active {
+  background-color: red;
+  color:yellow;
+  padding: 15px;
+  font-weight: bold;
+}
+
+/*Edita a fonte do autocomplete*/
+.data-key{
+  font-weight: bold;
+}
+
+/*Oculta o botão "X" da barra de pesquisa*/
+.reset{
+  display: none;
+}
+
+/*Estilizando botões para mostrar rotas extras*/
 .leaflet-routing-container.leaflet-bar.leaflet-control{
   border-radius: 15px;
   height: 150%;
-  background-color: rgb(41, 42, 44);
-  font-weight: bold;
 }
 
-/*Estilizando 'container' que mostra título da rota alternativa*/
 .leaflet-routing-alt.leaflet-routing-alt-minimized{
-  background-color: #2365c9;
-  color: black;
-  font-weight: bold;
-}
-
-/*Existe um botão 'x' que fecha o container de rotas alternativas, mas ele não é clicável, então o código abaixo o esconde*/
-.leaflet-routing-collapse-btn{
-  display:none;
-}
-
-tr:hover{
-  background-color:rgb(85, 87, 90);
-}
-
-h2 {
-  font-weight: bold;
-}
-
-#botaoZoomIn{
-  z-index: 2;
-  margin-right: 20px;
-}
-
-#botaoZoomOut{
-  margin-top: 80px;
-  margin-right: 20px;
-  z-index: 3;
-}
-
-#botaoOcultarRota{
-  margin-top: 160px;
-  margin-right: 20px;
-  z-index: 3;
-}
-
-#ola-usuario{
-  margin-right: 20px;
-}
-
-.checked {
-  color: orange;
+  background-color: rgb(43, 96, 175);
 }
