@@ -13,4 +13,4 @@ function mostrarPagamento(tipo) {
 
     const selecionado = document.getElementById(tipo);
     selecionado.style.display = 'block';
-  }
+}

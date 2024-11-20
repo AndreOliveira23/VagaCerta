@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* Previne rolagem desnecessária */
+    overflow: hidden; 
   }
 
   .pagamento-opcao {
