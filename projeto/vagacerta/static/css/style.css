@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 :root{
-  font-family: 'Quicksand' sans-serif;
+
   --primary-color-neutral: #3995f8;
   --primary-color-light:#a3cfff;
   --primary-color-dark: #007aff;
 }
 
+
 *{
+  font-family: 'Quicksand', sans-serif;
 }
 
 html,
