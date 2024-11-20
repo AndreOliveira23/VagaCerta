@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--neutral-background);
 }
 
 .container{
@@ -15,7 +16,7 @@
 }
 
 .form{
-    background-color: #3e3e3e;
+    background-color: var(--neutral-element);
     border-radius: 10px;
     width: 30%;
     min-height: 30rem;
@@ -29,6 +30,7 @@
     h2{
         text-align: center;
         font-weight: bolder;
+        color: var(--line-light);
     }
 
     section{
@@ -38,11 +40,12 @@
             font-size: 1.5rem;
             font-weight: bold;
             margin:  0 0 0 0.5rem ;
+            color: var(--line-light);
         }
         
         input{
             border: 0;
-            background-color: #ababab;
+            background-color:var(--neutral-diff);
             padding: 0 0.2rem;
             font-size: 1rem;
             color:black;
@@ -53,13 +56,23 @@
             margin: 5rem 0 0 0;
             font-weight: bold;
             font-size: 1.2rem;
-            background-color: var(--primary-color-light);
-            color: var(--primary-color-dark);
+            background-color: var(--primary-color-neutral);
+            color: var(--primary-color-light);
+            transition: 0.15s;
+        }
+
+        p{
+            color: var(--line-light)
         }
 
         a{
-            color: var(--primary-color-light);
+            color: var(--primary-color-dark);
             text-decoration: underline;
+            transition: color 0.2s;
+
+        }
+        a:hover{
+            color: var(--primary-color-neutral);
         }
     }
 
