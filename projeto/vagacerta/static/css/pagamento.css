@@ -153,6 +153,19 @@
     align-items: center;
   }
    
+  .pix-qrcode {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #imagem-pix-qrcode {
+    margin-top: 10px;
+    width: 300px;
+    height: auto;
+  }
+
   .card-logos {
     display: flex;
     width: 150px;
