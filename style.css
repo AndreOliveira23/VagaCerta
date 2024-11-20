@@ -2,7 +2,9 @@
 
 :root{
   font-family: 'Quicksand' sans-serif;
-  --primary: #0000ff;
+  --primary-color-neutral: #3995f8;
+  --primary-color-light:#a3cfff;
+  --primary-color-dark: #007aff;
 }
 
 *{
@@ -23,6 +25,10 @@ body,
     width: 90%;
     position: absolute;
     left: 0;
+}
+
+.top{
+  background-color: var(--primary-color-neutral);
 }
 
 .drawer{

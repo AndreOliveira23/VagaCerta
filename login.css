@@ -57,10 +57,12 @@
             margin: 5rem 0 0 0;
             font-weight: bold;
             font-size: 1.2rem;
+            background-color: var(--primary-color-light);
+            color: var(--primary-color-dark);
         }
 
         a{
-            color: var(--primary);
+            color: var(--primary-color-light);
             text-decoration: underline;
         }
     }
