@@ -22,11 +22,39 @@
         body{
             font-family: 'Iciel Gotham';
         }
+        
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .messages li {
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .messages .success {
+            background-color: #4CAF50;  /* Cor verde para sucesso */
+            color: white;
+            border: 1px solid #45a049;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .messages .success:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
     </style>
 </head>
 <body class="inverse-surface">
     <nav class="top blue10">
-  <a href="index.html">
+  <a href="{% url 'index' %}">
     <i >map</i>
     <div>Mapa</div>
   </a>
@@ -45,7 +73,7 @@
               <div class="max" >
                 <center>
                   <h6>Quase lá!</h6>
-                    <p>Complete as informações para finalizar sua reserva.</p>
+                    <p>Complete as informações para fazer login.</p>
                 </center>
               </div>
             </nav>
@@ -53,70 +81,67 @@
         </summary>
     </details>
 
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <div class="grid">
+      <div class="s12 m12 l6">
+          <center>
+              <h6>Já tem uma conta? <br> Faça seu login!</h6>
+          </center>
 
-        <div class="s12 m12 l6">
-            <center>
-                <h6>Já tem uma conta? <br> Faça seu login!</h6>
-
-            </center>
-            <fieldset>
-
-                <div class="field border label">
-                  <input>
-                  <label>Email</label>
-                </div>
-
-                <div class="field border label">
-                  <input type="password">
-                  <label>Senha</label>
-                </div>
-
-                <center>
-                    <a href="finalizarPagamento.html">
-                    <div class="field border label">
-                        <button class="black white-text">Entrar</button>
-                    </div>
-                </a>
-                </center>
-
-                  <a href="#"><u>Esqueceu sua senha?</u></a>
-              </fieldset>
-
-        </div>
-
-
-
-        <div class="s12 m12 l6">
-            <center>
-                <h6>Ainda não tem uma conta? <br> Crie agora!</h6>
-            </center>
-            <fieldset>
-
-                <div class="field border label">
-                  <input>
-                  <label>Email</label>
-                </div>
-
-                <div class="field border label">
-                  <input type="password">
-                  <label>Senha</label>
-                </div>
-
-                <center>
-                    <a href="finalizarPagamento.html">
+          <form method="POST" action="{% url 'login' %}">
+              {% csrf_token %}
+              <fieldset>
                   <div class="field border label">
-                 <button class="black white-text">Cadastrar</button>
-                </div>
-            </a>
-                </center>
+                      <input type="email" name="email" required>
+                      <label>Email</label>
+                  </div>
 
-                  <a onclick="abrirTermosDeUso()"><u>Termos de uso</u></a>
+                  <div class="field border label">
+                      <input type="password" name="password" required>
+                      <label>Senha</label>
+                  </div>
 
+                  <center>
+                      <button name="action" value="login" class="black white-text">Entrar</button>
+                  </center>
               </fieldset>
-        </div>
+          </form>
+
+          <a href="#"><u>Esqueceu sua senha?</u></a>
       </div>
 
+      <div class="s12 m12 l6">
+        <center>
+            <h6>Ainda não tem uma conta? <br> Crie agora!</h6>
+        </center>
+
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <fieldset>
+                <div class="field border label">
+                    <input type="email" name="email" required>
+                    <label>Email</label>
+                </div>
+
+                <div class="field border label">
+                    <input type="password" name="password" required>
+                    <label>Senha</label>
+                </div>
+
+                <center>
+                    <button name="action" value="register" class="black white-text">Cadastrar</button>
+                </center>
+            </fieldset>
+        </form>
+      </div>
+    </div>
 </main>
 
 <button class="circle transparent absolute blue" onclick="abrirSidebar()">

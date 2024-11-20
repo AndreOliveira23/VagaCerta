@@ -142,29 +142,57 @@
           <div class="s12 grey">
               <center>
                 <h5>Qual o dia e horário da reserva?</h5>
+                  <h6> Chegada </h6>
+                    <div class="input-wrapper" style="position: relative;">
+                      <button id="dataChegada">
+                        <i>📅</i>
+                        <span>Selecionar Data</span>
+                      </button>
+                      <input type="date" id="dataChegadaInput" style="position: absolute; top: 0; left: 0;" onchange="updateDataChegada(this)">
+                    </div>
 
-                  <button id="data">
-                    <i>today</i>
-                    <span>Date</span>
-                    <input type="date">
-                  </button>
+                    <div class="input-wrapper" style="position: relative;">
+                      <button id="horaChegada">
+                        <i>⏰</i>
+                        <span>Selecionar Horário</span>
+                      </button>
+                      <input type="time" id="horaChegadaInput" style="position: absolute; top: 0; left: 0;" onchange="updateHoraChegada(this)">
+                    </div>
 
-                  <button id="hora">
-                    <i>schedule</i>
-                    <span>Time</span>
-                    <input type="time">
-                  </button>
+                  <h6> Saída </h6> 
+                    <div class="input-wrapper" style="position: relative;">
+                      <button id="dataSaida">
+                        <i>📅</i>
+                        <span>Selecionar Data</span>
+                      </button>
+                      <input type="date" id="dataSaidaInput" style="position: absolute; top: 0; left: 0;" onchange="updateDataSaida(this)">
+                    </div>
+
+                    <div class="input-wrapper" style="position: relative;">
+                      <button id="horaSaida">
+                        <i>⏰</i>
+                        <span>Selecionar Horário</span>
+                      </button>
+                      <input type="time" id="horaSaidaInput" style="position: absolute; top: 0; left: 0;" onchange="updateHoraSaida(this)">
+                    </div>
              </center>
         </div>
+
+        <div id="resultados">
+          <p>Data e Hora de Chegada: <span id="dataHoraChegada">Nenhuma</span></p>
+          <p>Data e Hora de Saída: <span id="dataHoraSaida">Nenhuma</span></p>
+          <p>Total de Horas de Reserva: <span id="totalHoras">0</span> horas</p>
+        </div>
+
       </div>
 
         <div class="grid">
           <div class="s6 grey">
-            <button class="grey center black-text">R$ 15,00 / hora</button>
+            <button class="grey center black-text" id = "valor"></button>
           </div>
 
           <div class="s6 grey">
-            <button class="grey center">Total: R$15,00</button>
+            <button class="grey center" id = "total"></button>
           </div>
       </div>
 
@@ -181,7 +209,7 @@
 
         <nav class="right-align no-space">
           <button data-ui="#modal">Voltar</button>
-          <a href="login.html"><button >Reservar vaga</button></a>
+          <a href="{% url 'login' %}"><button >Reservar vaga</button></a>
         </nav>
 
       </dialog>
