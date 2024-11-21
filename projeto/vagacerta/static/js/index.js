@@ -17,7 +17,7 @@ var menuIcon = L.control({position: 'topleft'});
 
 menuIcon.onAdd = function(map) {
   var div = L.DomUtil.create('div', 'menu-icon');
-  div.innerHTML = '<button class="circle transparent" data-ui="#modal"  onclick="abrirSidebar()">\
+  div.innerHTML = '<button class="circle transparent" onclick="abrirSidebar(),fecharModalEstacionamento()">\
                         <i id="menu-icon-mapa">menu</i>\
                    </button>';
   return div;
