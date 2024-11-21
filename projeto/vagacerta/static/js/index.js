@@ -254,8 +254,35 @@ function fecharModalEstacionamento(){
 
 var valor = 0
 var total = 0
+
+function resetDataHora(){
+  const horaChegadaButton = document.querySelector('#horaChegada span');
+  const dataChegadaButton = document.querySelector('#dataChegada span');
+  const horaSaidaButton = document.querySelector('#horaSaida span');
+  const dataSaidaButton = document.querySelector('#dataSaida span');
+  
+  horaChegadaButton.textContent = 'Selecionar Horário';
+  dataChegadaButton.textContent = 'Selecionar Data';
+  horaSaidaButton.textContent = 'Selecionar Horário';
+  dataSaidaButton.textContent = 'Selecionar Data';
+  
+  document.getElementById('dataChegadaInput').value = '';
+  document.getElementById('horaChegadaInput').value = '';
+  document.getElementById('dataSaidaInput').value = '';
+  document.getElementById('horaSaidaInput').value = '';
+
+  document.getElementById('dataHoraChegada').textContent = 'Nenhuma';
+  document.getElementById('dataHoraSaida').textContent = 'Nenhuma';
+  document.getElementById('totalHoras').textContent = 0;
+  document.getElementById('total').innerText = 'Total: R$ - ';
+  total = 0
+  chegadaDate = null;
+  saidaDate = null;
+}
+
 //Preenche o modal dinâmicamente com as informações do estacionamento ao clicar no marcador
 markers.on('click', function() {
+  resetDataHora()
   var index =  Math.floor(Math.random() * 51); // Make sure to assign this index in your feature properties
 
   var estacionamentos = generateEstacionamentos();
@@ -267,7 +294,6 @@ markers.on('click', function() {
   document.getElementById('porcentagem-ocupacao').innerText = Math.round(porcentagem) + '% ocupado';
   valor = estacionamento.valor
   document.getElementById('valor').innerText = 'R$' + valor + ',00/hora';
-  document.getElementById('total').innerText = 'Total: R$ - ';
   ;
 
   let starRating = '';
@@ -285,52 +311,64 @@ markers.on('click', function() {
 let chegadaDate = null;
 let saidaDate = null;
 
-// Atualiza a data de chegada
-function updateDataChegada() {
+
+function updateDataHora(){
+  const dataSaida = document.getElementById('dataSaidaInput').value;
+  const horaSaida = document.getElementById('horaSaidaInput').value;
   const dataChegada = document.getElementById('dataChegadaInput').value;
   const horaChegada = document.getElementById('horaChegadaInput').value;
 
-  const dataChegadaButton = document.getElementById('dataChegada');
-  dataChegadaButton.querySelector('span').textContent = `${dataChegada}`;
+  if (dataSaida && horaSaida) {
+    saidaDate = new Date(`${dataSaida}T${horaSaida}`);
+    document.getElementById('dataHoraSaida').textContent = `${dataSaida} ${horaSaida}`;
+  }
 
-  const horaChegadaButton = document.getElementById('horaChegada');
-  horaChegadaButton.querySelector('span').textContent = `${horaChegada}`;
-
-  if (dataChegada && horaChegada) {
+  if(dataChegada && horaChegada){
     chegadaDate = new Date(`${dataChegada}T${horaChegada}`);
     document.getElementById('dataHoraChegada').textContent = `${dataChegada} ${horaChegada}`;
   }
-  calculateTotalHours();
+
+  if(chegadaDate && saidaDate){
+    if(saidaDate > chegadaDate){
+      calculateTotalHours()
+    }
+    else{
+      alert("Data de Saída antes da Chegada")
+      resetDataHora()
+    }
+  }
+}
+
+// Atualiza a data de chegada
+function updateDataChegada() {
+  const dataChegada = document.getElementById('dataChegadaInput').value;
+  const dataChegadaButton = document.getElementById('dataChegada');
+  dataChegadaButton.querySelector('span').textContent = `${dataChegada}`;
+  updateDataHora()
 }
 
 // Atualiza a hora de chegada
 function updateHoraChegada() {
-  updateDataChegada();
+  const horaChegada = document.getElementById('horaChegadaInput').value;
+  const horaChegadaButton = document.getElementById('horaChegada');
+  horaChegadaButton.querySelector('span').textContent = `${horaChegada}`;
+  updateDataHora()
 }
 
 // Atualiza a data de saída
 function updateDataSaida() {
   const dataSaida = document.getElementById('dataSaidaInput').value;
-  const horaSaida = document.getElementById('horaSaidaInput').value;
-
   const dataSaidaButton = document.getElementById('dataSaida');
   dataSaidaButton.querySelector('span').textContent = `${dataSaida}`;
-
-  const horaSaidaButton = document.getElementById('horaSaida');
-  horaSaidaButton.querySelector('span').textContent = `${horaSaida}`;
-
-  if (dataSaida && horaSaida) {
-    saidaDate = new Date(`${dataSaida}T${horaSaida}`);
-    if(saidaDate > chegadaDate){
-      document.getElementById('dataHoraSaida').textContent = `${dataSaida} ${horaSaida}`;
-      calculateTotalHours();
-    }
-  }
+  updateData()
 }
 
 // Atualiza a hora de saída
 function updateHoraSaida() {
-  updateDataSaida();
+  const horaSaida = document.getElementById('horaSaidaInput').value;
+  const horaSaidaButton = document.getElementById('horaSaida');
+  horaSaidaButton.querySelector('span').textContent = `${horaSaida}`;
+  updateDataHora();
 }
 
 // Calcula o total de horas entre chegada e saída
