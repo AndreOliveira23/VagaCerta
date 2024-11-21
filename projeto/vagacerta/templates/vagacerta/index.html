@@ -53,11 +53,13 @@
     <!-- Biblioteca de Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Fonte customizada-->
+    <link href="https://fonts.cdnfonts.com/css/iciel-gotham?styles=115130" rel="stylesheet">
 </head>
 <body>
     <nav class="top" onclick="fecharSidebar()">
 
-      <button class="circle transparent absolute left" onclick="abrirSidebar()">
+      <button class="circle transparent absolute left" data-ui="#modal" onclick="abrirSidebar()">
         <i id="menu-icon-navbar" >menu</i>
       </button>
 
@@ -83,6 +85,10 @@
         <i>-</i>
       </button>
 
+      <button class="padding primary absolute right middle" id="botaoGPS" onclick="localizar()">
+        <i>gps_fixed</i>
+      </button>
+      
       <button class="padding primary absolute right middle" id="botaoOcultarRota" onclick="botaoRota()">
         <p id="rota">Ocultar rota</p>
       </button>
@@ -99,7 +105,7 @@
               </button>
             </nav>
           </header>
-          <a href="{% url 'login' %}">
+          <a href="login.html">
             <i>login</i>
             <span>Fazer login</span> 
           </a>
@@ -119,39 +125,39 @@
       </dialog>
       
       <!--Modal com informações dos estacionamentos geradas dinamicamente-->
-      <dialog id="modal" class="inverse-surface">
+      <dialog id="modal" class=" blur inverse-surface ">
         <div class="grid">
-          <div class="s12"> <h5 id="nome-do-estacionamento">Park do Zé</h5></div>
+          <div class="s12"><h5 id="nome-do-estacionamento"></h5></div>
           <div class="s6" id="nota-do-estacionamento"> </div>
         </div>
 
-        <i>map</i><div id="endereco-do-estacionamento"></div>
-        <div><b><i>phone</i></b>  (11) 12345-6789</div>
+        <div id="endereco-do-estacionamento"></div>
+        <div id="telefone-estacionamento"><b><i>phone</i></b> (11) 12345-6789 </div>
 
         <div class="grid">
             <div class="s6 green">
-              <button class="green center extra" id="porcentagem-ocupacao"></button>
+              <button class="green center extra bold" id="porcentagem-ocupacao"></button>
             </div>
 
-            <div class="s6 grey">
-              <button class="grey center extra"><i>man</i>80m do seu destino</button>
+            <div class="s6 grey3">
+              <button class="grey3 center extra bold"><i>man</i>80m do seu destino</button>
             </div>
         </div>
 
-        <div class="grid">
-          <div class="s12 grey">
+        <div class="grid" id="div-data-horario">
+          <div class="s12 grey3 center-align middle-align" id="dia-e-horario-da-reserva">
               <center>
-                <h5>Qual o dia e horário da reserva?</h5>
+                <h5 id="pergunta-reserva">Qual o dia e horário da reserva?</h5>
 
                   <button id="data">
                     <i>today</i>
-                    <span>Date</span>
+                    <span>Data</span>
                     <input type="date">
                   </button>
 
                   <button id="hora">
                     <i>schedule</i>
-                    <span>Time</span>
+                    <span>Hora</span>
                     <input type="time">
                   </button>
              </center>
@@ -159,12 +165,12 @@
       </div>
 
         <div class="grid">
-          <div class="s6 grey">
-            <button class="grey center black-text">R$ 15,00 / hora</button>
+          <div class="s6 grey3">
+            <button class="grey3 center black-text bold" id="preco-hora"></button>
           </div>
 
-          <div class="s6 grey">
-            <button class="grey center">Total: R$15,00</button>
+          <div class="s6 grey3">
+            <button class="grey3 center black-text bold" id="preco-total"></button>
           </div>
       </div>
 
@@ -180,8 +186,8 @@
       </div>
 
         <nav class="right-align no-space">
-          <button data-ui="#modal">Voltar</button>
-          <a href="login.html"><button >Reservar vaga</button></a>
+          <button data-ui="#modal" class="bold">Voltar</button>
+          <a href="login.html"><button class="bold">Reservar vaga</button></a>
         </nav>
 
       </dialog>

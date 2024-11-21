@@ -17,7 +17,7 @@ var menuIcon = L.control({position: 'topleft'});
 
 menuIcon.onAdd = function(map) {
   var div = L.DomUtil.create('div', 'menu-icon');
-  div.innerHTML = '<button class="circle transparent" onclick="abrirSidebar()">\
+  div.innerHTML = '<button class="circle transparent" data-ui="#modal"  onclick="abrirSidebar()">\
                         <i id="menu-icon-mapa">menu</i>\
                    </button>';
   return div;
@@ -214,7 +214,7 @@ function getData() {
       var geojsonLayer = L.geoJson(data, {
           pointToLayer: function(feature, latlng) {
               var MarkerOptions = L.icon({
-                  iconUrl: '/static/images/map-marker-svgrepo-com.svg',
+                  iconUrl: '/projeto/vagacerta/static/images/map-marker-svgrepo-com.svg',
                   iconSize: [30, 30],
                   iconAnchor: [15, 15],
                   popupAnchor: [0, -15]
@@ -259,83 +259,101 @@ document.getElementById('hora').onclick = function(){
   document.getElementById('hora').innerHTML = "<i>schedule</i>19h30";
 }
 
+function localizar(){
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+          (position) => {
+              const { latitude, longitude } = position.coords;
+              map.setView([latitude, longitude], 18);
+              L.marker([latitude, longitude])
+                  .addTo(map)
+                  .bindPopup("Você está aqui!")
+                  .openPopup();
+          },
+          () => {
+              alert("Não foi possível buscar a sua localização. Verifique se o GPS está habilitado.");
+          },
+      );
+  } else {
+      alert("Geolocation is not supported by your browser.");
+  }
+}
+
 
 //Preenche o modal dinâmicamente com as informações do estacionamento ao clicar no marcador
 markers.on('click', function() {
+  document.getElementById('data').innerHTML = "<i>today</i>Data";
+  document.getElementById('hora').innerHTML = "<i>schedule</i>Hora";
   var index =  Math.floor(Math.random() * 51); // Make sure to assign this index in your feature properties
 
   var estacionamentos = generateEstacionamentos();
   let estacionamento = estacionamentos[index];
 
   document.getElementById('nome-do-estacionamento').innerText = estacionamento.nome;
-  document.getElementById('endereco-do-estacionamento').innerText = estacionamento.endereco;
+  document.getElementById('endereco-do-estacionamento').innerHTML = '<b><i>map</i></b> '+estacionamento.endereco;
   var porcentagem = estacionamento.lotacao / estacionamento.capacidade * 100;
   document.getElementById('porcentagem-ocupacao').innerText = Math.round(porcentagem) + '% ocupado';
 
   let starRating = '';
   for (let i = 0; i < 5; i++) {
     if (i < estacionamento.avaliacao) {
-      starRating += '<span class="fa fa-star checked" style="font-size: 60px"></span>'; // Estrela preenchida
+      starRating += '<span class="fa fa-star checked" style="font-size: 24px"></span>'; // Estrela preenchida
     } else {
-      starRating += '<span class="fa fa-star" style="font-size: 60px"></span>'; // Estrela vazia
+      starRating += '<span class="fa fa-star" style="font-size: 24px"></span>'; // Estrela vazia
     }
   }
   document.getElementById('nota-do-estacionamento').innerHTML = starRating;
+  document.getElementById('preco-hora').innerText = 'R$ ' + estacionamento.preco_hora + ',00 / hora';
+  document.getElementById('preco-total').innerText = 'Total: R$ ' + estacionamento.preco_hora +',00';
   document.querySelector('#modal').show();
 });
 
 /**********************************************MOCKS DE INFO DOS ESTACIONAMENTOS**********************************************************/
 function generateEstacionamentos() {
   return [
-    {nome: "Estacionamento 1", endereco: "Rua 1, 123, Bairro 1, Cidade 1", lotacao: 10, capacidade: 200, avaliacao: 5},
-    {nome: "Estacionamento 2", endereco: "Rua 2, 456, Bairro 2, Cidade 2", lotacao: 15, capacidade: 240, avaliacao: 3},
-    {nome: "Estacionamento 3", endereco: "Rua 3, 789, Bairro 3, Cidade 3", lotacao: 18, capacidade: 100, avaliacao: 4},
-    {nome: "Estacionamento 4", endereco: "Rua 4, 1011, Bairro 4, Cidade 4", lotacao: 20, capacidade: 80, avaliacao: 4},
-    {nome: "Estacionamento 5", endereco: "Rua 5, 1213, Bairro 5, Cidade 5", lotacao: 25, capacidade: 50, avaliacao: 5},
-    {nome: "Estacionamento 6", endereco: "Rua 6, 1415, Bairro 6, Cidade 6", lotacao: 12, capacidade: 50, avaliacao: 3},
-    {nome: "Estacionamento 7", endereco: "Rua 7, 1617, Bairro 7, Cidade 7", lotacao: 20, capacidade: 20, avaliacao: 4},
-    {nome: "Estacionamento 8", endereco: "Rua 8, 1819, Bairro 8, Cidade 8", lotacao: 220, capacidade: 300, avaliacao: 5},
-    {nome: "Estacionamento 9", endereco: "Rua 9, 2021, Bairro 9, Cidade 9", lotacao: 220, capacidade: 250, avaliacao: 4},
-    {nome: "Estacionamento 10", endereco: "Rua 10, 2223, Bairro 10, Cidade 10", lotacao: 120, capacidade: 120, avaliacao: 3},
-    {nome: "Estacionamento 11", endereco: "Rua 11, 2324, Bairro 11, Cidade 11", lotacao: 50, capacidade: 200, avaliacao: 4},
-    {nome: "Estacionamento 12", endereco: "Rua 12, 2526, Bairro 12, Cidade 12", lotacao: 30, capacidade: 100, avaliacao: 3},
-    {nome: "Estacionamento 13", endereco: "Rua 13, 2728, Bairro 13, Cidade 13", lotacao: 10, capacidade: 90, avaliacao: 5},
-    {nome: "Estacionamento 14", endereco: "Rua 14, 2930, Bairro 14, Cidade 14", lotacao: 75, capacidade: 150, avaliacao: 4},
-    {nome: "Estacionamento 15", endereco: "Rua 15, 3132, Bairro 15, Cidade 15", lotacao: 60, capacidade: 200, avaliacao: 5},
-    {nome: "Estacionamento 16", endereco: "Rua 16, 3334, Bairro 16, Cidade 16", lotacao: 20, capacidade: 80, avaliacao: 3},
-    {nome: "Estacionamento 17", endereco: "Rua 17, 3536, Bairro 17, Cidade 17", lotacao: 100, capacidade: 100, avaliacao: 4},
-    {nome: "Estacionamento 18", endereco: "Rua 18, 3738, Bairro 18, Cidade 18", lotacao: 40, capacidade: 50, avaliacao: 3},
-    {nome: "Estacionamento 19", endereco: "Rua 19, 3940, Bairro 19, Cidade 19", lotacao: 15, capacidade: 70, avaliacao: 4},
-    {nome: "Estacionamento 20", endereco: "Rua 20, 4142, Bairro 20, Cidade 20", lotacao: 55, capacidade: 110, avaliacao: 5},
-    {nome: "Estacionamento 21", endereco: "Rua 21, 4344, Bairro 21, Cidade 21", lotacao: 90, capacidade: 150, avaliacao: 4},
-    {nome: "Estacionamento 22", endereco: "Rua 22, 4546, Bairro 22, Cidade 22", lotacao: 10, capacidade: 200, avaliacao: 3},
-    {nome: "Estacionamento 23", endereco: "Rua 23, 4748, Bairro 23, Cidade 23", lotacao: 25, capacidade: 120, avaliacao: 4},
-    {nome: "Estacionamento 24", endereco: "Rua 24, 4950, Bairro 24, Cidade 24", lotacao: 70, capacidade: 90, avaliacao: 5},
-    {nome: "Estacionamento 25", endereco: "Rua 25, 5152, Bairro 25, Cidade 25", lotacao: 35, capacidade: 110, avaliacao: 4},
-    {nome: "Estacionamento 26", endereco: "Rua 26, 5354, Bairro 26, Cidade 26", lotacao: 30, capacidade: 60, avaliacao: 3},
-    {nome: "Estacionamento 27", endereco: "Rua 27, 5556, Bairro 27, Cidade 27", lotacao: 60, capacidade: 90, avaliacao: 4},
-    {nome: "Estacionamento 28", endereco: "Rua 28, 5758, Bairro 28, Cidade 28", lotacao: 85, capacidade: 100, avaliacao: 5},
-    {nome: "Estacionamento 29", endereco: "Rua 29, 5960, Bairro 29, Cidade 29", lotacao: 20, capacidade: 50, avaliacao: 3},
-    {nome: "Estacionamento 30", endereco: "Rua 30, 6162, Bairro 30, Cidade 30", lotacao: 90, capacidade: 200, avaliacao: 4},
-    {nome: "Estacionamento 31", endereco: "Rua 31, 6364, Bairro 31, Cidade 31", lotacao: 40, capacidade: 80, avaliacao: 3},
-    {nome: "Estacionamento 32", endereco: "Rua 32, 6566, Bairro 32, Cidade 32", lotacao: 60, capacidade: 150, avaliacao: 5},
-    {nome: "Estacionamento 33", endereco: "Rua 33, 6768, Bairro 33, Cidade 33", lotacao: 20, capacidade: 120, avaliacao: 3},
-    {nome: "Estacionamento 34", endereco: "Rua 34, 6970, Bairro 34, Cidade 34", lotacao: 100, capacidade: 200, avaliacao: 5},
-    {nome: "Estacionamento 35", endereco: "Rua 35, 7172, Bairro 35, Cidade 35", lotacao: 15, capacidade: 80, avaliacao: 3},
-    {nome: "Estacionamento 36", endereco: "Rua 36, 7374, Bairro 36, Cidade 36", lotacao: 110, capacidade: 150, avaliacao: 4},
-    {nome: "Estacionamento 37", endereco: "Rua 37, 7576, Bairro 37, Cidade 37", lotacao: 30, capacidade: 90, avaliacao: 3},
-    {nome: "Estacionamento 38", endereco: "Rua 38, 7778, Bairro 38, Cidade 38", lotacao: 20, capacidade: 40, avaliacao: 4},
-    {nome: "Estacionamento 39", endereco: "Rua 39, 7980, Bairro 39, Cidade 39", lotacao: 50, capacidade: 100, avaliacao: 5},
-    {nome: "Estacionamento 40", endereco: "Rua 40, 8182, Bairro 40, Cidade 40", lotacao: 120, capacidade: 250, avaliacao: 5},
-    {nome: "Estacionamento 41", endereco: "Rua 41, 8384, Bairro 41, Cidade 41", lotacao: 60, capacidade: 120, avaliacao: 3},
-    {nome: "Estacionamento 42", endereco: "Rua 42, 8586, Bairro 42, Cidade 42", lotacao: 90, capacidade: 140, avaliacao: 4},
-    {nome: "Estacionamento 43", endereco: "Rua 43, 8788, Bairro 43, Cidade 43", lotacao: 75, capacidade: 100, avaliacao: 4},
-    {nome: "Estacionamento 44", endereco: "Rua 44, 8990, Bairro 44, Cidade 44", lotacao: 50, capacidade: 70, avaliacao: 3},
-    {nome: "Estacionamento 45", endereco: "Rua 45, 9192, Bairro 45, Cidade 45", lotacao: 15, capacidade: 30, avaliacao: 5},
-    {nome: "Estacionamento 46", endereco: "Rua 46, 9394, Bairro 46, Cidade 46", lotacao: 80, capacidade: 90, avaliacao: 4},
-    {nome: "Estacionamento 47", endereco: "Rua 47, 9596, Bairro 47, Cidade 47", lotacao: 25, capacidade: 70, avaliacao: 3},
-    {nome: "Estacionamento 48", endereco: "Rua 48, 9798, Bairro 48, Cidade 48", lotacao: 60, capacidade: 110, avaliacao: 5},
-    {nome: "Estacionamento 49", endereco: "Rua 49, 9999, Bairro 49, Cidade 49", lotacao: 30, capacidade: 90, avaliacao: 4},
-    {nome: "Estacionamento 50", endereco: "Rua 50, 10000, Bairro 50, Cidade 50", lotacao: 100, capacidade: 150, avaliacao: 5}
+    {nome: "Estacionamento Central", endereco: "Av. Paulista, 123", lotacao: 10, capacidade: 200, avaliacao: 5, preco_hora: 50},
+    {nome: "Park Fácil", endereco: "Rua Haddock Lobo, 456", lotacao: 15, capacidade: 240, avaliacao: 3, preco_hora: 40},
+    {nome: "Garage Bela Vista", endereco: "Rua Augusta, 789", lotacao: 18, capacidade: 100, avaliacao: 4, preco_hora: 35},
+    {nome: "Estacionamento Premium", endereco: "Rua Oscar Freire, 1011", lotacao: 20, capacidade: 80, avaliacao: 4, preco_hora: 70},
+    {nome: "Park Luxo", endereco: "Rua Estados Unidos, 1213", lotacao: 25, capacidade: 50, avaliacao: 5, preco_hora: 60},
+    {nome: "Garage Express", endereco: "Rua Padre João Manoel, 1415", lotacao: 12, capacidade: 50, avaliacao: 3, preco_hora: 30},
+    {nome: "Estacionamento Popular", endereco: "Rua da Consolação, 1617", lotacao: 20, capacidade: 20, avaliacao: 4, preco_hora: 20},
+    {nome: "Park Avenida", endereco: "Av. Brigadeiro Faria Lima, 1819", lotacao: 220, capacidade: 300, avaliacao: 5, preco_hora: 55},
+    {nome: "Central Paulista", endereco: "Rua Tabapuã, 2021", lotacao: 220, capacidade: 250, avaliacao: 4, preco_hora: 45},
+    {nome: "Park Veloz", endereco: "Rua Clodomiro Amazonas, 2223", lotacao: 120, capacidade: 120, avaliacao: 3, preco_hora: 30},
+    {nome: "Garage Norte", endereco: "Rua Voluntários da Pátria, 2324", lotacao: 50, capacidade: 200, avaliacao: 4, preco_hora: 40},
+    {nome: "Estacionamento 24h", endereco: "Rua Domingos de Moraes, 2526", lotacao: 30, capacidade: 100, avaliacao: 3, preco_hora: 35},
+    {nome: "Park Econômico", endereco: "Rua Vergueiro, 2728", lotacao: 10, capacidade: 90, avaliacao: 5, preco_hora: 25},
+    {nome: "Garage Independência", endereco: "Av. Independência, 2930", lotacao: 75, capacidade: 150, avaliacao: 4, preco_hora: 50},
+    {nome: "Park Monumento", endereco: "Rua Bom Pastor, 3132", lotacao: 60, capacidade: 200, avaliacao: 5, preco_hora: 65},
+    {nome: "Estacionamento Econômico", endereco: "Rua Líbero Badaró, 3334", lotacao: 20, capacidade: 80, avaliacao: 3, preco_hora: 20},
+    {nome: "Park Centro", endereco: "Rua Funchal, 3536", lotacao: 100, capacidade: 100, avaliacao: 4, preco_hora: 45},
+    {nome: "Garage Jardim", endereco: "Rua Batataes, 3738", lotacao: 40, capacidade: 50, avaliacao: 3, preco_hora: 30},
+    {nome: "Park Simples", endereco: "Rua Harmonia, 3940", lotacao: 15, capacidade: 70, avaliacao: 4, preco_hora: 20},
+    {nome: "Garage Compacto", endereco: "Rua Clélia, 4142", lotacao: 55, capacidade: 110, avaliacao: 5, preco_hora: 60},
+    {nome: "Park Amplo", endereco: "Av. Regente Feijó, 4344", lotacao: 90, capacidade: 150, avaliacao: 4, preco_hora: 50},
+    {nome: "Estacionamento Prático", endereco: "Rua Juventus, 4546", lotacao: 10, capacidade: 200, avaliacao: 3, preco_hora: 25},
+    {nome: "Garage Versátil", endereco: "Av. Penha de França, 4748", lotacao: 25, capacidade: 120, avaliacao: 4, preco_hora: 40},
+    {nome: "Park Compacto", endereco: "Rua Serra de Bragança, 4950", lotacao: 70, capacidade: 90, avaliacao: 5, preco_hora: 55},
+    {nome: "Estacionamento Conveniente", endereco: "Av. Vieira de Morais, 5152", lotacao: 35, capacidade: 110, avaliacao: 4, preco_hora: 30},
+    {nome: "Garage Dinâmica", endereco: "Rua Nova York, 5354", lotacao: 30, capacidade: 60, avaliacao: 3, preco_hora: 20},
+    {nome: "Park Rápido", endereco: "Av. Santo Amaro, 5556", lotacao: 60, capacidade: 90, avaliacao: 4, preco_hora: 40},
+    {nome: "Garage Completa", endereco: "Rua Padre Lebret, 5758", lotacao: 85, capacidade: 100, avaliacao: 5, preco_hora: 70},
+    {nome: "Park Prático", endereco: "Estrada de Campo Limpo, 5960", lotacao: 20, capacidade: 50, avaliacao: 3, preco_hora: 25},
+    {nome: "Estacionamento Seguro", endereco: "Rua da Capela, 6162", lotacao: 90, capacidade: 200, avaliacao: 4, preco_hora: 50},
+    {nome: "Park Simples", endereco: "Rua Descalvado, 6364", lotacao: 40, capacidade: 80, avaliacao: 3, preco_hora: 30},
+    {nome: "Garage Ideal", endereco: "Av. dos Autonomistas, 6566", lotacao: 60, capacidade: 150, avaliacao: 5, preco_hora: 55},
+    {nome: "Estacionamento Alto Padrão", endereco: "Alameda Rio Negro, 6768", lotacao: 20, capacidade: 120, avaliacao: 3, preco_hora: 20},
+    {nome: "Park Fácil Acesso", endereco: "Av. Henriqueta Mendes Guerra, 6970", lotacao: 100, capacidade: 200, avaliacao: 5, preco_hora: 65},
+    {nome: "Garage Praticidade", endereco: "Rua Afrânio de Melo Franco, 7172", lotacao: 15, capacidade: 80, avaliacao: 3, preco_hora: 25},
+    {nome: "Park Seguro", endereco: "Av. Dom Aguirre, 7374", lotacao: 110, capacidade: 150, avaliacao: 4, preco_hora: 40},
+    {nome: "Estacionamento Compacto", endereco: "Rua Barão de Jundiaí, 7576", lotacao: 30, capacidade: 90, avaliacao: 3, preco_hora: 30},
+    {nome: "Garage Econômica", endereco: "Rua Barão de Jaguara, 7778", lotacao: 20, capacidade: 40, avaliacao: 4, preco_hora: 20},
+    {nome: "Park Premium", endereco: "Av. Presidente Vargas, 7980", lotacao: 50, capacidade: 100, avaliacao: 5, preco_hora: 60},
+    {nome: "Estacionamento Executivo", endereco: "Rua Dona Alexandrina, 8182", lotacao: 120, capacidade: 250, avaliacao: 5, preco_hora: 70},
+    {nome: "Garage Flex", endereco: "Av. Visconde de Rio Claro, 8384", lotacao: 60, capacidade: 120, avaliacao: 3, preco_hora: 25},
+    {nome: "Park Confiável", endereco: "Rua Araújo Leite, 8586", lotacao: 90, capacidade: 140, avaliacao: 4, preco_hora: 50},
+    {nome: "Garage Amigável", endereco: "Av. República, 8788", lotacao: 75, capacidade: 100, avaliacao: 4, preco_hora: 40},
+    {nome: "Estacionamento Versátil", endereco: "Rua Cel. Marcondes, 8990", lotacao: 50, capacidade: 70, avaliacao: 4, preco_hora: 30}
   ];
 }

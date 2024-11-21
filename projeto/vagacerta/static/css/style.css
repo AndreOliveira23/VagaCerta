@@ -2,7 +2,8 @@ html,
 body,
 #map {
   height: 100%;
-  z-index: 1;
+  z-index: 1;     
+  font-family: 'iCiel Gotham', sans-serif;                                     
 }
 
 #menu-icon-mapa{
@@ -71,8 +72,14 @@ h2 {
   z-index: 3;
 }
 
-#botaoOcultarRota{
+#botaoGPS{
   margin-top: 160px;
+  margin-right: 20px;
+  z-index: 2;
+}
+
+#botaoOcultarRota{
+  margin-top: 240px;
   margin-right: 20px;
   z-index: 3;
 }
@@ -83,4 +90,31 @@ h2 {
 
 .checked {
   color: orange;
+}
+
+#endereco-do-estacionamento, #telefone-estacionamento{
+  font-size: 20px;
+}
+
+#dia-e-horario-da-reserva{
+  height: 200px;
+  width: 100%;
+}
+
+#pergunta-reserva{
+  color: black;
+}
+
+#div-data-horario{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hora{
+  margin: 10px;
+}
+
+#modal{
+  width: 600px;
 }
