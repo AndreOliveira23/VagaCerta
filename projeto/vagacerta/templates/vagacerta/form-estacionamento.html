@@ -34,14 +34,42 @@
 
           <main class="responsive max" onclick="fecharSidebar()">
             <div class="form-card">
-                <div>
-                    <span> {{ nomeDono }} </span> - Cadastro de Estacionamento
+                <div class="form-title">
+                    Cadastro de Estacionamento
                 </div>
                 <div>
-                    <form>
-                        <section>
-                            
-                        </section>
+                    <form action="#">
+                        <div class="form-sect">
+                            <h4>Informações do dono</h4>
+                            <label for="nomeDono">Nome do dono</label>
+                            <input type="text" id="nomeDono">
+
+                            <label for="emailDono">Email:</label>
+                            <input type="text" id="nomeDono">
+
+                            <label for="telefone">Telefone:</label>
+                            <input id="telefone" type="text">
+
+                            <label for="cnpj">CNPJ:</label>
+                            <input id="cnpj" type="text">
+                        </div>
+                        <div class="form-sect">
+                            <h4>Informações do estacionamento</h4>
+
+                            <label for="nomeEstacionamento">Nome do estacionamento:</label>
+                            <input id="nomeEstacionamento" type="text">
+
+                            <label for="capacidade">Quantidade de vagas:</label>
+                            <input id="capacidade" type="number" min="0">
+
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco">
+
+                            <label for="custoHora">Preço da vaga por hora:</label>
+                            <input type="text">
+
+                            <button type="submit" id="sendButton">Cadastrar</button>
+                        </div>
                     </form>
                 </div>
             </div>

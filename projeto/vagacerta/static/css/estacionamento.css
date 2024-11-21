@@ -1,27 +1,90 @@
-
+*{
+    word-wrap: break-word;
+}
 
 main.responsive{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--line-light)
-
+    color: var(--line-light);
+    padding-top: 1rem;
+    overflow: scroll;
 }
 
 .form-card{
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 90%;
 
     div{
-        padding: 1rem;
         background-color: var(--neutral-element);
     }
 
-    div:first-child{
+    .form-title{
+        padding: 1rem;
         background-color: var(--primary-color-dark);
         font-size: 1rem;
         font-weight: bold;
         color: var(--neutral-diff);
+        border-radius: 15px 15px 0 0;
+    }
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+
+    label{
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    input{
+        border: 0;
+        color: var(--line-light);
+        font-size: 1rem;
+        padding-left: 0.2rem;
+        border-radius: 2rem;
+    }
+
+    .form-sect{
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+
+        h4{
+            font-size: 1.5rem;
+        }
+    }
+
+    .form-sect:last-child{
+        border-top: dotted 1px var(--line-light);
+    }
+
+    button{
+        background-color: var(--primary-color-neutral);
+        color: var(--neutral-diff);
+        font-weight: bold;
+        width: auto;
+        padding: 0 1rem;
+        margin: 1rem 0;
+
+        transition: 0.2s;
+    }
+}
+
+@media (min-width: 500px) {
+
+    
+    form{
+        flex-direction: row;
+
+        .form-sect{
+            width: 50%;
+        }
+
     }
 }
