@@ -23,19 +23,19 @@ main.responsive {
     color: #2e2e2e;
 }
 
-.blue-box {
+#blue-box {
     width: 1000px; 
-    height: 70px; 
+    height: 700px; 
     background-color: #3995f8; 
     color: white; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    margin: 0 auto;
     margin-top: 30px; 
     margin-bottom: 60px; 
     border-radius: 30px; 
     font-size: 2rem;
+    padding: 1.5rem;
 }
 
 .progress-bar {
@@ -315,4 +315,9 @@ main.responsive {
   }
   .warning {
     border-color: #3995f8;
+  }
+
+  #single-info {
+    padding-top: 1.8rem;
+    padding-bottom: 1.8rem;
   }
