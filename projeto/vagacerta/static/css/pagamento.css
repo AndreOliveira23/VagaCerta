@@ -6,7 +6,6 @@
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; 
   }
 
   .pagamento-opcao {
@@ -20,7 +19,7 @@
     height: 100vh;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .2);
-    overflow: hidden;
+    padding-bottom: 96px; /* Espaço equivalente à altura do footer */
   }
   .panel-body {
     height: auto;
@@ -28,7 +27,6 @@
     flex: 1;
     flex-direction: column;
     gap: 20px;
-    overflow-y: auto;
   }
 
   .blue-box {
@@ -43,6 +41,7 @@
     margin-top: 30px; 
     margin-bottom: 30px; 
     border-radius: 30px; 
+    font-size: 2rem;
   }
    
   .title {
@@ -52,10 +51,11 @@
     color: #2e2e2e;
   }
 
-  .space {
+  .spacce {
     display: flex;
     justify-content: center;
     align-items: center; 
+    color: #2e2e2e;
   }
 
   .progress-bar {
@@ -84,7 +84,7 @@
     z-index: -1;
     top: 5px;
     left: 22px;
-    width: 225px;
+    width: 160px;
     height: 6px;
     content: '';
     background-color: #efefef;
@@ -117,18 +117,22 @@
   }
    
   .step:nth-child(1):before {
-    right: -40px;
+    right: -50px;
     content: 'Estacionamento';
   }
   .step:nth-child(2):before {
-    right: -15px;
+    right: -12px;
     content: 'Login';
   }
   .step:nth-child(3):before {
+    right: -40px;
+    content: 'Confirmação';
+  }
+  .step:nth-child(4):before {
     right: -32px;
     content: 'Pagamento';
   }
-  .step:nth-child(4):before {
+  .step:nth-child(5):before {
     right: -5px;
     content: 'Fim';
   }
@@ -164,6 +168,7 @@
     margin-top: 10px;
     width: 300px;
     height: auto;
+    margin-bottom: 100px;
   }
 
   .card-logos {
@@ -178,8 +183,8 @@
   }
    
   .imagem-bandeira {
-    width: 60px; /* Largura da imagem */
-    height: auto; /* Mantém a proporção */
+    width: 60px; 
+    height: auto; 
   }
 
   input[type='radio'] {
@@ -242,17 +247,21 @@
   .small-inputs div {
     width: 195px;
   }
-
-  .panel-footer {
+ 
+  .panel-footeer {
     display: flex;
-    width: 100vw;
+    width: 100%;
     height: 96px;
     padding: 0 80px;
     background-color: rgb(239, 239, 239);
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0; 
+    z-index: 1000; 
   }
+
   .btn {
     font-size: 16px;
     width: 163px;

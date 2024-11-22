@@ -6,15 +6,36 @@
         <link rel="stylesheet" href="../../static/css/style.css">
         <link rel="stylesheet" href="../../static/css/pagamento.css">
         <script src="../../static/js/nav.js"></script>
+
+        <!--Beer CSS-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
     </head>
 
     <body>
-        <div class="checkout-panel">
+
+        <nav class="top" onclick="fecharSidebar()">
+            <button class="circle transparent absolute left" onclick="abrirSidebar()">
+              <i id="menu-icon-navbar" >menu</i>
+            </button>
+            <div class="field large prefix round fill">
+              <i class="front">search</i>
+              <input id="search">
+            </div>
+            <div>
+              <img class="logo-vaga-certa-nav" src="../../static/images/logo-vaga-certa-sem-fundo.png">
+            </div>      
+            <i class="extra absolute right" id="icone-user">account_circle</i>
+          </nav>
+
+        <div class="checkout-panel" onclick="fecharSidebar()">
             <div class="panel-body">
                 <h2 class="blue-box">Área de pagamento</h2>
 
-                <div class="space">
+                <div class="spacce">
                     <div class="progress-bar">
+                        <div class="step active"></div>
                         <div class="step active"></div>
                         <div class="step active"></div>
                         <div class="step"></div>
@@ -22,7 +43,7 @@
                     </div>
                 </div>
 
-                <div class="space">
+                <div class="spacce">
                     <div class="payment-method">
                         <label for="credit-card" class="method card" onclick="mostrarPagamento('cartao-info')">
                             <div class="card-logos">
@@ -32,7 +53,7 @@
 
                             <div class="radio-input">
                                 <input id="credit-card" type="radio" name="payment">
-                                Pagar {{ valor }} <br> com cartão de crédito
+                                Pagar R$ {{ valor }} <br> com cartão de crédito
                             </div>
                         </label>
 
@@ -44,7 +65,7 @@
 
                             <div class="radio-input">
                                 <input id="debit-card" type="radio" name="payment">
-                                Pagar {{ valor }} <br> com cartão de débito
+                                Pagar R$ {{ valor }} <br> com cartão de débito
                             </div>
                         </label>
 
@@ -52,14 +73,14 @@
                             <img class="imagem-bandeira" src="../../static/images/pix2.png"/>
                             <div class="radio-input">
                                 <input id="pix" type="radio" name="payment">
-                                Pagar {{ valor }} <br> com PIX
+                                Pagar R$ {{ valor }} <br> com PIX
                             </div>
                         </label>
                     </div>
                 </div>
 
                 <div id="cartao-info" class="pagamento-opcao">
-                    <div class="space">
+                    <div class="spacce">
                         <div class="input-fields">
                             <div class="column-1">
                                 <label for="cardholder">Nome</label>
@@ -85,7 +106,7 @@
                 </div>
 
                 <div id="pix-info" class="pagamento-opcao">
-                    <div class="space">
+                    <div class="spacce">
                         <div class="pix-qrcode">
                             <span>Escaneie o QR Code abaixo para realizar o pagamento</span>
                             <img id="imagem-pix-qrcode" src="../../static/images/pix-qrcode.jpeg" />
@@ -93,11 +114,55 @@
                     </div>
                 </div>
             </div>
-
-            <div class="panel-footer">
-                <button class="btn back-btn">Voltar</button>
-                <button class="btn next-btn">Próximo</button>
+            <div class="panel-footeer">
+                <a href="confirmation.html" class="btn back-btn">Voltar</a>
+                <a href="recibo.html" class="btn next-btn">Próximo</a>
             </div>
         </div>
+
+        <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
+            <nav class="drawer" onclick="fecharSidebar()">
+              <header>
+                <nav>
+                  <img class="circle" src="../../static/images/logo-vaga-certa-sem-fundo.png">
+                  <h6 class="max">Vaga Certa</h6>
+                  <button class="transparent circle large" onclick="fecharSidebar()">
+                    <i>close</i>
+                  </button>
+                </nav>
+              </header>
+              <a>
+                <i>inbox</i>
+                <span class="max">Inbox</span>
+                <b>24</b>
+              </a>
+              <a>
+                <i>send</i>
+                <span>Outbox</span>
+              </a>
+              <a>
+                <i>favorite</i>
+                <span>favorities</span>
+              </a>
+              <a>
+                <i>delete</i>
+                <span>Trash</span>
+              </a>
+              <hr>
+              <label>Labels</label>
+              <a>
+                <i>fiber_manual_record</i>
+                <span>Label</span>
+              </a>
+              <a>
+                <i>change_history</i>
+                <span>Label</span>
+              </a>
+              <a>
+                <i>stop</i>
+                <span>Label</span>
+              </a>
+            </nav>
+          </dialog>
     </body>
 </html>

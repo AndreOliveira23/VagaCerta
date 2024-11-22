@@ -39,6 +39,10 @@ main.responsive{
   background-color: var(--neutral-background);
 }
 
+.logo-vaga-certa-nav {
+  width: 70px;
+  height: auto;
+}
 
 .top{
   background-color: var(--primary-color-neutral);

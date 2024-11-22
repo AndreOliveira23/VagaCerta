@@ -3,12 +3,12 @@
     box-sizing: border-box;
   } 
 
-  html, body {
+  html, body, #panel {
     margin: 0;
     padding: 0;
     height: 100%;
     display: flex;
-    flex-direction: column; /* Define o layout em coluna */
+    flex-direction: column; 
     background-color: #3995f8;
   } 
   
@@ -31,12 +31,14 @@
     margin-top: 30px; 
     margin-bottom: 30px; 
     border-radius: 30px; 
+    font-size: 20px;
   }
 
-  .space {
+  .ce {
     display: flex;
     justify-content: center;
     align-items: center; 
+    color: #2e2e2e;
   }
 
   .options {
@@ -54,6 +56,12 @@
     margin-top: 20px;
     flex-direction: column;
     align-items: center;
+
+    span {
+      font-size: 25px;
+      font-weight: 700;
+      color: white;
+    }
   }
    
   .image-button {
@@ -80,12 +88,6 @@
     transform: scale(1.1);
   }
 
-  span {
-    font-size: 25px;
-    font-weight: 700;
-    color: white;
-  }
-
   .panel-footer {
     display: flex;
     width: 100%;
@@ -94,7 +96,8 @@
     background-color: rgb(239, 239, 239);
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0; /* Garante que o rodapé não seja comprimido */
+    flex-shrink: 0;
+    color: #2e2e2e;
   }
 
   .logo-vaga-certa {

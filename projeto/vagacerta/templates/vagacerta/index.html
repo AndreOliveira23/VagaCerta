@@ -58,19 +58,19 @@
     <script src="https://unpkg.com/leaflet-geosearch/dist/bundle.min.js"></script>
 </head>
 <body>
-    <nav class="top" onclick="fecharSidebar()">
-      
-      <button class="circle transparent absolute left" onclick="abrirSidebar()">
-        <i id="menu-icon-navbar" >menu</i>
-      </button>
-
-      <div class="field large prefix round fill">
-        <i class="front">search</i>
-        <input id="search">
-      </div>         
-        <i class="extra absolute right" id="icone-user">account_circle</i>
-
-    </nav>
+  <nav class="top" onclick="fecharSidebar()">
+    <button class="circle transparent absolute left" onclick="abrirSidebar()">
+      <i id="menu-icon-navbar" >menu</i>
+    </button>
+    <div class="field large prefix round fill">
+      <i class="front">search</i>
+      <input id="search">
+    </div>
+    <div>
+      <img class="logo-vaga-certa-nav" src="../../static/images/logo-vaga-certa-sem-fundo.png">
+    </div>      
+    <i class="extra absolute right" id="icone-user">account_circle</i>
+  </nav>
 
       <main class="responsive max">
             <div id="map" onclick="fecharSidebar()"></div>
@@ -80,8 +80,8 @@
         <nav class="drawer" onclick="fecharSidebar()">
           <header>
             <nav>
-              <img class="circle" src="/favicon.png">
-              <h6 class="max">Title</h6>
+              <img class="circle" src="../../static/images/logo-vaga-certa-sem-fundo.png">
+              <h6 class="max">Vaga Certa</h6>
               <button class="transparent circle large" onclick="fecharSidebar()">
                 <i>close</i>
               </button>
