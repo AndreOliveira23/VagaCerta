@@ -88,3 +88,41 @@ form{
 
     }
 }
+
+.button-area {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    margin-top: 1rem;
+}
+
+
+.btn {
+    font-size: 16px;
+    width: 200px;
+    height: 48px;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 23px;
+  }
+
+  .back-btn {
+    color: #fff;
+    background: #3995f8;
+  }
+   
+  .btn:focus {
+    outline: none;
+  }
+   
+  .btn:hover {
+    transform: scale(1.1);
+  }
+  .blue-border {
+    border: 1px solid #3995f8;
+  }
+  .warning {
+    border-color: #3995f8;
+  }
