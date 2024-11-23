@@ -102,7 +102,7 @@
               </button>
             </nav>
           </header>
-          <a href="login.html">
+          <a href="{% url 'login' %}">
             <i>login</i>
             <span>Fazer login</span> 
           </a>
@@ -176,8 +176,8 @@
     <main class="responsive max">
         <div id="map" onclick="fecharSidebar()"></div>
         <div class="panel-footeer">
-            <a href="intrapage.html" class="btn back-btn">Voltar</a>
-            <a href="login.html" class="btn next-btn">Próximo</a>
+            <a href="{% url 'intra' %}" class="btn back-btn">Voltar</a>
+            <a href="{% url 'login' %}" class="btn next-btn">Próximo</a>
         </div>
     </main>
 
@@ -192,16 +192,16 @@
                     </button>
                 </nav>
             </header>
-            <a href="login.html">
+            <a href="{% url 'login' %}">
                 <i>inbox</i>
                 <span class="max">Inbox</span>
                 <b>24</b>
             </a>
-            <a href="confirm.html">
+            <a href="{% url 'confirmation' %}">
                 <i>send</i>
                 <span>Outbox</span>
             </a>
-            <a href="form-estacionamento.html">
+            <a href="{% url 'form' %}">
                 <i>favorite</i>
                 <span>Favorities</span>
             </a>
@@ -233,7 +233,7 @@
             <button class="transparent link" onclick="fechaModal()">Cancel</button>
             <button class="transparent link" onclick="fechaModal()">Confirm</button>
           <button data-ui="#modal" class="bold">Voltar</button>
-          <a href="login.html"><button class="bold">Reservar vaga</button></a>
+          <a href="{% url 'login' %}"><button class="bold">Reservar vaga</button></a>
         </nav>
     </dialog>
 

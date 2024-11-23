@@ -19,7 +19,7 @@
 
             <script>
               function executarAcaoERedirecionar() {
-                  window.location.href = "analise-form-estacionamento.html";
+                  window.location.href = "{% url 'analise' %}";
               }
           </script>
     </head>
@@ -75,7 +75,7 @@
                             <input type="text">
 
                             <div class="button-area">
-                              <a href="analise-form-estacionamento.html" class="btn back-btn">Cadastrar</a>
+                              <a href="{% url 'analise' %}" class="btn back-btn">Cadastrar</a>
                             </div>
                         </div>
                     </form>
@@ -94,16 +94,16 @@
                   </button>
                 </nav>
               </header>
-              <a href="login.html" >
+              <a href="{% url 'login' %}" >
                 <i>inbox</i>
                 <span class="max">Inbox</span>
                 <b>24</b>
               </a>
-              <a href="confirm.html">
+              <a href="{% url 'confirmation' %}">
                 <i>send</i>
                 <span>Outbox</span>
               </a>
-              <a href="form-estacionamento.html">
+              <a href="{% url 'form' %}">
                 <i>favorite</i>
                 <span>favorities</span>
               </a>

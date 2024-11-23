@@ -78,7 +78,7 @@
                     <p>Fim: <span id="fim">{{ fim }}</span></p>
                   </div>
                 </div>
-                <a href="index.html" class="image-button">
+                <a href="{% url 'index' %}" class="image-button">
                   <img class="foto" src="../../static/images/img2.jpg" alt="Foto do estacionamento">
                 </a>
               </div>
@@ -89,7 +89,7 @@
                     <p>Forma de pagamento: <span id="pagamento"> {{ pagamento }} </span></p>
                   </div>
                 </div>
-                <a href="index.html" class="image-button">
+                <a href="{% url 'index' %}" class="image-button">
                   <img class="foto" src="../../static/images/Mapa.png" alt="Local do estacionamento">
                 </a>
               </div>
@@ -98,7 +98,7 @@
         </div>
       </section>
       <div class="panel-footeer">
-        <a href="index.html" class="btn back-btn">Voltar o mapa</a>
+        <a href="{% url 'index' %}" class="btn back-btn">Voltar o mapa</a>
       </div>
     </main>
 
@@ -113,12 +113,12 @@
             </button>
           </nav>
         </header>
-        <a href="login.html">
+        <a href="{% url 'login' %}html">
           <i>inbox</i>
           <span class="max">Inbox</span>
           <b>24</b>
         </a>
-        <a href="recibo.html">
+        <a href="{% url 'recibo' %}">
           <i>send</i>
           <span>Outbox</span>
         </a>
