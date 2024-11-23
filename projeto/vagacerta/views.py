@@ -17,7 +17,7 @@ def formEstacionamento_page(request):
     return render(request, 'vagacerta/form-estacionamento.html')
 
 def analiseEstacionamento_page(request):
-    return render(request, 'vagacerta/analise-estacionamento.html')
+    return render(request, 'vagacerta/analise-form-estacionamento.html')
 
 def intra_page(request):
     return render(request, 'vagacerta/intrapage.html')
