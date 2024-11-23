@@ -14,7 +14,7 @@ var menuIcon = L.control({position: 'topleft'});
 
 menuIcon.onAdd = function(map) {
   var div = L.DomUtil.create('div', 'menu-icon');
-  div.innerHTML = '<button class="circle transparent" onclick="abrirSidebar()">\
+  div.innerHTML = '<button class="circle transparent" onclick="abrirSidebar(),fecharModalEstacionamento()">\
                         <i id="menu-icon-mapa">menu</i>\
                    </button>';
   return div;
@@ -127,6 +127,25 @@ function setRoute(){
     }
   });
 
+  $.get(overpassQuery, function(data) {
+      var data = osmtogeojson(data);
+      var geojsonLayer = L.geoJson(data, {
+          pointToLayer: function(feature, latlng) {
+              var MarkerOptions = L.icon({
+                  iconUrl: '/projeto/vagacerta/static/images/map-marker-svgrepo-com.svg',
+                  iconSize: [30, 30],
+                  iconAnchor: [15, 15],
+                  popupAnchor: [0, -15]
+              });
+              return L.marker(latlng, { icon: MarkerOptions });
+          },
+      }); 
+      markers.addLayer(geojsonLayer);
+      map.addLayer(markers);
+      // Adiciona um controle de camadas para os marcadores
+      $('#mySpinner').removeClass('spinner');
+  }, "xml"); //fecha $.get
+}
 
   //Remove a barra de rotas anterior
     setTimeout(function(){
@@ -159,32 +178,46 @@ function mockLocation(inputValue){
     var marker = L.marker([-23.544936895841495, -46.47334814071655]).addTo(map);
     marker.bindPopup("<b>Neo Química Arena</b><br>Estádio do Corinthians").openPopup();
 
-    //Colocar marcadores nos estacionamentos ao redor do estádio
+function localizar(){
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+          (position) => {
+              const { latitude, longitude } = position.coords;
+              map.setView([latitude, longitude], 18);
+              L.marker([latitude, longitude])
+                  .addTo(map)
+                  .bindPopup("Você está aqui!")
+                  .openPopup();
+          },
+          () => {
+              alert("Não foi possível buscar a sua localização. Verifique se o GPS está habilitado.");
+          },
+      );
+  } else {
+      alert("Geolocation is not supported by your browser.");
+  }
+}
 
-    criarMarcadorEstacionamento(-23.54525163558828, -46.4764165878296, "Estacionamento 1");
+
+//Preenche o modal dinâmicamente com as informações do estacionamento ao clicar no marcador
+markers.on('click', function() {
+  document.getElementById('data').innerHTML = "<i>today</i>Data";
+  document.getElementById('hora').innerHTML = "<i>schedule</i>Hora";
+  var index =  Math.floor(Math.random() * 51); // Make sure to assign this index in your feature properties
 
     criarMarcadorEstacionamento(-23.546825323021206, -46.47388458251953, "Estacionamento 2");
 
-    criarMarcadorEstacionamento(-23.545035252093307, -46.47062301635743, "Estacionamento 3");
-    
-    criarMarcadorEstacionamento(-23.54475001876039, -46.472318172454834, "Estacionamento 4");
-  }
+  document.getElementById('nome-do-estacionamento').innerText = estacionamento.nome;
+  document.getElementById('endereco-do-estacionamento').innerHTML = '<b><i>map</i></b> '+estacionamento.endereco;
+  var porcentagem = estacionamento.lotacao / estacionamento.capacidade * 100;
+  document.getElementById('porcentagem-ocupacao').innerText = Math.round(porcentagem) + '% ocupado';
 
-  if(inputValue.toLowerCase() === "allianz parque"){
-      
-      map.setView([-23.5280972212507, -46.67841911315919], 17);
-  
-      var marker = L.marker([-23.52699548517475, -46.67864441871644]).addTo(map);
-      marker.bindPopup("<b>Allianz Parque</b><br>Estádio do Palmeiras").openPopup();
-  
-      //Colocar marcadores nos estacionamentos ao redor do estádio
-  
-      criarMarcadorEstacionamento(-23.526179014096655, -46.678451299667366, "Estacionamento 1");
-  
-      criarMarcadorEstacionamento(-23.525392049227378, -46.67821526527405, "Estacionamento 2");
-  
-      criarMarcadorEstacionamento(-23.525018239266025, -46.678987741470344, "Estacionamento 3");
-      
+  let starRating = '';
+  for (let i = 0; i < 5; i++) {
+    if (i < estacionamento.avaliacao) {
+      starRating += '<span class="fa fa-star checked" style="font-size: 24px"></span>'; // Estrela preenchida
+    } else {
+      starRating += '<span class="fa fa-star" style="font-size: 24px"></span>'; // Estrela vazia
     }
 
   if(inputValue.toLowerCase() === "estadio do morumbi"){
@@ -203,50 +236,58 @@ function mockLocation(inputValue){
       criarMarcadorEstacionamento(-23.597, -46.720, "Estacionamento 3");
   }
 
-  if(inputValue.toLowerCase() === "estadio do pacaembu"){
-            
-      map.setView([-23.547, -46.657], 17);
-    
-      var marker = L.marker([-23.547, -46.657]).addTo(map);
-      marker.bindPopup("<b>Estádio do Pacaembu</b><br>Estádio do Vaxco").openPopup();
-    
-      //Colocar marcadores nos estacionamentos ao redor do estádio
-    
-      criarMarcadorEstacionamento(-23.547, -46.657, "Estacionamento 1");
-    
-      criarMarcadorEstacionamento(-23.547, -46.657, "Estacionamento 2");
-    
-      criarMarcadorEstacionamento(-23.547, -46.657, "Estacionamento 3");
-    }   
+  document.getElementById('nota-do-estacionamento').innerHTML = starRating;
+  document.getElementById('preco-hora').innerText = 'R$ ' + estacionamento.preco_hora + ',00 / hora';
+  document.getElementById('preco-total').innerText = 'Total: R$ ' + estacionamento.preco_hora +',00';
+  document.querySelector('#modal').show();
+});
 
-  if(inputValue.toLowerCase() === "estadio são januário"){
-                
-        map.setView([-22.906, -43.230], 17);
-        
-        var marker = L.marker([-22.906, -43.230]).addTo(map);
-        marker.bindPopup("<b>Estádio São Januário</b><br>Estádio do Vasco").openPopup();
-        
-        //Colocar marcadores nos estacionamentos ao redor do estádio
-        
-        criarMarcadorEstacionamento(-22.906, -43.230, "Estacionamento 1");
-        
-        criarMarcadorEstacionamento(-22.906, -43.230, "Estacionamento 2");
-        
-        criarMarcadorEstacionamento(-22.906, -43.230, "Estacionamento 3");
-      }
-    
+/**********************************************MOCKS DE INFO DOS ESTACIONAMENTOS**********************************************************/
+function generateEstacionamentos() {
+  return [
+    {nome: "Estacionamento Central", endereco: "Av. Paulista, 123", lotacao: 10, capacidade: 200, avaliacao: 5, preco_hora: 50},
+    {nome: "Park Fácil", endereco: "Rua Haddock Lobo, 456", lotacao: 15, capacidade: 240, avaliacao: 3, preco_hora: 40},
+    {nome: "Garage Bela Vista", endereco: "Rua Augusta, 789", lotacao: 18, capacidade: 100, avaliacao: 4, preco_hora: 35},
+    {nome: "Estacionamento Premium", endereco: "Rua Oscar Freire, 1011", lotacao: 20, capacidade: 80, avaliacao: 4, preco_hora: 70},
+    {nome: "Park Luxo", endereco: "Rua Estados Unidos, 1213", lotacao: 25, capacidade: 50, avaliacao: 5, preco_hora: 60},
+    {nome: "Garage Express", endereco: "Rua Padre João Manoel, 1415", lotacao: 12, capacidade: 50, avaliacao: 3, preco_hora: 30},
+    {nome: "Estacionamento Popular", endereco: "Rua da Consolação, 1617", lotacao: 20, capacidade: 20, avaliacao: 4, preco_hora: 20},
+    {nome: "Park Avenida", endereco: "Av. Brigadeiro Faria Lima, 1819", lotacao: 220, capacidade: 300, avaliacao: 5, preco_hora: 55},
+    {nome: "Central Paulista", endereco: "Rua Tabapuã, 2021", lotacao: 220, capacidade: 250, avaliacao: 4, preco_hora: 45},
+    {nome: "Park Veloz", endereco: "Rua Clodomiro Amazonas, 2223", lotacao: 120, capacidade: 120, avaliacao: 3, preco_hora: 30},
+    {nome: "Garage Norte", endereco: "Rua Voluntários da Pátria, 2324", lotacao: 50, capacidade: 200, avaliacao: 4, preco_hora: 40},
+    {nome: "Estacionamento 24h", endereco: "Rua Domingos de Moraes, 2526", lotacao: 30, capacidade: 100, avaliacao: 3, preco_hora: 35},
+    {nome: "Park Econômico", endereco: "Rua Vergueiro, 2728", lotacao: 10, capacidade: 90, avaliacao: 5, preco_hora: 25},
+    {nome: "Garage Independência", endereco: "Av. Independência, 2930", lotacao: 75, capacidade: 150, avaliacao: 4, preco_hora: 50},
+    {nome: "Park Monumento", endereco: "Rua Bom Pastor, 3132", lotacao: 60, capacidade: 200, avaliacao: 5, preco_hora: 65},
+    {nome: "Estacionamento Econômico", endereco: "Rua Líbero Badaró, 3334", lotacao: 20, capacidade: 80, avaliacao: 3, preco_hora: 20},
+    {nome: "Park Centro", endereco: "Rua Funchal, 3536", lotacao: 100, capacidade: 100, avaliacao: 4, preco_hora: 45},
+    {nome: "Garage Jardim", endereco: "Rua Batataes, 3738", lotacao: 40, capacidade: 50, avaliacao: 3, preco_hora: 30},
+    {nome: "Park Simples", endereco: "Rua Harmonia, 3940", lotacao: 15, capacidade: 70, avaliacao: 4, preco_hora: 20},
+    {nome: "Garage Compacto", endereco: "Rua Clélia, 4142", lotacao: 55, capacidade: 110, avaliacao: 5, preco_hora: 60},
+    {nome: "Park Amplo", endereco: "Av. Regente Feijó, 4344", lotacao: 90, capacidade: 150, avaliacao: 4, preco_hora: 50},
+    {nome: "Estacionamento Prático", endereco: "Rua Juventus, 4546", lotacao: 10, capacidade: 200, avaliacao: 3, preco_hora: 25},
+    {nome: "Garage Versátil", endereco: "Av. Penha de França, 4748", lotacao: 25, capacidade: 120, avaliacao: 4, preco_hora: 40},
+    {nome: "Park Compacto", endereco: "Rua Serra de Bragança, 4950", lotacao: 70, capacidade: 90, avaliacao: 5, preco_hora: 55},
+    {nome: "Estacionamento Conveniente", endereco: "Av. Vieira de Morais, 5152", lotacao: 35, capacidade: 110, avaliacao: 4, preco_hora: 30},
+    {nome: "Garage Dinâmica", endereco: "Rua Nova York, 5354", lotacao: 30, capacidade: 60, avaliacao: 3, preco_hora: 20},
+    {nome: "Park Rápido", endereco: "Av. Santo Amaro, 5556", lotacao: 60, capacidade: 90, avaliacao: 4, preco_hora: 40},
+    {nome: "Garage Completa", endereco: "Rua Padre Lebret, 5758", lotacao: 85, capacidade: 100, avaliacao: 5, preco_hora: 70},
+    {nome: "Park Prático", endereco: "Estrada de Campo Limpo, 5960", lotacao: 20, capacidade: 50, avaliacao: 3, preco_hora: 25},
+    {nome: "Estacionamento Seguro", endereco: "Rua da Capela, 6162", lotacao: 90, capacidade: 200, avaliacao: 4, preco_hora: 50},
+    {nome: "Park Simples", endereco: "Rua Descalvado, 6364", lotacao: 40, capacidade: 80, avaliacao: 3, preco_hora: 30},
+    {nome: "Garage Ideal", endereco: "Av. dos Autonomistas, 6566", lotacao: 60, capacidade: 150, avaliacao: 5, preco_hora: 55},
+    {nome: "Estacionamento Alto Padrão", endereco: "Alameda Rio Negro, 6768", lotacao: 20, capacidade: 120, avaliacao: 3, preco_hora: 20},
+    {nome: "Park Fácil Acesso", endereco: "Av. Henriqueta Mendes Guerra, 6970", lotacao: 100, capacidade: 200, avaliacao: 5, preco_hora: 65},
+    {nome: "Garage Praticidade", endereco: "Rua Afrânio de Melo Franco, 7172", lotacao: 15, capacidade: 80, avaliacao: 3, preco_hora: 25},
+    {nome: "Park Seguro", endereco: "Av. Dom Aguirre, 7374", lotacao: 110, capacidade: 150, avaliacao: 4, preco_hora: 40},
+    {nome: "Estacionamento Compacto", endereco: "Rua Barão de Jundiaí, 7576", lotacao: 30, capacidade: 90, avaliacao: 3, preco_hora: 30},
+    {nome: "Garage Econômica", endereco: "Rua Barão de Jaguara, 7778", lotacao: 20, capacidade: 40, avaliacao: 4, preco_hora: 20},
+    {nome: "Park Premium", endereco: "Av. Presidente Vargas, 7980", lotacao: 50, capacidade: 100, avaliacao: 5, preco_hora: 60},
+    {nome: "Estacionamento Executivo", endereco: "Rua Dona Alexandrina, 8182", lotacao: 120, capacidade: 250, avaliacao: 5, preco_hora: 70},
+    {nome: "Garage Flex", endereco: "Av. Visconde de Rio Claro, 8384", lotacao: 60, capacidade: 120, avaliacao: 3, preco_hora: 25},
+    {nome: "Park Confiável", endereco: "Rua Araújo Leite, 8586", lotacao: 90, capacidade: 140, avaliacao: 4, preco_hora: 50},
+    {nome: "Garage Amigável", endereco: "Av. República, 8788", lotacao: 75, capacidade: 100, avaliacao: 4, preco_hora: 40},
+    {nome: "Estacionamento Versátil", endereco: "Rua Cel. Marcondes, 8990", lotacao: 50, capacidade: 70, avaliacao: 4, preco_hora: 30}
+  ];
 }
-
-function criarMarcadorEstacionamento (lat, long, nome) {
-  var marker = L.marker([lat, long]).addTo(map);
-  marker.bindPopup("<b>"+nome+"</b><br>Estacionamento");
-  marker.setIcon(L.icon({
-    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  }));
-}
-*/

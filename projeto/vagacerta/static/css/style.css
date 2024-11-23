@@ -106,6 +106,17 @@ div.results.active {
 
 .leaflet-routing-alt.leaflet-routing-alt-minimized{
   background-color: rgb(43, 96, 175);
+
+#botaoGPS{
+  margin-top: 160px;
+  margin-right: 20px;
+  z-index: 2;
+}
+
+#botaoOcultarRota{
+  margin-top: 240px;
+  margin-right: 20px;
+  z-index: 3;
 }
 
   .panel-footeer {
@@ -156,3 +167,34 @@ div.results.active {
   .warning {
     border-color: #3995f8;
   }
+
+.checked {
+  color: orange;
+}
+
+#endereco-do-estacionamento, #telefone-estacionamento{
+  font-size: 20px;
+}
+
+#dia-e-horario-da-reserva{
+  height: 200px;
+  width: 100%;
+}
+
+#pergunta-reserva{
+  color: black;
+}
+
+#div-data-horario{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hora{
+  margin: 10px;
+}
+
+#modal{
+  width: 600px;
+}
