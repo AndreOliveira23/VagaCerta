@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaga Certa - Análise form estacionamento</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+    <script src="../../static/js/nav.js"></script>
+    
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/analise-form-estacionamento.css">
+
+    <script>
+        function abrirForm(){
+          let form = document.getElementById('signup-form');
+          form.classList.toggle('add');
+        }
+    </script>
+</head>
+<body>
+    <nav class="top" onclick="fecharSidebar()">
+      <button class="circle transparent absolute left" onclick="abrirSidebar()">
+        <i id="menu-icon-navbar" >menu</i>
+      </button>
+      <div class="field large prefix round fill">
+        <i class="front">search</i>
+        <input id="search">
+      </div>
+      <div>
+        <img class="logo-vaga-certa-nav" src="../../static/images/logo-vaga-certa-sem-fundo.png">
+      </div>      
+      <i class="extra absolute right" id="icone-user">account_circle</i>
+    </nav>
+
+      <main class="responsive max" onclick="fecharSidebar()">
+
+        <h2 class="blue-box">Análise dos dados</h2>
+        <div class="container">
+            <div class="area-texto-analise">
+                <p>
+                    Estamos fazendo a análise dos seus dados e do seu estacionamento.
+                </p>
+                <p>
+                    Em breve, você receberá um e-mail com o resultado da análise.
+                </p>
+            </div>
+            <img class="foto-analise" src="../../static/images/analise-forms-estacionamento.png">
+        </div>
+
+        <div class="panel-footeer">
+          <a href="intrapage.html" class="btn back-btn">Voltar para o início</a>
+      </div>
+      </main>
+
+      <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
+        <nav class="drawer" onclick="fecharSidebar()">
+          <header>
+            <nav>
+              <img class="circle" src="../../static/images/logo-vaga-certa-sem-fundo.png">
+              <h6 class="max">Vaga Certa</h6>
+              <button class="transparent circle large" onclick="fecharSidebar()">
+                <i>close</i>
+              </button>
+            </nav>
+          </header>
+          <a>
+            <i>inbox</i>
+            <span class="max">Inbox</span>
+            <b>24</b>
+          </a>
+          <a>
+            <i>send</i>
+            <span>Outbox</span>
+          </a>
+          <a>
+            <i>favorite</i>
+            <span>favorities</span>
+          </a>
+          <a>
+            <i>delete</i>
+            <span>Trash</span>
+          </a>
+          <hr>
+          <label>Labels</label>
+          <a>
+            <i>fiber_manual_record</i>
+            <span>Label</span>
+          </a>
+          <a>
+            <i>change_history</i>
+            <span>Label</span>
+          </a>
+          <a>
+            <i>stop</i>
+            <span>Label</span>
+          </a>
+        </nav>
+      </dialog>
+</body>
+</html>

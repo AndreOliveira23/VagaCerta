@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style>
-    * {
+* {
 	border: 0;
 	box-sizing: border-box;
 	margin: 0;
@@ -150,12 +142,3 @@ label {
 		transform: translate(0,-1em) rotate(-180deg) translate(7.5em,-0.25em);
 	}
 }
-</style>
-<body>
-    <form>
-        <label for="search">Search</label>
-        <input id="search" type="search" pattern=".*\S.*" required placeholder="        Para onde você vai?">
-        <span class="caret"></span>
-    </form>
-</body>
-</html>

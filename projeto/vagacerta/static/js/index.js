@@ -1,14 +1,11 @@
 //Define a região inicial do mapa para SP, com nível de zoom 12 (numa escala de 0 a 18)
 //Na escala, 0 é o mundo inteiro e 18 é o nível de rua
-var map = L.map('map', {
-  center: [-23.5489, -46.6388], 
-  zoom: 12,
-  zoomControl: false // Desativa o controle de zoom padrão
-});
+var map = L.map('map').setView([-23.5489,-46.6388], 12);
 
 
+//Mostra o mapa
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 
@@ -22,29 +19,13 @@ menuIcon.onAdd = function(map) {
                    </button>';
   return div;
 };
+
 menuIcon.addTo(map);
 
-
-//Adiciona o controle de zoom personalizado
-document.getElementById('botaoZoomIn').onclick = function(){
-  map.zoomIn();
-}
-
-document.getElementById('botaoZoomOut').onclick = function(){
-  map.zoomOut();
-}
-
-document.getElementById('botaoOcultarRota').onclick = function(){
-  if(displayed){
-    document.getElementsByClassName("leaflet-routing-container leaflet-bar leaflet-control")[i].style.display = "none";
-    displayed = false;
-    document.getElementById('rota').innerText = "Mostrar rota";
-  }else{
-    document.getElementsByClassName("leaflet-routing-container leaflet-bar leaflet-control")[i].style.display = "block";
-    displayed = true;
-    document.getElementById('rota').innerText = "Ocultar rota";
-  }
-}
+map.on('click', function(ev) {
+    var latlng = map.mouseEventToLatLng(ev.originalEvent);
+    console.log(latlng.lat + ', ' + latlng.lng);
+});
 
 //Barra de pesquisa (API do Leaflet)
 const searchControl = new GeoSearch.GeoSearchControl({
@@ -60,6 +41,7 @@ const searchInput = document.getElementById("search");
 
 textbox.addEventListener("keypress", function onEvent(event) {
     if (event.key === "Enter") {
+      console.log("Entered value:", searchInput.value);
       document.querySelector('.glass').value = searchInput.value;
       clicar();
     }
@@ -69,7 +51,7 @@ textbox.addEventListener("keypress", function onEvent(event) {
 a localização inserida */
 function clicar(){
     
-  // Cria um evento para o clique de um enter
+// Cria um evento para o clique de um enter
   const event = new KeyboardEvent('keydown', {
     key: 'Enter',
     code: 'Enter',
@@ -109,105 +91,41 @@ navigator.geolocation.getCurrentPosition(function(position) {
   // Adiciona um marcador na localização do usuário
   L.marker(userLocation).addTo(map).bindPopup("Você está aqui!!").openPopup();
 
+
 }, function(error) {
   console.error("Falha na geolocalização: " + error.message);
   alert("Não foi possível determinar a sua localização. Veja se o GPS está habilitado.");
 });
 
-document.getElementById('botaoOcultarRota').style.display = "none"; //Botão de mostrar/ocultar rota inicialmente oculto (só aparece após traçar a rota)
 
-var i = 0; //Variável para controlar a contagem de rotas criadas, para removê-las.
+rotaCounter = 0;
+i = 0;
 
 function setRoute(){
-  //Esconde o botão de mostrar/ocultar rota gerado pela rota anterior
-  document.getElementById('botaoOcultarRota').style.display = "none";
 
   /*Removendo marcador antigo, colocado sobre o destino encontrado, para não sobrepor o novo marcador
   que será colocado no destino da rota*/
+
   map.eachLayer((layer) => {
-    
-    //Polyline é a linha que representa a rota, LayerGroup é o grupo de camadas e Marker é o marcador
-    if (layer instanceof L.Polyline || layer instanceof L.LayerGroup || layer instanceof L.Marker) { 
+    if (layer instanceof L.Polyline) {
+        console.log("This is a Polyline.");
+        layer.remove();
+    }
+
+    if (layer instanceof L.Polygon) {
+        console.log("This is a Polygon.");
+        layer.remove();
+    }
+
+    if (layer instanceof L.LayerGroup) {
+        console.log("This is a Layer Group.");
+        layer.remove();
+    }
+
+    if (layer instanceof L.Control.Layers) {
         layer.remove();
     }
   });
-
-
-  //Remove a barra de rotas anterior
-  setTimeout(function(){
-    document.getElementsByClassName("leaflet-routing-container leaflet-bar leaflet-control")[i].style.display = "none";
-    i++;
-  }, 50);
-
-  //Cria a nova rota
-  setTimeout(function(){
-    var destino = map.getCenter();
-    L.Routing.control({
-      waypoints: [
-        userLocation,
-        destino
-      ],
-      collapsible: true,
-      lineOptions: { //Estilo da linha da rota
-        styles: [{ color: 'blue', opacity: 1, weight: 5 }]
-      }
-    }).addTo(map);
-  },200);
-
-  //Mostra o botão de mostrar/ocultar rota depois de traçar a rota
-  setTimeout(function(){
-    document.getElementById('botaoOcultarRota').style.display = "block";
-  },800);
-
-  getParkingLotData();//Chama a função para buscar os estacionamentos ao redor da localização
-}
-
-var displayed = true;
-var markers = new L.FeatureGroup();
-/*Chama a função para localizar os estacionamentos ao redor da localização
-Está desta forma porque várias funções são chamadas ao apertar o 'enter' após digitar o endereço:
-cliclar(), setRoute() e getParkingLotData(). clicar() é chamada primeiro pois
-é a função que faz a busca pelo endereço digitado. setRoute() é chamada
-em seguida para traçar a rota entre os pontos de origem e destino. Existe um delay
-associado a setRoute() para garantir que a rota seja traçada após a remoção da rota anterior.
-Por fim, getParkingLotData() é chamada para buscar os estacionamentos ao redor da localização encontrada.
-Todos esses delays podem ser ajustados para melhorar a experiência do usuário. */
-
-function getParkingLotData() {
-  setTimeout(function() {
-    getData();
-  }, 900);
-};
-
-
-function getData() {
-  // Remove os marcadores antigos (tirar isso faz com que as instruções da rota fiquem sobre a tela)
-  markers.clearLayers();
-  var bbox = map.getBounds();
-  console.log(bbox);
-  
-  // Define a área de busca para os estacionamentos
-  var overpassQueryBox = [
-      bbox._southWest.lat,
-      bbox._southWest.lng,
-      bbox._northEast.lat,
-      bbox._northEast.lng
-  ];
-  var overpassQuery = buildQuery(overpassQueryBox);
-
-  function buildQuery(overpassQueryBox) {
-      var query =
-          'https://overpass-api.de/api/interpreter?' +
-          'data=[out:xml][timeout:25];' +
-          '(' + 
-          'node["amenity"="parking"](' + overpassQueryBox + ');' +
-          'way["amenity"="parking"](' + overpassQueryBox + ');' +
-          'relation["amenity"="parking"](' + overpassQueryBox + ');' +
-          ');' +
-          'out%20center;';
-      console.log(query);
-      return query;
-  }
 
   $.get(overpassQuery, function(data) {
       var data = osmtogeojson(data);
@@ -229,35 +147,36 @@ function getData() {
   }, "xml"); //fecha $.get
 }
 
-//Funções auxiliares
-function abrirSidebar(){
-  event.stopImmediatePropagation();//Impede que o evento de clique se propague para o mapa
-  document.querySelector('#dialog').show();
+  //Remove a barra de rotas anterior
+    setTimeout(function(){
+        document.getElementsByClassName("leaflet-routing-container leaflet-bar leaflet-control")[i].style.display = "none";
+        i++;
+    }, 500);
+
+    //Cria a nova rota
+    setTimeout(function(){
+        var destino = map.getCenter();
+        L.Routing.control({
+            waypoints: [
+                userLocation,
+                destino
+            ]
+        }).addTo(map);
+    },2000);
 }
 
-function fecharSidebar(){
-  document.querySelector('#dialog').close();
-}
 
-function abrirTermosDeUso(){
-  document.querySelector('#modal2').show();
-}
+/********************************************MOCKS**********************************/
 
-function fecharTermosDeUso(){
-  document.querySelector('#modal2').close();
-}
+/*
+function mockLocation(inputValue){
 
-function fecharModalEstacionamento(){
-  document.querySelector('#modal').close();
-}
+  if(inputValue.toLowerCase() === "neo quimica arena"){
+    
+    map.setView([-23.545694237082536, -46.47390604019166], 17);
 
-document.getElementById('data').onclick = function(){
-  document.getElementById('data').innerHTML = "<i>today</i>26/11/2024";
-}
-
-document.getElementById('hora').onclick = function(){
-  document.getElementById('hora').innerHTML = "<i>schedule</i>19h30";
-}
+    var marker = L.marker([-23.544936895841495, -46.47334814071655]).addTo(map);
+    marker.bindPopup("<b>Neo Química Arena</b><br>Estádio do Corinthians").openPopup();
 
 function localizar(){
   if (navigator.geolocation) {
@@ -286,8 +205,7 @@ markers.on('click', function() {
   document.getElementById('hora').innerHTML = "<i>schedule</i>Hora";
   var index =  Math.floor(Math.random() * 51); // Make sure to assign this index in your feature properties
 
-  var estacionamentos = generateEstacionamentos();
-  let estacionamento = estacionamentos[index];
+    criarMarcadorEstacionamento(-23.546825323021206, -46.47388458251953, "Estacionamento 2");
 
   document.getElementById('nome-do-estacionamento').innerText = estacionamento.nome;
   document.getElementById('endereco-do-estacionamento').innerHTML = '<b><i>map</i></b> '+estacionamento.endereco;
@@ -301,7 +219,23 @@ markers.on('click', function() {
     } else {
       starRating += '<span class="fa fa-star" style="font-size: 24px"></span>'; // Estrela vazia
     }
+
+  if(inputValue.toLowerCase() === "estadio do morumbi"){
+        
+      map.setView([-23.597, -46.720], 17);
+  
+      var marker = L.marker([-23.597, -46.720]).addTo(map);
+      marker.bindPopup("<b>Estádio do Morumbi</b><br>Estádio do São Paulo").openPopup();
+  
+      //Colocar marcadores nos estacionamentos ao redor do estádio
+  
+      criarMarcadorEstacionamento(-23.597, -46.720, "Estacionamento 1");
+  
+      criarMarcadorEstacionamento(-23.597, -46.720, "Estacionamento 2");
+  
+      criarMarcadorEstacionamento(-23.597, -46.720, "Estacionamento 3");
   }
+
   document.getElementById('nota-do-estacionamento').innerHTML = starRating;
   document.getElementById('preco-hora').innerText = 'R$ ' + estacionamento.preco_hora + ',00 / hora';
   document.getElementById('preco-total').innerText = 'Total: R$ ' + estacionamento.preco_hora +',00';

@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vaga Certa - Cadastro de estacionamento</title>
+        <link rel="stylesheet" href="../../static/css/style.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+            <!--Beer CSS-->
+            <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css" rel="stylesheet">
+    
+            <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
+        
+            <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+        
+            <!-- Local -->
+            <script src="../../static/js/nav.js"></script>
+            <link rel="stylesheet" href="../../static/css/estacionamento.css">
+
+            <script>
+              function executarAcaoERedirecionar() {
+                  window.location.href = "analise-form-estacionamento.html";
+              }
+          </script>
+    </head>
+    <body>
+      <nav class="top" onclick="fecharSidebar()">
+        <button class="circle transparent absolute left" onclick="abrirSidebar()">
+          <i id="menu-icon-navbar" >menu</i>
+        </button>
+        <div class="field large prefix round fill">
+          <i class="front">search</i>
+          <input id="search">
+        </div>
+        <div>
+          <img class="logo-vaga-certa-nav" src="../../static/images/logo-vaga-certa-sem-fundo.png">
+        </div>      
+        <i class="extra absolute right" id="icone-user">account_circle</i>
+      </nav>
+
+          <main class="responsive max" onclick="fecharSidebar()">
+            <div class="form-card">
+                <div class="form-title">
+                    Cadastro de Estacionamento
+                </div>
+                <div>
+                    <form action="#">
+                        <div class="form-sect">
+                            <h4>Informações do dono</h4>
+                            <label for="nomeDono">Nome do dono</label>
+                            <input type="text" id="nomeDono">
+
+                            <label for="emailDono">Email:</label>
+                            <input type="text" id="nomeDono">
+
+                            <label for="telefone">Telefone:</label>
+                            <input id="telefone" type="text">
+
+                            <label for="cnpj">CNPJ:</label>
+                            <input id="cnpj" type="text">
+                        </div>
+                        <div class="form-sect">
+                            <h4>Informações do estacionamento</h4>
+
+                            <label for="nomeEstacionamento">Nome do estacionamento:</label>
+                            <input id="nomeEstacionamento" type="text">
+
+                            <label for="capacidade">Quantidade de vagas:</label>
+                            <input id="capacidade" type="number" min="0">
+
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco">
+
+                            <label for="custoHora">Preço da vaga por hora:</label>
+                            <input type="text">
+
+                            <div class="button-area">
+                              <a href="analise-form-estacionamento.html" class="btn back-btn">Cadastrar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </main>
+
+          <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
+            <nav class="drawer" onclick="fecharSidebar()">
+              <header>
+                <nav>
+                  <img class="circle" src="../../static/images/logo-vaga-certa-sem-fundo.png">
+                  <h6 class="max">Vaga Certa</h6>
+                  <button class="transparent circle large" onclick="fecharSidebar()">
+                    <i>close</i>
+                  </button>
+                </nav>
+              </header>
+              <a href="login.html" >
+                <i>inbox</i>
+                <span class="max">Inbox</span>
+                <b>24</b>
+              </a>
+              <a href="confirm.html">
+                <i>send</i>
+                <span>Outbox</span>
+              </a>
+              <a href="form-estacionamento.html">
+                <i>favorite</i>
+                <span>favorities</span>
+              </a>
+              <a>
+                <i>delete</i>
+                <span>Trash</span>
+              </a>
+              <hr>
+              <label>Labels</label>
+              <a>
+                <i>fiber_manual_record</i>
+                <span>Label</span>
+              </a>
+              <a>
+                <i>change_history</i>
+                <span>Label</span>
+              </a>
+              <a>
+                <i>stop</i>
+                <span>Label</span>
+              </a>
+            </nav>
+          </dialog>
+    </body>
+</html>
