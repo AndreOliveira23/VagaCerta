@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaga Certa - Página Inicial</title>
 
+     <!--Jquery CDN-->
+     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <!-- Leaflet CDN -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-    <!-- Leaflet Routing Machine -->
+    <!--Leaflet Routing machine-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
@@ -23,51 +25,50 @@
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.css" integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ==" crossorigin="">
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.9/dist/esri-leaflet-geocoder.js" integrity="sha512-QXchymy6PyEfYFQeOUuoz5pH5q9ng0eewZN8Sv0wvxq3ZhujTGF4eS/ySpnl6YfTQRWmA2Nn3Bezi9xuF8yNiw==" crossorigin=""></script>
 
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <!-- Leaflet CSS-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
 
-    <!-- Beer CSS -->
+    <!--Beer CSS-->
     <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css" rel="stylesheet">
     <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
 
-    <!-- CSS Local -->
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <!--CSS Local -->
+     <link rel="stylesheet" href="../../static/css/style.css">
+    
+     <!--API de localização dos estacionamentos-->
+     <script src="../../static/js/Permalink.js"></script>
+     <script src="../../static/js/osmtogeojson.js"></script>
+     <script src="../../static/js/Leaflet.EditInOSM.js"></script>
 
-    <!-- API de localização dos estacionamentos -->
-    <script src="Permalink.js"></script>
-    <script src="osmtogeojson.js"></script>
-    <script src="Leaflet.EditInOSM.js"></script>
-
-    <!-- CSS e JS para barra de pesquisa -->
+     <!-- CSS e JS para barra de pesquisa -->
     <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
     <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch/dist/geosearch.css" />
-    <script src="../../static/js/nav.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch/dist/geosearch.css"/>
     <script src="https://unpkg.com/leaflet-geosearch/dist/bundle.min.js"></script>
-
 
     <!-- Biblioteca de Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- Fonte customizada-->
-    <link href="https://fonts.cdnfonts.com/css/iciel-gotham?styles=115130" rel="stylesheet">
 </head>
-
 <body>
     <nav class="top" onclick="fecharSidebar()">
-        <button class="circle transparent absolute left" onclick="abrirSidebar()">
-            <i id="menu-icon-navbar">menu</i>
-        </button>
-        <div class="field large prefix round fill">
-            <i class="front">search</i>
-            <input id="search">
-        </div>
-        <div>
-            <img class="logo-vaga-certa-nav" src="../../static/images/logo-vaga-certa-sem-fundo.png">
-        </div>
-        <i class="extra absolute right" id="icone-user">account_circle</i>
+
+      <button class="circle transparent absolute left" onclick="abrirSidebar()">
+        <i id="menu-icon-navbar" >menu</i>
+      </button>
+
+      <div class="field large prefix round fill">
+        <i class="front">search</i>
+        <input id="search">
+      </div>
+      <div class="absolute right" id="ola-usuario">
+        
+      </div>
+
     </nav>
 
       <main class="responsive max">
@@ -82,10 +83,6 @@
         <i>-</i>
       </button>
 
-      <button class="padding primary absolute right middle" id="botaoGPS" onclick="localizar()">
-        <i>gps_fixed</i>
-      </button>
-      
       <button class="padding primary absolute right middle" id="botaoOcultarRota" onclick="botaoRota()">
         <p id="rota">Ocultar rota</p>
       </button>
@@ -122,122 +119,101 @@
       </dialog>
       
       <!--Modal com informações dos estacionamentos geradas dinamicamente-->
-      <dialog id="modal" class=" blur inverse-surface ">
+      <dialog id="modal" class="inverse-surface">
         <div class="grid">
-          <div class="s12"><h5 id="nome-do-estacionamento"></h5></div>
+          <div class="s12"> <h5 id="nome-do-estacionamento">Park do Zé</h5></div>
           <div class="s6" id="nota-do-estacionamento"> </div>
         </div>
 
-        <div id="endereco-do-estacionamento"></div>
-        <div id="telefone-estacionamento"><b><i>phone</i></b> (11) 12345-6789 </div>
+        <i>map</i><div id="endereco-do-estacionamento"></div>
+        <div><b><i>phone</i></b>  (11) 12345-6789</div>
 
         <div class="grid">
             <div class="s6 green">
-              <button class="green center extra bold" id="porcentagem-ocupacao"></button>
+              <button class="green center extra" id="porcentagem-ocupacao"></button>
             </div>
 
-            <div class="s6 grey3">
-              <button class="grey3 center extra bold"><i>man</i>80m do seu destino</button>
+            <div class="s6 grey">
+              <button class="grey center extra"><i>man</i>80m do seu destino</button>
             </div>
         </div>
 
-        <div class="grid" id="div-data-horario">
-          <div class="s12 grey3 center-align middle-align" id="dia-e-horario-da-reserva">
+        <div class="grid">
+          <div class="s12 grey">
               <center>
-                <h5 id="pergunta-reserva">Qual o dia e horário da reserva?</h5>
+                <h5>Qual o dia e horário da reserva?</h5>
+                  <h6> Chegada </h6>
+                    <div class="input-wrapper" style="position: relative;">
+                      <button id="dataChegada">
+                        <i>📅</i>
+                        <span>Selecionar Data</span>
+                      </button>
+                      <input type="date" id="dataChegadaInput" style="position: absolute; top: 0; left: 0;" onchange="updateDataChegada(this)">
+                    </div>
 
-                  <button id="data">
-                    <i>today</i>
-                    <span>Data</span>
-                    <input type="date">
-                  </button>
+                    <div class="input-wrapper" style="position: relative;">
+                      <button id="horaChegada">
+                        <i>⏰</i>
+                        <span>Selecionar Horário</span>
+                      </button>
+                      <input type="time" id="horaChegadaInput" style="position: absolute; top: 0; left: 0;" onchange="updateHoraChegada(this)">
+                    </div>
 
-                  <button id="hora">
-                    <i>schedule</i>
-                    <span>Hora</span>
-                    <input type="time">
-                  </button>
+                  <h6> Saída </h6> 
+                    <div class="input-wrapper" style="position: relative;">
+                      <button id="dataSaida">
+                        <i>📅</i>
+                        <span>Selecionar Data</span>
+                      </button>
+                      <input type="date" id="dataSaidaInput" style="position: absolute; top: 0; left: 0;" onchange="updateDataSaida(this)">
+                    </div>
+
+                    <div class="input-wrapper" style="position: relative;">
+                      <button id="horaSaida">
+                        <i>⏰</i>
+                        <span>Selecionar Horário</span>
+                      </button>
+                      <input type="time" id="horaSaidaInput" style="position: absolute; top: 0; left: 0;" onchange="updateHoraSaida(this)">
+                    </div>
              </center>
         </div>
+
+        <div id="resultados">
+          <p>Data e Hora de Chegada: <span id="dataHoraChegada">Nenhuma</span></p>
+          <p>Data e Hora de Saída: <span id="dataHoraSaida">Nenhuma</span></p>
+          <p>Total de Horas de Reserva: <span id="totalHoras">0</span> horas</p>
+        </div>
+
       </div>
 
         <div class="grid">
-          <div class="s6 grey3">
-            <button class="grey3 center black-text bold" id="preco-hora"></button>
+          <div class="s6 grey">
+            <button class="grey center black-text" id = "valor"></button>
           </div>
 
-          <div class="s6 grey3">
-            <button class="grey3 center black-text bold" id="preco-total"></button>
+          <div class="s6 grey">
+            <button class="grey center" id = "total"></button>
           </div>
       </div>
 
       <div class="grid" id="foto-estacionamento">
 
-    <main class="responsive max">
-        <div id="map" onclick="fecharSidebar()"></div>
-        <div class="panel-footeer">
-            <a href="{% url 'intra' %}" class="btn back-btn">Voltar</a>
-            <a href="{% url 'login' %}" class="btn next-btn">Próximo</a>
+        <div class="s6">
+          <img src="../../static/images/img2.jpg" alt="Imagem do estacionamento" style="width:100%; height:100%;">
         </div>
-    </main>
 
-    <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
-        <nav class="drawer" onclick="fecharSidebar()">
-            <header>
-                <nav>
-                    <img class="circle" src="../../static/images/logo-vaga-certa-sem-fundo.png">
-                    <h6 class="max">Vaga Certa</h6>
-                    <button class="transparent circle large" onclick="fecharSidebar()">
-                        <i>close</i>
-                    </button>
-                </nav>
-            </header>
-            <a href="{% url 'login' %}">
-                <i>inbox</i>
-                <span class="max">Inbox</span>
-                <b>24</b>
-            </a>
-            <a href="{% url 'confirmation' %}">
-                <i>send</i>
-                <span>Outbox</span>
-            </a>
-            <a href="{% url 'form' %}">
-                <i>favorite</i>
-                <span>Favorities</span>
-            </a>
-            <a>
-                <i>delete</i>
-                <span>Trash</span>
-            </a>
-            <hr>
-            <label>Labels</label>
-            <a>
-                <i>fiber_manual_record</i>
-                <span>Label</span>
-            </a>
-            <a>
-                <i>change_history</i>
-                <span>Label</span>
-            </a>
-            <a>
-                <i>stop</i>
-                <span>Label</span>
-            </a>
-        </nav>
-    </dialog>
+        <div class="s6">
+          <img src="../../static/images/img3.jpg" alt="Imagem do estacionamento" style="width:100%; height:100%;">
+        </div>
+      </div>
 
-    <dialog class="modal" id="modal">
-        <h5>Modal</h5>
-        <div>Some text here</div>
         <nav class="right-align no-space">
-            <button class="transparent link" onclick="fechaModal()">Cancel</button>
-            <button class="transparent link" onclick="fechaModal()">Confirm</button>
-          <button data-ui="#modal" class="bold">Voltar</button>
-          <a href="{% url 'login' %}"><button class="bold">Reservar vaga</button></a>
+          <button data-ui="#modal">Voltar</button>
+          <a href="{% url 'login' %}"><button >Reservar vaga</button></a>
         </nav>
-    </dialog>
 
-    <script src="index.js"></script>
+      </dialog>
+
+      <script src="../../static/js/index.js"></script>    
 </body>
-
 </html>
