@@ -195,7 +195,6 @@ div.results.active {
   align-items: center;
   bottom: 0;
   left: 0; 
-  z-index: 1000; 
 }
 
 .btn {
