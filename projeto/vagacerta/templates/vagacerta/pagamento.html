@@ -120,49 +120,35 @@
             </div>
         </div>
 
+        <!--Sidebar-->
         <dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
-            <nav class="drawer" onclick="fecharSidebar()">
-              <header>
-                <nav>
-                  <img class="circle" src="../../static/images/logo-vaga-certa-sem-fundo.png">
-                  <h6 class="max">Vaga Certa</h6>
-                  <button class="transparent circle large" onclick="fecharSidebar()">
-                    <i>close</i>
-                  </button>
-                </nav>
-              </header>
-              <a>
-                <i>inbox</i>
-                <span class="max">Inbox</span>
-                <b>24</b>
-              </a>
-              <a>
-                <i>send</i>
-                <span>Outbox</span>
-              </a>
-              <a>
-                <i>favorite</i>
-                <span>favorities</span>
-              </a>
-              <a>
-                <i>delete</i>
-                <span>Trash</span>
-              </a>
-              <hr>
-              <label>Labels</label>
-              <a>
-                <i>fiber_manual_record</i>
-                <span>Label</span>
-              </a>
-              <a>
-                <i>change_history</i>
-                <span>Label</span>
-              </a>
-              <a>
-                <i>stop</i>
-                <span>Label</span>
-              </a>
-            </nav>
-          </dialog>
+          <nav class="drawer" onclick="fecharSidebar()">
+            <header>
+              <nav>
+                <img class="circle" src="../../static/images/logo-vaga-certa.png">
+                <h6>Vaga Certa</h6>
+                <button class="transparent circle large" onclick="fecharSidebar()">
+                  <i>close</i>
+                </button>
+              </nav>
+            </header>
+            <a href="login.html">
+              <i>login</i>
+              <span>Fazer login</span> 
+            </a>
+            <a>
+              <i>track</i>
+              <span id="inbox">Histórico de reservas</span>
+            </a>
+            <a>
+              <i>notifications</i>
+              <span>Notificações</span>
+            </a>
+            <a>
+              <i>favorite</i>
+              <span>Minhas avaliações</span>
+            </a>
+          </nav>
+        </dialog>
     </body>
 </html>
