@@ -22,14 +22,6 @@
     </script>
 </head>
 <body>
-    <!-- <div id = "navbar">
-        <div id="logo-vaga-certa"><img id="logo" src="logo-vaga-certa.png"></div>
-        <input id="search" type="text" placeholder="  Para onde você vai?" onkeydown="handleSearch(), getParkingLotData()">
-        <button onclick="handleSearch()">Search</button>
-        <div id="icone-usuario"><i class=" medium material-icons">account_circle</i></div>
-        <p id="ola-usuario">Olá, Pedro!</p>
-    </div> -->
-
     <nav class="top" onclick="fecharSidebar()">
       <button class="circle transparent absolute left" onclick="abrirSidebar()">
         <i id="menu-icon-navbar" >menu</i>
@@ -44,33 +36,35 @@
       <i class="extra absolute right" id="icone-user">account_circle</i>
     </nav>
 
-      <main class="responsive max" onclick="fecharSidebar()">
+    <main class="responsive max" onclick="fecharSidebar()">
 
         <h2 class="blue-box">Log in</h2>
 
         <div class="space">
-          <div class="progress-bar">
-              <div class="step active"></div>
-              <div class="step"></div>
-              <div class="step"></div>
-              <div class="step"></div>
-              <div class="step"></div>
-          </div>
+            <div class="progress-bar">
+                <div class="step active"></div>
+                <div class="step"></div>
+                <div class="step"></div>
+                <div class="step"></div>
+                <div class="step"></div>
+            </div>
         </div>
+
         <div class="container">
             <div class="form">
                 <h2>Faça o seu login!</h2>
-                <form action="#">
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
                     <section class="question-sect">
-                        <label for="username1">Usuário*:</label>
-                        <input type="text" id="username1" name="username1" required>
+                        <label for="username">Usuário*:</label>
+                        <input type="text" id="username" name="email" required>
                     </section>
                     <section class="question-sect">
-                        <label for="password1">Senha*:</label>
-                        <input type="password" id="password1" name="password1" required>    
+                        <label for="password">Senha*:</label>
+                        <input type="password" id="password" name="password" required>    
                     </section>
                     <section>
-                        <button type="submit">Entrar</button>
+                        <button type="submit" name="action" value="login">Entrar</button>
                     </section>
                     <section>
                         <p>Ainda não tem uma conta? <a onclick="abrirForm()">Cadastre-se!</a></p>
@@ -80,17 +74,18 @@
 
             <div class="form add" id="signup-form">
                 <h2>Ainda não tem uma conta? Crie agora!</h2>
-                <form action="#">
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
                     <section class="question-sect">
                         <label for="username2">Usuário:</label>
-                        <input type="text" id="username2" name="username2" required>
+                        <input type="text" id="username2" name="email" required>
                     </section>
                     <section class="question-sect">
                         <label for="password2">Senha:</label>
-                        <input type="password" id="password2" name="password2" required>
+                        <input type="password" id="password2" name="password" required>
                     </section>
                     <section>
-                        <button type="submit">Cadastrar</button>
+                        <button type="submit" name="action" value="register">Cadastrar</button>
                     </section>
                 </form>
             </div>
@@ -99,49 +94,8 @@
         <div class="panel-footeer">
           <a href="{% url 'index' %}" class="btn back-btn">Voltar</a>
           <a href="{% url 'confirmation' %}" class="btn next-btn">Próximo</a>
-      </div>
-      </main>
-
-<!--Sidebar-->
-<dialog class="left no-padding" id="dialog" onclick="fecharSidebar()">
-  <nav class="drawer" onclick="fecharSidebar()">
-    <header>
-      <nav>
-        <img class="circle" src="../../static/images/logo-vaga-certa.png">
-        <h6>Vaga Certa</h6>
-        <button class="transparent circle large" onclick="fecharSidebar()">
-          <i>close</i>
-        </button>
-      </nav>
-    </header>
-    <a href="{% url 'login' %}">
-      <i>login</i>
-      <span>Fazer login</span> 
-    </a>
-    <a>
-      <i>track</i>
-      <span id="inbox">Histórico de reservas</span>
-    </a>
-    <a>
-      <i>notifications</i>
-      <span>Notificações</span>
-    </a>
-    <a>
-      <i>favorite</i>
-      <span>Minhas avaliações</span>
-    </a>
-  </nav>
-</dialog>
-
-    <!-- <div id="menu-icon">
-        <div class="menu-icon" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
         </div>
-    </div> -->
-
-
+    </main>
 
 </body>
 </html>
