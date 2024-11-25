@@ -27,7 +27,7 @@ def login_page(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('pagamento')  
+                return redirect('confirmation')  # Alterado para redirecionar para 'confirmation'
             else:
                 messages.error(request, "Credenciais inválidas.")
   
