@@ -97,8 +97,8 @@
         </div>
 
         <div class="panel-footeer">
-          <a href="index.html" class="btn back-btn">Voltar</a>
-          <a href="confirmation.html" class="btn next-btn">Próximo</a>
+          <a href="{% url 'index' %}" class="btn back-btn">Voltar</a>
+          <a href="{% url 'confirmation' %}" class="btn next-btn">Próximo</a>
       </div>
       </main>
 
@@ -114,7 +114,7 @@
         </button>
       </nav>
     </header>
-    <a href="login.html">
+    <a href="{% url 'login' %}">
       <i>login</i>
       <span>Fazer login</span> 
     </a>

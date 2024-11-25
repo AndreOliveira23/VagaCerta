@@ -71,7 +71,7 @@
                     <p>Fim: <span id="fim">{{ fim }}</span></p>
                   </div>
                 </div>
-                <a href="index.html" class="image-button">
+                <a href="{% url 'index' %}" class="image-button">
                   <img class="foto" src="../../static/images/img2.jpg" alt="Foto do estacionamento">
                 </a>
               </div>
@@ -81,7 +81,7 @@
                     <p>Valor:<span id="valor"> R$ {{ valor }} </span></p>
                   </div>
                 </div>
-                <a href="index.html" class="image-button">
+                <a href="{% url 'index' %}" class="image-button">
                   <img class="foto" src="../../static/images/Mapa.png" alt="Local do estacionamento">
                 </a>
               </div>
@@ -89,8 +89,8 @@
         </div>
       </section>
       <div class="panel-footeer">
-        <a href="login.html" class="btn back-btn">Voltar</a>
-        <a href="pagamento.html" class="btn next-btn">Próximo</a>
+        <a href="{% url 'login' %}" class="btn back-btn">Voltar</a>
+        <a href="{% url 'pagamento' %}" class="btn next-btn">Próximo</a>
     </div>
     </main>
 
@@ -106,7 +106,7 @@
             </button>
           </nav>
         </header>
-        <a href="login.html">
+        <a href="{% url 'login' %}">
           <i>login</i>
           <span>Fazer login</span> 
         </a>

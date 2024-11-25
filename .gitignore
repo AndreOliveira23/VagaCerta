@@ -5,3 +5,4 @@ node_modules
 *.json
 swap.sh
 env/
+*.pyc
