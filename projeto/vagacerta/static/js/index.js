@@ -79,32 +79,117 @@ var parkingIcon = L.icon({
   popupAnchor: [0, -15] // Âncora do popup em relação ao ícone
 });
 
-// Função para exibir os estacionamentos cadastrados no mapa
+function abrirModalEstacionamento(estacionamento) {
+  // Preenche o modal com os dados do estacionamento
+  document.getElementById('nome-do-estacionamento').innerText = estacionamento.fields.nome;
+  document.getElementById('endereco-do-estacionamento').innerText = estacionamento.fields.endereco;
+  document.getElementById('porcentagem-ocupacao').innerText = `Vagas disponíveis: ${estacionamento.fields.capacidade - (estacionamento.fields.ocupadas || 0)}`;
+  document.getElementById('valor').innerText = `Preço por hora: R$ ${estacionamento.fields.preco_por_hora}`;
+  document.getElementById('foto-estacionamento').innerHTML = `
+      <div class="s6">
+        <img src="/static/images/img2.jpg" alt="Imagem do estacionamento" style="width:100%; height:100%;">
+      </div>
+      <div class="s6">
+        <img src="/static/images/img3.jpg" alt="Imagem do estacionamento" style="width:100%; height:100%;">
+      </div>
+  `;
+
+  // Abre o modal
+  const modal = document.getElementById('modal');
+  modal.showModal();
+}
+
+// Função para exibir os estacionamentos com marcadores e adicionar evento de clique
 function exibirEstacionamentos() {
-  // Obtém o JSON dos estacionamentos do elemento HTML
   var estacionamentosData = JSON.parse(document.getElementById('estacionamentos-data').textContent);
 
   estacionamentosData.forEach(function (estacionamento) {
       var lat = estacionamento.fields.latitude;
       var lng = estacionamento.fields.longitude;
-      var nome = estacionamento.fields.nome;
-      var endereco = estacionamento.fields.endereco;
-      var capacidade = estacionamento.fields.capacidade;
-      var precoPorHora = estacionamento.fields.preco_por_hora;
-      var vagasOcupadas = estacionamento.fields.ocupadas || 0; // Assumindo que vagas ocupadas estão disponíveis no backend
-      var vagasDisponiveis = capacidade - vagasOcupadas;
 
       // Adiciona marcador ao mapa
       var marker = L.marker([lat, lng], { icon: parkingIcon }).addTo(map);
 
-      // Adiciona popup ao marcador
-      marker.bindPopup(`
-          <b>${nome}</b><br>
-          <p><strong>Endereço:</strong> ${endereco}</p>
-          <p><strong>Preço por hora:</strong> R$ ${precoPorHora}</p>
-          <p><strong>Vagas disponíveis:</strong> ${vagasDisponiveis}</p>
-      `);
+      // Adiciona evento de clique para abrir o modal
+      marker.on('click', function () {
+          abrirModalEstacionamento(estacionamento);
+      });
   });
+}
+function isValidDate(dateString) {
+  // Regex para validar formato YYYY-MM-DD
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  return regex.test(dateString) && !isNaN(new Date(dateString).getTime());
+}
+
+function isValidTime(timeString) {
+  // Regex para validar formato HH:MM
+  const regex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+  return regex.test(timeString);
+}
+
+function updateDataChegada(input) {
+  if (isValidDate(input.value)) {
+      document.getElementById('dataHoraChegada').innerText = `${input.value} ${document.getElementById('horaChegadaInput').value || ''}`;
+      calcularTotalHoras();
+  } else {
+      alert('Insira uma data válida no formato YYYY-MM-DD.');
+      input.value = '';
+  }
+}
+
+function updateHoraChegada(input) {
+  if (isValidTime(input.value)) {
+      document.getElementById('dataHoraChegada').innerText = `${document.getElementById('dataChegadaInput').value || ''} ${input.value}`;
+      calcularTotalHoras();
+  } else {
+      alert('Insira um horário válido no formato HH:MM.');
+      input.value = '';
+  }
+}
+
+function updateDataSaida(input) {
+  if (isValidDate(input.value)) {
+      document.getElementById('dataHoraSaida').innerText = `${input.value} ${document.getElementById('horaSaidaInput').value || ''}`;
+      calcularTotalHoras();
+  } else {
+      alert('Insira uma data válida no formato YYYY-MM-DD.');
+      input.value = '';
+  }
+}
+
+function updateHoraSaida(input) {
+  if (isValidTime(input.value)) {
+      document.getElementById('dataHoraSaida').innerText = `${document.getElementById('dataSaidaInput').value || ''} ${input.value}`;
+      calcularTotalHoras();
+  } else {
+      alert('Insira um horário válido no formato HH:MM.');
+      input.value = '';
+  }
+}
+
+function calcularTotalHoras() {
+  const chegada = new Date(`${document.getElementById('dataChegadaInput').value}T${document.getElementById('horaChegadaInput').value}`);
+  const saida = new Date(`${document.getElementById('dataSaidaInput').value}T${document.getElementById('horaSaidaInput').value}`);
+  
+  if (chegada && saida && saida > chegada) {
+      const diff = Math.abs(saida - chegada) / 36e5; // Diferença em horas
+      document.getElementById('totalHoras').innerText = diff.toFixed(1);
+  } else {
+      document.getElementById('totalHoras').innerText = '0';
+  }
+}
+
+function calcularTotal() {
+  const totalHoras = calcularTotalHoras();
+  const precoPorHora = parseFloat(document.getElementById('precoPorHora').value);
+
+  if (!isNaN(precoPorHora) && totalHoras > 0) {
+      const precoTotal = totalHoras * precoPorHora;
+      document.getElementById('precoTotal').innerText = `R$ ${precoTotal.toFixed(2)}`;
+  } else {
+      document.getElementById('precoTotal').innerText = 'R$ 0.00';
+  }
 }
 
 // Função para localizar o usuário
@@ -122,3 +207,9 @@ navigator.geolocation.getCurrentPosition(function (position) {
 
 // Chama a função para exibir os estacionamentos no mapa
 exibirEstacionamentos();
+
+document.getElementById('search').addEventListener('input', function (e) {
+  const query = e.target.value.toLowerCase();
+  console.log('Buscando por:', query);
+  // Adicione aqui a lógica para filtrar ou pesquisar.
+});
