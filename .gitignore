@@ -1,5 +1,7 @@
-projeto/vagacerta/migrations/
-projeto/vagacerta/__pycache__/
+projeto/db.sqlite3
+projeto/projeto/__pycache__/*
+projeto/vagacerta/migrations/*
+projeto/vagacerta/__pycache__/*
 RP2.code-workspace
 node_modules
 *.json
