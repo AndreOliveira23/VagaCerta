@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from .models import Estacionamento, DonoDeEstacionamento
+from django.core.serializers import serialize
+import requests
 
 # Create your views here.
 def login_page(request):
@@ -35,7 +37,11 @@ def login_page(request):
     return render(request, 'vagacerta/login.html')
 
 def index_page(request):
-    return render(request, 'vagacerta/index.html')
+    estacionamentos = Estacionamento.objects.all()
+    estacionamentos_json = serialize('json', estacionamentos, fields=(
+        'nome', 'latitude', 'longitude', 'endereco', 'capacidade', 'preco_por_hora', 'ocupadas'
+    ))
+    return render(request, 'vagacerta/index.html', {'estacionamentos': estacionamentos_json})
 
 def searchBar(request):
     return render(request, 'vagacerta/search-bar.html')
@@ -45,6 +51,31 @@ def confirmation(request):
 
 def analise_form_estacionamento(request):
     return render(request, 'vagacerta/analise-form-estacionamento.html')
+
+def get_coordinates_from_address(address):
+    """Função para obter latitude e longitude de um endereço usando Nominatim API"""
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {
+        'q': address,
+        'format': 'json',
+        'limit': 1,
+    }
+    headers = {
+        'User-Agent': 'VagaCertaApp/1.0 (email@example.com)'  # Substitua pelo seu e-mail
+    }
+    try:
+        response = requests.get(url, params=params, headers=headers)
+        print(f"URL da requisição: {response.url}")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Resposta da API: {data}")
+            if data:
+                return float(data[0]['lat']), float(data[0]['lon'])
+        else:
+            print(f"Erro na API: {response.status_code}")
+    except Exception as e:
+        print(f"Erro ao acessar a API: {e}")
+    return None, None
 
 def form_estacionamento(request):
     if request.method == 'POST':
@@ -70,6 +101,12 @@ def form_estacionamento(request):
             return redirect('form')
 
         try:
+            latitude, longitude = get_coordinates_from_address(endereco)
+            if not latitude or not longitude:
+                messages.error(request, "Endereço inválido. Não foi possível obter as coordenadas.")
+                print("deu erro")
+                return redirect('form')
+            
             # Verifica se o dono já existe
             dono, created = DonoDeEstacionamento.objects.get_or_create(
                 email=email_dono,
@@ -86,7 +123,9 @@ def form_estacionamento(request):
                 endereco=endereco,
                 capacidade=int(capacidade),
                 preco_por_hora=float(custo_hora),  # Converte custo_hora para float
-                dono=dono
+                dono=dono,
+                latitude=latitude,
+                longitude=longitude
             )
             print(f"Estacionamento criado: {estacionamento}")
 

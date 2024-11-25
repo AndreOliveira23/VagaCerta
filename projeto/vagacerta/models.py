@@ -28,6 +28,8 @@ class Estacionamento(models.Model):
     capacidade = models.IntegerField()
     dono = models.ForeignKey(DonoDeEstacionamento, on_delete=models.CASCADE, related_name='estacionamentos')
     preco_por_hora = models.DecimalField(max_digits=10, decimal_places=2)
+    latitude = models.FloatField()
+    longitude = models.FloatField() 
 
     def __str__(self):
         return self.nome
