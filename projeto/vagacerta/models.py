@@ -27,6 +27,7 @@ class Estacionamento(models.Model):
     endereco = models.TextField()
     capacidade = models.IntegerField()
     dono = models.ForeignKey(DonoDeEstacionamento, on_delete=models.CASCADE, related_name='estacionamentos')
+    preco_por_hora = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.nome

@@ -44,38 +44,39 @@
                     Cadastro de Estacionamento
                 </div>
                 <div>
-                    <form action="#">
+                  <form action="{% url 'form' %}" method="POST">
+                    {% csrf_token %}
                         <div class="form-sect">
                             <h4>Informações do dono</h4>
                             <label for="nomeDono">Nome do dono</label>
-                            <input type="text" id="nomeDono">
+                            <input type="text" id="nomeDono" name="nomeDono">
 
                             <label for="emailDono">Email:</label>
-                            <input type="text" id="nomeDono">
+                            <input type="text" id="emailDono" name="emailDono">
 
                             <label for="telefone">Telefone:</label>
-                            <input id="telefone" type="text">
+                            <input id="telefone" type="text" name="telefone">
 
                             <label for="cnpj">CNPJ:</label>
-                            <input id="cnpj" type="text">
+                            <input id="cnpj" type="text" name="cnpj">
                         </div>
                         <div class="form-sect">
                             <h4>Informações do estacionamento</h4>
 
                             <label for="nomeEstacionamento">Nome do estacionamento:</label>
-                            <input id="nomeEstacionamento" type="text">
-
+                            <input id="nomeEstacionamento" type="text" name="nomeEstacionamento">
+                        
                             <label for="capacidade">Quantidade de vagas:</label>
-                            <input id="capacidade" type="number" min="0">
-
+                            <input id="capacidade" type="number" min="0" name="capacidade">
+                        
                             <label for="endereco">Endereço</label>
-                            <input type="text" id="endereco">
+                            <input type="text" id="endereco" name="endereco">
 
                             <label for="custoHora">Preço da vaga por hora:</label>
-                            <input type="text">
+                            <input type="text" id="custoHora" name="custoHora">
 
                             <div class="button-area">
-                              <a href="{% url 'analise' %}" class="btn back-btn">Cadastrar</a>
+                              <button type="submit" class="btn back-btn">Cadastrar</button>
                             </div>
                         </div>
                     </form>
