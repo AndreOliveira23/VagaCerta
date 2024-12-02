@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from .models import Estacionamento, DonoDeEstacionamento
+from .models import Estacionamento, DonoDeEstacionamento, Reserva
 from django.core.serializers import serialize
 import requests
+from datetime import datetime
+from decimal import Decimal
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def login_page(request):
@@ -36,18 +39,78 @@ def login_page(request):
   
     return render(request, 'vagacerta/login.html')
 
-def index_page(request):
+def index_page(request):       
     estacionamentos = Estacionamento.objects.all()
     estacionamentos_json = serialize('json', estacionamentos, fields=(
         'nome', 'latitude', 'longitude', 'endereco', 'capacidade', 'preco_por_hora', 'ocupadas'
     ))
     return render(request, 'vagacerta/index.html', {'estacionamentos': estacionamentos_json})
 
+def form_reserva(request):
+    if request.method == 'POST':
+        estacionamento = 'Park do Zé'
+        dados_estacionamento = Estacionamento.objects.get(nome=estacionamento)
+
+        nome_reserva = 'Tiago'
+
+        data_chegada = request.POST.get('data_chegada')
+        hora_chegada = request.POST.get('hora_chegada')
+        data_saida = request.POST.get('data_saida')
+        hora_saida = request.POST.get('hora_saida')
+
+        # Supondo que o motorista e a vaga são obtidos de outra forma
+
+        preco_por_hora = dados_estacionamento.preco_por_hora
+        # Parse das datas e horas
+        chegada = datetime.strptime(f"{data_chegada} {hora_chegada}", "%Y-%m-%d %H:%M")
+        saida = datetime.strptime(f"{data_saida} {hora_saida}", "%Y-%m-%d %H:%M")
+
+        if chegada >= saida:
+            messages.error(request, "Horário de saída deve ser posterior ao de chegada.")
+            return redirect('form_reserva')
+
+        # Cálculo do total de horas
+        diff_horas = Decimal((saida - chegada).total_seconds() / 3600)
+
+        # Cálculo do valor total
+        valor_total = round(preco_por_hora * diff_horas, 2)
+
+        try:
+            reserva = Reserva.objects.create(
+                nome=nome_reserva,
+                data_reserva=data_chegada,
+                hora_inicio=hora_chegada,
+                hora_fim=hora_saida,
+                valor_total=valor_total  # Atualize com a lógica de cálculo se necessário
+            )
+
+            messages.success(request, f"Reserva {reserva.id} criada com sucesso!")
+            return redirect('login')  # Redireciona para página de confirmação
+        except Exception as e:
+            print(f"Erro ao criar reserva: {e}")
+            messages.error(request, "Ocorreu um erro ao criar a reserva.")
+            return redirect('index')
+
+    return render(request, 'vagacerta/login.html')
+
 def searchBar(request):
     return render(request, 'vagacerta/search-bar.html')
 
 def confirmation(request):
-    return render(request, 'vagacerta/confirmation.html')
+    # Busca a reserva com o nome "Tiago"
+    reserva = get_object_or_404(Reserva, nome="Tiago")
+
+    context = {
+        'nome_estacionamento': "Park do Zé",  # Nome fixo do estacionamento
+        'endereço': "USP LESTE",  # Ajuste conforme necessário
+        'telefone': "(11) 12345-6789",  # Adicione se existir
+        'inicio': f"{reserva.data_reserva} {reserva.hora_inicio}",
+        'fim': f"{reserva.data_reserva} {reserva.hora_fim}",
+        'valor': reserva.valor_total,
+    }
+
+    return render(request, 'vagacerta/confirmation.html', context)
+
 
 def analise_form_estacionamento(request):
     return render(request, 'vagacerta/analise-form-estacionamento.html')
@@ -145,4 +208,24 @@ def pagamento(request):
     return render(request, 'vagacerta/pagamento.html')
 
 def recibo(request):
-    return render(request, 'vagacerta/recibo.html')
+    # Busca a reserva com o nome "Tiago". Ajuste conforme necessário.
+    reserva = get_object_or_404(Reserva, nome="Tiago")
+
+    # Dados fixos ou provenientes de outro modelo
+    nome_estacionamento = "Park do Zé"
+    endereço = "USP LESTE"
+    telefone = "(11) 12345-6789"
+    forma_pagamento = "Cartão de Crédito"  # Exemplo de forma de pagamento
+
+    context = {
+        'num_compra': reserva.id,  # Usando o ID da reserva como número da compra
+        'nome_estacionamento': nome_estacionamento,
+        'endereço': endereço,
+        'telefone': telefone,
+        'inicio': f"{reserva.data_reserva} {reserva.hora_inicio}",
+        'fim': f"{reserva.data_reserva} {reserva.hora_fim}",
+        'valor': reserva.valor_total,
+        'pagamento': forma_pagamento,
+    }
+
+    return render(request, 'vagacerta/recibo.html', context)

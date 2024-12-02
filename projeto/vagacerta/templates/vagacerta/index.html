@@ -147,30 +147,37 @@
         <div class="grid">
           <div class="s12 grey">
               <center>
-                <h5>Qual o dia e horário da reserva?</h5>
-                <h6> Chegada </h6>
-                  <div class="input-wrapper">
-                      <label for="dataChegadaInput">Data:</label>
-                      <input type="text" id="dataChegadaInput" placeholder="YYYY-MM-DD" onchange="updateDataChegada(this)">
-                  </div>
-
-                  <div class="input-wrapper">
-                      <label for="horaChegadaInput">Horário:</label>
-                      <input type="text" id="horaChegadaInput" placeholder="HH:MM" onchange="updateHoraChegada(this)">
-                  </div>
-
-                  <h6> Saída </h6>
-                  <div class="input-wrapper">
-                      <label for="dataSaidaInput">Data:</label>
-                      <input type="text" id="dataSaidaInput" placeholder="YYYY-MM-DD" onchange="updateDataSaida(this)">
-                  </div>
-
-                  <div class="input-wrapper">
-                      <label for="horaSaidaInput">Horário:</label>
-                      <input type="text" id="horaSaidaInput" placeholder="HH:MM" onchange="updateHoraSaida(this)">
-                  </div>                
-             </center>
-        </div>
+                  <h5>Qual o dia e horário da reserva?</h5>
+                  <form action="{% url 'form_reserva' %}" method="POST">
+                      {% csrf_token %}
+                      
+                      <h6> Chegada </h6>
+                      <div class="input-wrapper">
+                          <label for="dataChegadaInput">Data:</label>
+                          <input type="text" id="dataChegadaInput" name="data_chegada" placeholder="YYYY-MM-DD">
+                      </div>
+      
+                      <div class="input-wrapper">
+                          <label for="horaChegadaInput">Horário:</label>
+                          <input type="text" id="horaChegadaInput" name="hora_chegada" placeholder="HH:MM">
+                      </div>
+      
+                      <h6> Saída </h6>
+                      <div class="input-wrapper">
+                          <label for="dataSaidaInput">Data:</label>
+                          <input type="text" id="dataSaidaInput" name="data_saida" placeholder="YYYY-MM-DD">
+                      </div>
+      
+                      <div class="input-wrapper">
+                          <label for="horaSaidaInput">Horário:</label>
+                          <input type="text" id="horaSaidaInput" name="hora_saida" placeholder="HH:MM">
+                      </div> 
+      
+                      <a href="{% url 'login' %}"><button type="submit" class="btn">Reservar</button></a>
+                  </form>
+              </center>
+          </div>
+      
 
         <div id="resultados">
           <p>Data e Hora de Chegada: <span id="dataHoraChegada">Nenhuma</span></p>
@@ -203,7 +210,7 @@
 
       <nav class="right-align no-space">
         <button data-ui="#modal" onclick="document.getElementById('modal').close()">Voltar</button>
-        <a href="{% url 'login' %}"><button>Reservar vaga</button></a>
+        <a href="{% url 'login' %}"><button onclick="reservaVaga()">Reservar vaga</button></a>
       </nav>
     
 

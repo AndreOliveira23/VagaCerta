@@ -51,12 +51,12 @@ class Vaga(models.Model):
 
 
 class Reserva(models.Model):
-    motorista = models.ForeignKey(Motorista, on_delete=models.CASCADE, related_name='reservas')
-    vaga = models.ForeignKey(Vaga, on_delete=models.CASCADE, related_name='reservas')
+    nome = models.CharField(max_length=255)
     data_reserva = models.DateField()
     hora_inicio = models.TimeField()
     hora_fim = models.TimeField()
     valor_total = models.DecimalField(max_digits=10, decimal_places=2)
 
+
     def __str__(self):
-        return f"Reserva {self.id} - {self.motorista.nome}"
+        return self.nome

@@ -382,6 +382,11 @@ var map = L.map('map', {
       document.getElementById('total').innerText = 'Total: R$' + total + ',00';
     }
   }
+
+  function reservaVaga() {
+    const nomeEstacionamento = document.getElementById('nome-do-estacionamento').innerText;
+    alert(nomeEstacionamento);
+  }
   
   /**********************************************MOCKS DE INFO DOS ESTACIONAMENTOS**********************************************************/
   function generateEstacionamentos() {

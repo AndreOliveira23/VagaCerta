@@ -11,4 +11,5 @@ urlpatterns = [
     path('intrapage/', views.intrapage, name='intrapage'),
     path('pagamento/', views.pagamento, name='pagamento'),
     path('recibo/', views.recibo, name='recibo'),
+    path('form-reserva/', views.form_reserva, name='form_reserva'),
 ]
