@@ -8,7 +8,7 @@ Dados indicam que, em média, os motoristas gastam 77 horas por ano procurando o
 
 O Vaga Certa é uma resposta a esse problema, proporcionando uma solução digital para facilitar a busca e reserva de vagas de estacionamento em tempo real, através de uma plataforma web acessível e eficiente. A proposta do projeto é otimizar o tempo dos motoristas, garantindo que encontrem e reservem vagas próximas aos seus destinos de maneira fácil e automática, utilizando recursos como geolocalização e um sistema de pagamento integrado. 
 
-- Para mais informações: [Apresentação Vaga Certa](https://github.com/AndreOliveira23/VagaCerta/blob/main/Apresentacao_VagaCerta.pdf)
+- Para mais informações baixe a nossa apresentação: <a id="raw-url" href="https://github.com/AndreOliveira23/VagaCerta/blob/main/Apresentacao_VagaCerta.pdf">Apresentação Vaga Certa</a>
 
 ## Contexto
 
