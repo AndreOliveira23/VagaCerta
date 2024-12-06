@@ -10,7 +10,62 @@ O Vaga Certa é uma resposta a esse problema, proporcionando uma solução digit
 
 Este projeto trata-se de um MVP (Minium Viable Product - Produto Mínimo Viável), desenvolvido para a disciplina 'ACH2008 - Empreendedorismo em Informática'. 
 
+## O que é?
 
+- Um sistema centralizado e eficiente que reúna todas as informações necessárias para facilitar a experiência do usuário ao encontrar e utilizar estacionamentos
+
+- Work in progress...
+
+- Para mais informações: <link do canva>
+
+## Objetivo
+
+Possibilitar o encontro das melhores opções de vagas, junto com a certeza de seu valor, disponibilidade e qualidade
+
+## Decisões técnicas (FAQ)
+
+Por se tratar de um MVP early stage, optamos por aumentar a eficiência e rapidez na entrega de features, para isso tomamos as seguintes decisões e seguimos alguns princípios:
+
+- Linguagem de programação: Python3 (familiaridade dos membros do projeto com a linguagem)
+
+- Framework web: Django (optamos por utilizar um framework web para acelerar a entrega de algumas features base da nossa aplicação, como o uso de rotas, views e sistemas de autenticação)
+
+- Front-end: HTML CSS JS (utilizar um framework front-end como React, Angular, Vue, Svelt, etc. iria adicionar complexidade desnecessária neste momento em que estamos focados em testar uma ideia de solução, posteriormente vale revisar a qualidade da nossa UI UX)
+
+- Arquitetura: monolíto monorepo (baseado no curto período de desenvolvimento de menos de 1 semestre, focamos em entregar a proposta de valor acima de decisões complexas envolvendo escalabilidade e economia de recursos, pois isso é algo que pode ser pensado como next step)
+
+- Banco de dados: Django ORM e SQLite3 (operações comuns, como CRUD (Create, Read, Update, Delete), são simplificadas e encapsuladas em APIs claras e reutilizáveis, reduzindo a duplicação de código)
+
+## Pre-requisitos
+
+- [Python3](https://www.python.org/downloads/)
+
+## Setup (Linux)
+
+1. Clone o repositório
+
+```
+$ git clone https://github.com/AndreOliveira23/VagaCerta.git
+```
+
+2. Ative o ambiente virtual para isolamento de dependências
+```
+$ python3 -m venv venv
+$ source venv/bin/activate
+```
+
+3. Vá para o diretório do projeto e rode as migrações no banco de dados local
+```
+$ cd projeto/ && python3 manage.py makemigrations && python3 manage.py migrate
+```
+
+4. Suba o servidor local Django
+
+```
+$ python3 manage.py runserver
+```
+
+5. Acesse a aplicação no localhost porta 8000
 
 ## Colaboradores
 
