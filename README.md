@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://github.com/AndreOliveira23/VagaCerta/blob/main/projeto/vagacerta/static/images/logo-vaga-certa-sem-fundo.png" />
+</p>
 
 # Vaga Certa : Simplificando estacionar
 
